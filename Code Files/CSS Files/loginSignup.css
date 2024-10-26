@@ -1,0 +1,53 @@
+html, body{
+    margin: 0;
+    height: 100%;
+    background-color: bisque;
+    overflow: hidden;
+}
+
+section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+}
+
+.container .inputs{
+    background-color: azure;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 80px 80px;
+
+}
+
+input{
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.title{
+    margin-top: -100px;
+}
+
+h3{ 
+    font-size: 50px;
+    text-align: center;
+}
+
+#loginBTN{
+    background-color: crimson;
+    margin-top: 40px;
+    padding: 15px 30px;
+    color: azure;
+    margin-bottom: -30px;
+}
+
+form{
+    flex-direction: column;
+    display: flex;
+}

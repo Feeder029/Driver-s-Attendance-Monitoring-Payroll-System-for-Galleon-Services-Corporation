@@ -35,7 +35,8 @@ JOIN driver_address d on a.`DI_AddressID` = d.`DA_ID`
 JOIN driver_unit_type e on a.`DI_UnitTypeID` = e.`DUT_ID`
 JOIN driver_vehicle f on a.`DI_VehicleID` = f.`DV_ID`
 JOIN hub_assigned g on a.`DI_HubAssignedID` = g.`HASS_ID`
-JOIN government_information h on a.`DI_GovInfoID` = h.`GOV_ID` where a.`DI_ID` = $DriverID;";
+JOIN government_information h on a.`DI_GovInfoID` = h.`GOV_ID` 
+where DI_ID = $DriverID";
 
 $result = mysqli_query($conn, $DriversInfo);
 
@@ -45,6 +46,7 @@ if (!$result) {
 
 // Put Results in a Variable so we can easily use it later on
 while ($row = mysqli_fetch_assoc($result)) {
+    //Text
     $D_ID = $row['DI_ID'];
     $D_FN = $row['DN_FName'];
     $D_MN = $row['DN_MName'];
@@ -72,34 +74,136 @@ while ($row = mysqli_fetch_assoc($result)) {
     $D_PhilHealth = $row['GOV_PhilHealthNo'];
     $D_SSS = $row['GOV_SSSNo'];
     $D_Pagibig = $row['GOV_PagibigNo'];
+
+    if($D_MN == ''){
+        $FullName = $D_FN." " .$D_LN." ".$D_Sfx;
+    } else {
+        $FullName = $D_FN." ".substr($D_MN,0,1 ).". ".$D_LN." ".$D_Sfx;
+    }
+
+    //Images (Encode the Text to the Image) -  src="data:image/jpeg;base64,<?php echo $orImage; > (How to Call it)    
+    $D_PPIC = base64_encode($row['ACC_ProfilePicture']);
+    $D_License = base64_encode($row['DI_LicenseImg']);
+    $D_BrgyClear = base64_encode($row['DI_BrgyClearanceImg']);
+    $D_PolClear = base64_encode($row['DI_PoliceClearanceImg']);
+    $D_NBI_Clear = base64_encode($row['DI_NBIClearanceImg']);
+    $D_OR = base64_encode($row['DV_ORImg']);
+    $D_CR = base64_encode($row['DV_CRImg']);
 }
 
 mysqli_close($conn)
 ?>
 
 
-</body>
+<body>
 <p> 
-<?php echo "<h2>Driver Information</h2>";
-echo "Driver ID: $D_ID<br>";
-echo "Name: $D_FN $D_MN $D_LN $D_Sfx<br>";
-echo "Age: $D_Age<br>";
-echo "Contact No: $D_CN<br>";
-echo "Gender: $D_Gender<br>";
-echo "Date of Birth: $D_DOB<br>";
-echo "Email: $D_Email<br>";
-echo "GCash No: $D_GcashNo<br>";
-echo "GCash Name: $D_GCash_Name<br>";
-echo "Username: $D_Username<br>";
-echo "Password: $D_Password<br>";
-echo "Address: $D_HouseNo, $D_LotNo, $D_Street, $D_Barangay, $D_City, $D_Province, $D_Zip<br>";
-echo "Unit Type: $D_UnitType<br>";
-echo "Vehicle Plate: $D_Plate<br>";
-echo "Hub Assigned: $D_Hub<br>";
-echo "PhilHealth No: $D_PhilHealth<br>";
-echo "SSS No: $D_SSS<br>";
-echo "Pagibig No: $D_Pagibig<br>";
-?>
+    <link rel="stylesheet" href="../CSS Files/employeeprofile.css">
 
-</p>
+    <!-- Profile  -->
+    <img src="data:image/png;base64,<?php echo $D_PPIC; ?>" alt="Profile Picture" style="width: 100px; height: 100px"> 
+    <h1> <?php echo "$FullName"?></h1>
+    <label for="imageInput" style="cursor: pointer; color: blue; text-decoration: underline;"> Edit Profile </label>
+    </p>
+    <hr>
+    <hr>
+
+    <!-- Personal & Account: JOB ONES -->
+
+    <div class="Two-Textbox">
+    
+    <div class="Top-Bottom">
+    <h4>DRIVER ID: </h4>
+    <input type="text" value="<?php echo $D_ID ?>" disabled>
+    </div>
+
+    <div class="Top-Bottom">
+    <h4>UNIT TYPE: </h4>
+    <input type="text" value="<?php echo $D_UnitType ?>" disabled>
+    </div>
+
+    </div>
+
+    <div class="Two-Textbox">
+    <div class="Top-Bottom">
+    <h4> HUB: </h4>
+    <input type="text" value="<?php echo  $D_Hub ?>" disabled>
+    <hr>
+    </div>
+    </div>
+
+    <hr>
+
+    <!-- Personal & Account: PERSON -->
+
+    <div class="Two-Textbox">
+    
+    <div class="Top-Bottom">
+    <h4>FIRST NAME: </h4>
+    <input type="text" value="<?php echo $D_FN ?>" disabled>
+    </div>
+
+    <div class="Top-Bottom">
+    <h4>LAST NAME: </h4>
+    <input type="text" value="<?php echo $D_LN ?>" disabled>
+    </div>
+
+    </div>
+
+    <div class="Two-Textbox">
+    
+    <div class="Top-Bottom">
+    <h4>MIDDLE NAME: </h4>
+    <input type="text" value="<?php echo $D_MN ?>" disabled>
+    </div>
+
+    <div class="Top-Bottom">
+    <h4>SUFFIX: </h4>
+    <input type="text" value="<?php echo $D_Sfx ?>" disabled>
+    </div>
+
+    </div>
+
+    <div class="Two-Textbox">
+    
+    <div class="Top-Bottom">
+    <h4>AGE: </h4>
+    <input type="text" value="<?php echo $D_Age ?>" disabled>
+    </div>
+
+    <div class="Top-Bottom">
+    <h4>DATE OF BIRTH: </h4>
+    <input type="date" value="<?php echo $D_DOB?>" disabled>
+    </div>
+
+    </div>
+    
+    <div class="Two-Textbox">
+    
+    <div class="Top-Bottom">
+    <h4>Gender: </h4>
+
+    <select  id="myDropdown" disabled>
+        <option value="" selected><?php echo $D_Gender ?></option>
+        <option value="option1">Option 1</option>
+    </select>
+
+    </div>
+    </div>
+
+    <hr>
+
+    <!-- Personal & Account: Account -->
+
+    <div class="Top-Bottom">
+    <h4> Username: </h4>
+    <input type="text" value="<?php echo $D_Username ?>" disabled>
+    </div>
+
+    <div class="Top-Bottom">
+    <h4> Password: </h4>
+    <input type="password" value="<?php echo $D_Password?>" disabled>
+    </div>
+
+
 </html>
+</body>

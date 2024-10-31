@@ -1,0 +1,10 @@
+.Two-Textbox {
+    display: flex;
+    gap: 20px; 
+    align-items: center;
+}
+
+.Top-Bottom{
+    display: flex;
+    flex-direction: column;
+}

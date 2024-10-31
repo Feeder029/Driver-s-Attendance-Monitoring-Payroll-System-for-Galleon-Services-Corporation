@@ -92,6 +92,28 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 
 mysqli_close($conn)
+
+// To Update the Details about their personal and account details
+
+/*
+UPDATE driver_information a
+JOIN driver_name c ON a.DI_NameID = c.DN_ID
+ JOIN account b on a.`DI_AccountID` = b.`ACC_ID`
+SET
+    a.`DI_Age` = 32,
+    a.`DI_UnitTypeID` = 1,
+    a.`DI_HubAssignedID` = 2,
+    a.`DI_DOB` = '1992-10-22',
+    a.`DI_Gender` = 'Female',
+    b.`ACC_Username` = 'TinaBurnesr_34534',
+    b.`ACC_Password` = '9342_Passd',
+    c.`DN_FName` = 'Tina',
+    c.`DN_LName` = 'Burner',
+    c.`DN_MName` = 'Akap',
+    c.`DN_Suffix` = 'Sr.'
+WHERE a.DI_ID = 34534;
+*/
+
 ?>
 
 

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2024 at 10:03 AM
+-- Generation Time: Oct 31, 2024 at 06:00 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -108,7 +108,8 @@ CREATE TABLE `attendance` (
   `ATT_DeliveryID` int(10) NOT NULL,
   `ATT_Date` date NOT NULL,
   `ATT_TimeIn` time NOT NULL,
-  `ATT_TimeOut` time NOT NULL
+  `ATT_TimeOut` time NOT NULL,
+  `ATT_Status` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -212,7 +213,9 @@ CREATE TABLE `driver_information` (
   `DI_LicenseImg` longblob NOT NULL,
   `DI_BrgyClearanceImg` longblob NOT NULL,
   `DI_PoliceClearanceImg` longblob NOT NULL,
-  `DI_NBIClearanceImg` longblob NOT NULL
+  `DI_NBIClearanceImg` longblob NOT NULL,
+  `Gcash_No` varchar(30) NOT NULL,
+  `GCash_Name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

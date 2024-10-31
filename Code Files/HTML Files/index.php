@@ -35,6 +35,7 @@
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="loginform">
                     <input type="text" name="username" id="usernameTB" placeholder="Username">
                     <input type="password" name="password" id="passwordTB" placeholder="Password">
+                    
                     <button type="submit" id="loginBTN">LOGIN</button>
                 </form>                      
             </div>

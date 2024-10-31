@@ -20,21 +20,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS Files/Employee_Profile.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="../CSS Files/loginSignup.css">
+    <!-- <script src="../JS Files/loginSignup.js" defer></script> -->
+    <title>Login & Sign up</title>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="profile">
-        <img src="/Pictures/Employee_BAse.jpeg" alt="Profile Picture" class="profile-pic">
-        <h1 class="FN"> First Name</h1>
-        <h2 class="LN"> Last Name</h2>
-        <p class="role"> Place Hub Driver</p> 
-        <!-- replace echo <?php ?> to get inputs from the database  -->
+    <section>       
+        <div class="container">         
+            <div class="inputs">
+                <div class="title">
+                    <h3>LOGIN</h3>
+                </div> 
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="loginform">
+                    <input type="text" name="username" id="usernameTB" placeholder="Username">
+                    <input type="password" name="password" id="passwordTB" placeholder="Password">
+                    <button type="submit" id="loginBTN">LOGIN</button>
+                </form>                      
+            </div>
+                 
         </div>
-    </div>  
-    
+    </section>
+
+
 </body>
 </html>
 

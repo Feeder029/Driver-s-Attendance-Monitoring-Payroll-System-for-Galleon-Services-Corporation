@@ -14,6 +14,7 @@ html{
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', 'sans-serif';
+    
 }
 
 a{
@@ -23,13 +24,20 @@ a{
     font-size: 1rem;
     color: white;
     width: 100%;
+    padding: 5px;
     
 }
+
+a:hover{
+    color: #212879;
+}
+
 
 li{
     list-style:none;
     margin-top: 5px;
     padding-left: 10px;
+    transition: transform 0.2s ease;
     
 }
 
@@ -43,10 +51,35 @@ li{
     z-index: 2000px;
     overflow-x: hidden;
     scrollbar-width: none;
+    
 }
 
 .side-menu{
     background-color: rgb(36, 60, 133);
+    border: none;
+}
+
+.side-menu li:hover{
+    background-color: #ffc729;
+    border-left: 5px solid whitesmoke;
+    padding-left: 25px;
+    outline: none;
+}
+
+.side-menu li a:focus{
+    background-color: #ffc729;
+    outline: none;
+    color: #212879;
+    margin-left: -30px;
+    padding-left: 30px;
+    width: 250px;
+    border-left: 25px solid whitesmoke;
+}
+
+.side-menu li a:focus:hover{
+    border: 0;
+    border-left: 5px solid whitesmoke;
+    padding-left: 30.2px;
 }
 
 .side-profile{
@@ -87,8 +120,13 @@ li{
 }
 
 .iframe-container iframe{
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    left: 15%;
+    position:fixed;
+    top: 90px;
+    left: 230px;
+    height: 100vh;
+    width: calc(100% - 230px);
+    border: none;
+
 }
+
+

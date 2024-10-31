@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2024 at 06:00 AM
+-- Generation Time: Oct 31, 2024 at 01:56 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `gsc_attendanceandpayroll`
+-- Database: `gsc_attendanceandpayrollbackup`
 --
 
 -- --------------------------------------------------------
@@ -31,7 +31,8 @@ CREATE TABLE `account` (
   `ACC_ID` int(10) NOT NULL,
   `ACC_AcountStatID` int(10) NOT NULL,
   `ACC_Username` varchar(30) NOT NULL,
-  `ACC_Password` varchar(30) NOT NULL
+  `ACC_Password` varchar(30) NOT NULL,
+  `ACC_ProfilePicture` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -204,7 +205,6 @@ CREATE TABLE `driver_information` (
   `DI_VehicleID` int(10) NOT NULL,
   `DI_HubAssignedID` int(10) NOT NULL,
   `DI_GovInfoID` int(10) NOT NULL,
-  `DI_DriverUnitTypeID` int(10) NOT NULL,
   `DI_Age` int(10) NOT NULL,
   `DI_ContactNo` varchar(30) NOT NULL,
   `DI_Gender` varchar(30) NOT NULL,

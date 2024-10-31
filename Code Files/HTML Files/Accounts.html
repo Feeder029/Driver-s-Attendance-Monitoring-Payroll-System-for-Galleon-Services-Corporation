@@ -3,9 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../CSS Files/Accounts.css">
     <title>ACCOUNTS</title>
 </head>
-<body style="background-color: pink;">
-    <H1>ACCOUNTS</H1>
+<body>
+    <div class="navbar">
+        <nav>
+            
+            <h3>ACCOUNTS LIST</h3>
+
+            <div class="navbar-input">
+                <div class="category-btn">
+                    <div class="option">
+                        <input class="input" type="radio" name="btn" value="option1" checked="">
+                        <div class="btn">
+                            <span class="span">ALL</span>
+                        </div>
+                    </div>
+                    <div class="option">
+                        <input class="input" type="radio" name="btn" value="option2">
+                        <div class="btn">
+                            <span class="span">ACTIVE</span>
+                        </div>  </div>
+                    <div class="option">
+                        <input class="input" type="radio" name="btn" value="option3">
+                        <div class="btn">
+                            <span class="span">&nbsp;PENDING&nbsp;</span>
+                        </div>  
+                    </div>
+                </div>
+
+                <div class="search-bar">
+                    <i class='bx bx-search'></i>
+                    <input type="search" name="search" id="search" placeholder="Search" > 
+                </div>
+            </div>
+           
+        </nav>
+    </div>
 </body>
 </html>

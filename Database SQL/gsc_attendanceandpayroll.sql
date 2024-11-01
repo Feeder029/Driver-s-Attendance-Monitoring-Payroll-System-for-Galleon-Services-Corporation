@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2024 at 01:56 PM
+-- Generation Time: Nov 01, 2024 at 06:04 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `gsc_attendanceandpayrollbackup`
+-- Database: `gsc_attendanceandpayrolls`
 --
 
 -- --------------------------------------------------------
@@ -202,7 +202,6 @@ CREATE TABLE `driver_information` (
   `DI_NameID` int(10) NOT NULL,
   `DI_AddressID` int(10) NOT NULL,
   `DI_UnitTypeID` int(10) NOT NULL,
-  `DI_VehicleID` int(10) NOT NULL,
   `DI_HubAssignedID` int(10) NOT NULL,
   `DI_GovInfoID` int(10) NOT NULL,
   `DI_Age` int(10) NOT NULL,
@@ -251,7 +250,7 @@ CREATE TABLE `driver_unit_type` (
 
 CREATE TABLE `driver_vehicle` (
   `DV_ID` int(10) NOT NULL,
-  `DV_VehicleModel` varchar(30) NOT NULL,
+  `DV_DriverID` int(30) NOT NULL,
   `DV_VehiclePlate` varchar(30) NOT NULL,
   `DV_ORImg` longblob NOT NULL,
   `DV_CRImg` longblob NOT NULL

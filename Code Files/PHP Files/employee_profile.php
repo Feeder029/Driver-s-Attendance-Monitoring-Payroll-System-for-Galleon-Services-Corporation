@@ -138,8 +138,8 @@ while ($row = mysqli_fetch_assoc($VehiclesInfo)) {
 }
 
 
-// Connection to get in the HtmlDesign 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Connection for the Personal and Account Form
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'Personal&Account') {
 
     //Assigning Values to a Variable (I use htmlspecialchars cause youtube says it make it safe somehow)
     $FN = htmlspecialchars($_POST['FirstName']);
@@ -156,7 +156,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $BY = htmlspecialchars($_POST['barangay']);
     $CY = htmlspecialchars($_POST['city']);
     $PV = htmlspecialchars($_POST['province']);
+    $GNO = htmlspecialchars($_POST['GcashNo']);
+    $GNA = htmlspecialchars($_POST['GcashName']);
     $ZP = htmlspecialchars($_POST['Zip']);
+
 
     if (isset($_POST['gender'])) {
         $GD = $_POST['gender']; 
@@ -181,15 +184,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     Personal_AccountUpdate($conn,$AG, $UT,$HB,$DB, $FN, $LN , $GD, $UR , $PS,$MN,
-     $SX, $DriverID,$HN,$LT,$ST,$BY,$CY,$PV,$ZP);
+     $SX, $DriverID,$HN,$LT,$ST,$BY,$CY,$PV,$ZP,$GNO,$GNA);
 
     header(header: "Location: " . $_SERVER['PHP_SELF']);
     exit(); 
 }
 
+// Connection for the Profile Picture Form
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'profileform') {
+
+    echo "eWSD";
+
+    //If statement to see if the picture is uploaded
+    if (isset($_FILES['profile']) && $_FILES['profile']['error'] == UPLOAD_ERR_OK) {
+        //Get the Binary Data
+        $profilePic = mysqli_real_escape_string($conn, file_get_contents($_FILES['profile']['tmp_name']));
+    }
+
+    Profile_PicUpdate($conn, $DriverID, $profilePic);
+    header(header: "Location: " . $_SERVER['PHP_SELF']);
+    exit(); 
+
+}
+
+//Function for update in Profile Picture
+function Profile_PicUpdate($conn, $DriverID, $image) {
+
+$sql = "UPDATE driver_information a
+            JOIN account b ON a.`DI_AccountID` = b.`ACC_ID`
+            SET b.`ACC_ProfilePicture` = '$image'
+            WHERE a.DI_ID = $DriverID";
+
+    $result = mysqli_query($conn, $sql);
+    
+    if (!$result) {
+        echo "Update failed: " . mysqli_error($conn);
+    } else {
+        echo "Profile picture updated successfully.";
+    }
+}
 
 //Function for update in Personal & Account Details
-function Personal_AccountUpdate($conn,$AG,$UT,$HB,$DB,$FN, $LN , $GD, $UR , $PS,$MN, $SX, $DriverID,$HN,$LT,$ST,$BY,$CY,$PV,$ZP) {
+function Personal_AccountUpdate($conn,$AG,$UT,$HB,$DB,$FN, $LN , $GD, $UR , $PS,$MN, $SX, $DriverID,$HN,$LT,$ST,$BY,$CY,$PV,$ZP,$GNO,$GNA) {
     //Update Code
     $REPLACE =
     "UPDATE driver_information a
@@ -202,6 +238,8 @@ function Personal_AccountUpdate($conn,$AG,$UT,$HB,$DB,$FN, $LN , $GD, $UR , $PS,
         a.`DI_HubAssignedID` = $HB,
         a.`DI_DOB` = '$DB',
         a.`DI_Gender` = '$GD',
+        a.`Gcash_No` = '$GNO',
+        a.`GCash_Name` = '$GNA',
         b.`ACC_Username` = '$UR',
         b.`ACC_Password` = '$PS',
         c.`DN_FName` = '$FN',

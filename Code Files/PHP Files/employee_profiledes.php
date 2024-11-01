@@ -12,20 +12,20 @@
     include("employee_profile.php");
     ?>
 
-    <p> 
-    
-    
-    
-        <!-- Profile  -->
-        <img src="data:image/png;base64,<?php echo $DRV["Profile"]; ?>" alt="Profile Picture" style="width: 100px; height: 100px"> 
-        <h1> <?php echo "$FullName"?></h1>
-        <label for="imageInput" style="cursor: pointer; color: blue; text-decoration: underline;"> Edit Profile </label>
-        </p>
-        <hr>
-        <hr>
-    
+   <form method="post" id="profileform" enctype="multipart/form-data">
+    <!-- Profile  -->
+    <img src="data:image/png;base64,<?php echo $DRV["Profile"]; ?>" alt="Profile Picture" style="width: 100px; height: 100px"> 
+    <h1> <?php echo "$FullName"; ?></h1>
+    <label for="image" style="cursor: pointer; color: blue; text-decoration: underline;">Edit Profile</label>
+    <input type="file" name="profile" id="image" accept="image/*" style="display: none;">
+    <input type="hidden" name="id" value="profileform">
+    <hr>
+    <hr>
+   </form>
 
-        <form method="post" action="">
+     
+
+        <form method="post" name="id" id="Personal&Account">
         <!-- Personal & Account: JOB ONES -->
     
         <div class="Two-Textbox" >
@@ -228,8 +228,9 @@
     
         <div class="Top-Bottom">
         </div>
-        <input type="submit" name="SAVE" value="SAVE" id="save" onclick="Change()" class="editable_status" disabled/>
-        
+        <input type="submit" name="SAVE" value="SAVE" id="save" class="editable_status" disabled/>
+
+        <input type="hidden" name="id" value="Personal&Account">
     
         </div>
         
@@ -237,6 +238,7 @@
         </div>
         
         </form>
+
         <script src="../JS Files/Employee_Profile.js"></script>
     
     </html>

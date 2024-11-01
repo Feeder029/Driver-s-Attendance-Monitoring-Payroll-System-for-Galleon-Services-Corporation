@@ -6,3 +6,6 @@ document.getElementById('edit').addEventListener('click', function() {
     });
 });
 
+document.getElementById("image").addEventListener("change", function() {
+    this.form.submit();
+});

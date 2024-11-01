@@ -37,7 +37,14 @@
     
         <div class="Top-Bottom">
         <h4>UNIT TYPE: </h4>
-        <input type="text" value="<?php echo $DRV["Unit"]?>" disabled>
+        <select class="editable_status" name="unittype" disabled>
+        <?php 
+        for ($i = 0; $i < count($UnitTypes); $i++) {
+            $selectedunit = ($DRV["Unit"] == $UnitTypes[$i]) ? ' selected' : '';
+            echo '<option value="' . htmlspecialchars($UnitTypesID[$i]) . '"' . $selectedunit . '>' . htmlspecialchars($UnitTypes[$i]) . '</option>';
+        }
+        ?>
+        </select>
         </div>
     
         </div>
@@ -45,8 +52,14 @@
         <div class="Two-Textbox">
         <div class="Top-Bottom">
         <h4> HUB: </h4>
-        <input type="text" value="<?php echo $DRV["Hub"] ?>" disabled>
-        <hr>
+        <select class="editable_status" name="hub" disabled>
+        <?php 
+        for ($i = 0; $i < count($Hub); $i++){
+            $selectedunit =  ($DRV["Hub"] == $Hub[$i]) ? 'selected' : '';
+            echo '<option value="' . htmlspecialchars($HubID[$i]) . '"' . $selectedunit . '>' . htmlspecialchars($Hub[$i]) . '</option>';
+        }
+        ?>
+        </select>
         </div>
         </div>
     
@@ -85,18 +98,111 @@
         
         <div class="Two-Textbox">
         
+        <div class="Top-Bottom" class="editable_status">
+        <h4>AGE: </h4>
+        <input type="text" value="<?php echo $DRV["Age"] ?>" disabled class="editable_status"  name = "Age">
+        </div>
+    
+        <div class="Top-Bottom" class="editable_status">
+        <h4>DOB: </h4>
+        <input type="date" value="<?php echo $DRV["DOB"] ?>" disabled class="editable_status" name = "DOB">
+        </div>
+    
+        </div>
+
+
+
+        <div class="Two-Textbox">
+        
         <div class="Top-Bottom">
         <h4>Gender: </h4>
-        <select name="gender" id="gender" disabled class="editable_status" name = "Gender">
-            <option value="Male" <?php echo ($DRV["Gender"] == 'Male') ? 'selected' : ''; ?>>Male</option>
-            <option value="Female" <?php echo ($DRV["Gender"]  == 'Female') ? 'selected' : ''; ?>>Female</option>
-            <option value="Others" <?php echo ($DRV["Gender"]  == 'Others') ? 'selected' : ''; ?>>Others</option>
+        <select  id="gender" disabled class="editable_status" name="gender">
+            <option value="Male" <?php echo ($DRV["Gender"] == 'Male') ? 'selected' : ''; ?> >Male</option>
+            <option value="Female" <?php echo ($DRV["Gender"]  == 'Female') ? 'selected' : ''; ?> >Female</option>
+            <option value="Others" <?php echo ($DRV["Gender"]  == 'Others') ? 'selected' : ''; ?> >Others</option>
         </select>
     
         </div>
         </div>
     
         <hr>
+        
+        <!-- Personal & Account: Address -->
+
+
+        <div class="Two-Textbox">
+        
+        <div class="Top-Bottom" class="editable_status">
+        <h4>PROVINCE: </h4>
+        <select  disabled class="editable_status" name="province">
+        <option value= "<?php echo $DRV["Province"] ?>"> <?php echo $DRV["Province"] ?> </option>
+        </select>        
+        </div>
+    
+        <div class="Top-Bottom" class="editable_status">
+        <h4>CITY: </h4>
+        <select disabled class="editable_status" name="city">
+        <option value= "<?php echo $DRV["City"] ?>"> <?php echo $DRV["City"] ?> </option>
+        </select>        
+        </div>
+    
+        </div>
+
+        <div class="Two-Textbox">
+        
+        <div class="Top-Bottom" class="editable_status">
+        <h4> BARANGAY: </h4>
+        <select  disabled class="editable_status" name="barangay">
+        <option value= "<?php echo $DRV["Brgy"] ?>"> <?php echo $DRV["Brgy"] ?> </option>
+        </select>        
+        </div>
+    
+        <div class="Top-Bottom" class="editable_status">
+        <h4> STREET: </h4>
+        <input type="text" value="<?php echo $DRV["Street"] ?>" disabled class="editable_status"  name = "Street">
+        </div>
+    
+        </div>
+
+        <div class="Two-Textbox">
+        
+        <div class="Top-Bottom" class="editable_status">
+        <h4> LOT NO: </h4>
+        <input type="text" value="<?php echo $DRV["Lot"] ?>" disabled class="editable_status"  name = "Lot">   
+        </div>
+    
+        <div class="Top-Bottom" class="editable_status">
+        <h4> HOUSE NO: </h4>
+        <input type="text" value="<?php echo $DRV["House"] ?>" disabled class="editable_status"  name = "House">
+        </div>
+    
+        </div>
+
+        <div class="Two-Textbox">
+
+        <h4> ZIP CODE: </h4>
+        <input type="text" value="<?php echo $DRV["Zip"] ?>" disabled class="editable_status"  name = "Zip">
+        </div>
+        </div>
+
+        <hr>
+
+        <div class="Two-Textbox">
+        
+        <div class="Top-Bottom" class="editable_status">
+        <h4> GCASH NO: </h4>
+        <input type="text" value="<?php echo $DRV["GC_NO"] ?>" disabled class="editable_status"  name = "GcashNo">   
+        </div>
+    
+        <div class="Top-Bottom" class="editable_status">
+        <h4> GCASH NAME: </h4>
+        <input type="text" value="<?php echo $DRV["GC_Name"] ?>" disabled class="editable_status"  name = "GcashName">
+        </div>
+    
+        </div>
+
+        <hr>
+
     
         <!-- Personal & Account: Account -->
     

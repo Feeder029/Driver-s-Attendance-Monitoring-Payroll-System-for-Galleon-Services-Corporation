@@ -17,7 +17,31 @@ if ($conn) {
 // A Variable for once they sign in, theyll took their driver id and use it to take all of their info! 
 $DriverID = 34534;
 
+//Options for Unit Type
+$unitcount = 0;
+$UnitType_OptionCodes = "SELECT DUT_ID, DUT_UnitType FROM driver_unit_type;";
+$UnitType_Option = mysqli_query($conn, $UnitType_OptionCodes);            
+if (!$UnitType_Option) {
+    die("Query failed: " . mysqli_error($conn));
+} while ($row = mysqli_fetch_assoc($UnitType_Option)) {
+    $UnitTypes[$unitcount] = $row['DUT_UnitType'];
+    $UnitTypesID[$unitcount] = $row['DUT_ID'];   
+    $unitcount++;
+}
 
+
+
+//Options for Hubs
+$hubcount = 0;
+$Hub_OptionCodes = "SELECT HASS_ID,HASS_Name FROM hub_assigned;";
+$Hub_Option = mysqli_query($conn, $Hub_OptionCodes);            
+if (!$Hub_Option) {
+    die("Query failed: " . mysqli_error($conn));
+} while ($row = mysqli_fetch_assoc($Hub_Option)) {
+    $Hub[$hubcount] = $row['HASS_Name'];
+    $HubID[$hubcount] = $row['HASS_ID'];
+    $hubcount++;
+}
 
 
 //Mysql Code to Select every drivers detail
@@ -65,6 +89,7 @@ while ($row = mysqli_fetch_assoc($DriverInfo)) {
         "PASS" => $row['ACC_Password'],
         "House" => $row['DA_HouseNo'],
         "Lot" => $row['DA_LotNo'],
+        "Brgy" => $row['DA_Barangay'],
         "Street" => $row['DA_Street'],
         "City" => $row['DA_City'],
         "Province" => $row['DA_Province'],
@@ -112,38 +137,84 @@ while ($row = mysqli_fetch_assoc($VehiclesInfo)) {
     $Vehicle_Count += 1;
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $FN = $_POST['FirstName'];
-    $LN = $_POST['LastName'];
-    $GD = $_POST['Gender'];
-    $UR = $_POST['User'];
-    $PS= $_POST['Password'];
-    $MN = $_POST['Middle'];
-    $SX = $_POST['Suffix'];
 
-    Change($conn,$FN, $LN , $GD, $UR , $PS,$MN, $SX, $DriverID);
+// Connection to get in the HtmlDesign 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    //Assigning Values to a Variable (I use htmlspecialchars cause youtube says it make it safe somehow)
+    $FN = htmlspecialchars($_POST['FirstName']);
+    $LN = htmlspecialchars($_POST['LastName']);
+    $UR = htmlspecialchars($_POST['User']);
+    $PS= htmlspecialchars($_POST['Password']);
+    $MN = htmlspecialchars($_POST['Middle']);
+    $SX = htmlspecialchars($_POST['Suffix']);
+    $AG = htmlspecialchars($_POST['Age']);
+    $DB = htmlspecialchars($_POST['DOB']);
+    $HN = htmlspecialchars($_POST['House']);
+    $LT = htmlspecialchars($_POST['Lot']);
+    $ST = htmlspecialchars($_POST['Street']);
+    $BY = htmlspecialchars($_POST['barangay']);
+    $CY = htmlspecialchars($_POST['city']);
+    $PV = htmlspecialchars($_POST['province']);
+    $ZP = htmlspecialchars($_POST['Zip']);
+
+    if (isset($_POST['gender'])) {
+        $GD = $_POST['gender']; 
+    } else {
+        $GD = 'Others';
+    }
+
+    if (isset($_POST['unittype'])) {
+        $UT = $_POST['unittype'];
+        echo $UT;
+        } else {
+        echo "Not working";
+    }
+
+    if (isset($_POST['hub'])) {
+        $HB = $_POST['hub'];
+        echo $HB;
+        } else {
+        echo "Not working";
+    }
+
+
+
+    Personal_AccountUpdate($conn,$AG, $UT,$HB,$DB, $FN, $LN , $GD, $UR , $PS,$MN,
+     $SX, $DriverID,$HN,$LT,$ST,$BY,$CY,$PV,$ZP);
 
     header(header: "Location: " . $_SERVER['PHP_SELF']);
     exit(); 
 }
 
-function Change($conn,$FN , $LN , $GD, $UR , $PS,$MN, $SX, $DriverID) {
+
+//Function for update in Personal & Account Details
+function Personal_AccountUpdate($conn,$AG,$UT,$HB,$DB,$FN, $LN , $GD, $UR , $PS,$MN, $SX, $DriverID,$HN,$LT,$ST,$BY,$CY,$PV,$ZP) {
+    //Update Code
     $REPLACE =
     "UPDATE driver_information a
     JOIN driver_name c ON a.DI_NameID = c.DN_ID
     JOIN account b on a.`DI_AccountID` = b.`ACC_ID`
+    JOIN driver_address d on a.`DI_AddressID` = d.`DA_ID`
     SET
-        a.`DI_Age` = 32,
-        a.`DI_UnitTypeID` = 1,
-        a.`DI_HubAssignedID` = 2,
-        a.`DI_DOB` = '1992-10-22',
+        a.`DI_Age` = $AG,
+        a.`DI_UnitTypeID` = $UT,
+        a.`DI_HubAssignedID` = $HB,
+        a.`DI_DOB` = '$DB',
         a.`DI_Gender` = '$GD',
         b.`ACC_Username` = '$UR',
         b.`ACC_Password` = '$PS',
         c.`DN_FName` = '$FN',
         c.`DN_LName` = '$LN',
         c.`DN_MName` = '$MN',
-        c.`DN_Suffix` = '$SX'
+        c.`DN_Suffix` = '$SX',
+        d.`DA_HouseNo` = '$HN', 
+        d.`DA_LotNo` = '$LT', 
+        d.`DA_Street` = '$ST', 
+        d.`DA_Barangay` = '$BY',
+        d.`DA_City` = '$CY', 
+        d.`DA_Province` = '$PV',
+        d.`DA_ZipCode` = '$ZP'
     WHERE a.DI_ID = $DriverID;";
     
     
@@ -155,31 +226,6 @@ function Change($conn,$FN , $LN , $GD, $UR , $PS,$MN, $SX, $DriverID) {
 }
 
 mysqli_close($conn)
-
-
-
-
-// To Update the Details about their personal and account details
-
-/*
-UPDATE driver_information a
-JOIN driver_name c ON a.DI_NameID = c.DN_ID
- JOIN account b on a.`DI_AccountID` = b.`ACC_ID`
-SET
-    a.`DI_Age` = 32,
-    a.`DI_UnitTypeID` = 1,
-    a.`DI_HubAssignedID` = 2,
-    a.`DI_DOB` = '1992-10-22',
-    a.`DI_Gender` = 'Female',
-    b.`ACC_Username` = 'TinaBurnesr_34534',
-    b.`ACC_Password` = '9342_Passd',
-    c.`DN_FName` = 'Tina',
-    c.`DN_LName` = 'Burner',
-    c.`DN_MName` = 'Akap',
-    c.`DN_Suffix` = 'Sr.'
-WHERE a.DI_ID = 34534;
-*/
-
 
 ?>
 

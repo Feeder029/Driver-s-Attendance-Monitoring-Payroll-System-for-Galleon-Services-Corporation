@@ -66,7 +66,7 @@ li{
     outline: none;
 }
 
-.side-menu li a:focus{
+.side-menu li a.active{
     background-color: #ffc729;
     outline: none;
     color: #212879;
@@ -76,7 +76,7 @@ li{
     border-left: 25px solid whitesmoke;
 }
 
-.side-menu li a:focus:hover{
+.side-menu li a.active:hover{
     border: 0;
     border-left: 5px solid whitesmoke;
     padding-left: 30.2px;

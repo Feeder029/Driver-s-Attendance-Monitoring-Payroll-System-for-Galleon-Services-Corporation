@@ -10,8 +10,11 @@ html{
     overflow-x: hidden;
 }
 
+.navbar, html{
+    overflow: visible;
+}
 .navbar {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(0, 5, 151, 0.316);
     backdrop-filter: blur(10px);
     padding: 1px;
     border-radius: 10px;
@@ -42,20 +45,22 @@ html{
     z-index: 1;
     padding: 5px;
     border-radius: 15px;
-    margin: -75px 100px 30px 0;
+    margin: -75px 50px 30px 0;
     display: flex;
     align-items: center;
     flex-direction: row;
     position: relative;
     line-height: 28px;
-    
+
 }
 
 .search-bar input{
+    flex-grow: 1;
     font-size: 19px;
     width: 100%;
     height: 100%;
     padding-left: 2rem;
+    padding-right: 5.5rem;
     box-shadow: 0 0 0 1.5px #2b2c37, 0 0 25px -17px #000;
     border: 0;
     border-radius: 12px;
@@ -65,6 +70,7 @@ html{
     transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1);
     cursor: text;
     z-index: 0;
+    margin-right: 5px;
 }
 
 .search-bar input::placeholder{
@@ -75,9 +81,13 @@ html{
     box-shadow: 0 0 0 2.5px #2f303d, 0px 0px 25px -15px #000;
 }
 
-.search-bar input:active{
+/* .search-bar input:active{
     transform: scale(0.95);
 }
+
+.search-bar .bx-search:active{
+    transform: scale(0.95);
+} */
 
 .search-bar input:focus {
     box-shadow: 0 0 0 2.5px #2f303d;
@@ -95,7 +105,7 @@ html{
 
 .category-btn {
     --font-color-dark: #323232;
-    --font-color-light: #FFF;
+    --font-color-light: #ffc729;
     --bg-color: #7e83bf;
     --main-color: #323232;
     position: relative;
@@ -109,7 +119,7 @@ html{
 
 }
 
-.option {
+.btn-option {
     width: 80.5px;
     height: 28px;
     position: relative;
@@ -147,4 +157,194 @@ html{
 
 .input:checked + .btn .span {
     color: var(--font-color-light);
+}
+
+.dropdown-category {
+    width: fit-content;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    position:relative;
+    transition: 300ms;
+    color: white;
+    overflow: hidden;
+    margin: 0 0 -127px -85px;
+}
+
+.selected {
+    background-color: #2a2f3b;
+    padding: 5px;
+    margin-bottom: 3px;
+    border-radius: 0 10px 10px 0 ;
+    position: relative;
+    z-index: 100000;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.arrow {
+    position: relative;
+    right: 0px;
+    height: 10px;
+    transform: rotate(-90deg);
+    width: 15px;
+    fill: white;
+    z-index: 100000;
+    transition: 300ms;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #2a2f3b;
+    position: relative;
+    top: -100px;
+    opacity: 0;
+    transition: 300ms;
+}
+
+.dropdown-category:hover > .options {
+    opacity: 1;
+    top: 0;
+}
+
+.dropdown-category:hover > .selected .arrow {
+    transform: rotate(0deg);
+}
+
+.option {
+    border-radius: 5px;
+    padding: 5px;
+    transition: 300ms;
+    background-color: #2a2f3b;
+    width: 60px;
+    font-size: 15px;
+}
+.option:hover {
+    background-color: #323741;
+}
+
+.options input[type="radio"] {
+    display: none;
+}
+
+.options label {
+    display: inline-block;
+}
+.options label::before {
+    content: attr(data-txt);
+}
+
+/* .options input[type="radio"]:checked + label {
+    display: none;
+}
+
+.options input[type="radio"]#dd-all:checked + label {
+    display: none;
+} */
+
+.dropdown-category:has(.options input[type="radio"]#dd-all:checked) .selected::before {
+    content: attr(data-default);
+}
+.dropdown-category:has(.options input[type="radio"]#dd-active:checked) .selected::before {
+    content: attr(data-one);
+}
+.dropdown-category:has(.options input[type="radio"]#dd-pending:checked) .selected::before {
+    content: attr(data-two);
+}
+
+
+.table-container{
+    margin-top: 20px;
+    max-height: 6in;
+    overflow-y: auto;
+    z-index: -1;
+    position: relative;
+}
+
+.table-container .table-accounts{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+tr, td{
+    background-color: #383f85;
+    color:white;
+    padding: 30px 10px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+}
+
+.td-content{
+    margin: -20px 0;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.td-left{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.td-left .bx{
+    font-size: 100px;
+}
+
+#username{
+    font-size: 40px;
+    margin: 10px 0;
+}
+
+#fullname, #position-name{
+    font-size: 20px;
+    margin: 0;
+    display: inline-block;
+}
+
+.td-right{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    position: relative;
+    right: -50%;
+}
+
+#date{
+    font-size: 20px;
+    margin-right: -10px;
+    z-index: 1;
+}
+
+.td-btn{
+    position: relative;
+    align-content: space-between;
+    word-spacing: 20px;
+}
+
+.td-btn button{
+    padding: 7px; 
+    border: none;
+    font-weight: bold;
+    color: whitesmoke;
+    margin-right: -10px;
+}
+
+#accept-btn{
+  
+    background-color: rgb(23, 99, 23);
+}
+
+#decline-btn{
+    background-color: rgb(137, 40, 40);
+}
+
+#view-btn{
+    background-color: #967d38;
 }

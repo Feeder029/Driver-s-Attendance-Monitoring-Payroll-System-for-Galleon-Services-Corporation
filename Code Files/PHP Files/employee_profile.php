@@ -100,6 +100,7 @@ while ($row = mysqli_fetch_assoc($DriverInfo)) {
         "SSSNo" => $row['GOV_SSSNo'],
         "PagNo" => $row['GOV_PagibigNo'],
         "Profile" => base64_encode($row['ACC_ProfilePicture']),
+        "DriversLicense" => base64_encode($row['DI_LicenseImg']),
         "Brgy_Clear" => base64_encode($row['DI_BrgyClearanceImg']),
         "Pol_Clear" => base64_encode($row['DI_PoliceClearanceImg']),
         "NBI_Clear" => base64_encode($row['DI_NBIClearanceImg'])
@@ -114,7 +115,7 @@ while ($row = mysqli_fetch_assoc($DriverInfo)) {
 }
 
 //Mysql Code to Select every drivers vehicles
-$VehiclesDetails = "SELECT a.DV_VehiclePlate,a.DV_ORImg,a.DV_CRImg FROM driver_vehicle a
+$VehiclesDetails = "SELECT a.DV_ID,a.DV_VehiclePlate,a.DV_ORImg,a.DV_CRImg FROM driver_vehicle a
 JOIN driver_information b ON a.DV_DriverID = b.DI_ID
 WHERE b.DI_ID = $DriverID";
 
@@ -130,6 +131,7 @@ $Vehicle_Count = 0; //Array for Vehicles
 // Put Vehicle Results in a Variable so we can easily use it later on
 while ($row = mysqli_fetch_assoc($VehiclesInfo)) {
     $VHC[$Vehicle_Count] = [
+        "ID" =>  $row['DV_ID'],
         "Plate" =>  $row['DV_VehiclePlate'],
         "OR" => base64_encode($row['DV_ORImg']),
         "CR" => base64_encode($row['DV_CRImg'])
@@ -193,7 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] 
 // Connection for the Profile Picture Form
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'profileform') {
 
-    echo "eWSD";
+    echo "PROFILEFORM";
 
     //If statement to see if the picture is uploaded
     if (isset($_FILES['profile']) && $_FILES['profile']['error'] == UPLOAD_ERR_OK) {
@@ -205,6 +207,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] 
     header(header: "Location: " . $_SERVER['PHP_SELF']);
     exit(); 
 
+}
+
+$OR = [];
+$CR = [];
+$License = [];
+$V_ID = [];
+
+// Ensure the form is submitted and the correct ID is present
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'Vehicles') {
+    $vehicleIDs = $_POST['VehicleID'];
+    $plates = $_POST['Plate'];
+    $orImages = $_FILES['OR'];
+    $crImages = $_FILES['CR'];
+
+    for ($i = 0; $i < count($vehicleIDs); $i++) {
+        $vehicleID = $vehicleIDs[$i];
+        $plate = mysqli_real_escape_string($conn, $plates[$i]);
+        $orImage = null;
+        $crImage = null;
+
+        // Handle OR image upload
+        if ($orImages['error'][$i] == UPLOAD_ERR_OK) {
+            $orImage = mysqli_real_escape_string($conn, file_get_contents($orImages['tmp_name'][$i]));
+        }
+
+        // Handle CR image upload
+        if ($crImages['error'][$i] == UPLOAD_ERR_OK) {
+            $crImage = mysqli_real_escape_string($conn, file_get_contents($crImages['tmp_name'][$i]));
+        }
+
+        Vehicles_Update($conn, $vehicleID, $plate, $orImage, $crImage);
+    }
+
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit(); 
+}
+
+function Vehicles_Update($conn, $vehicleID, $plate, $orImage, $crImage) {
+    $sql_Vehicle = "UPDATE driver_vehicle SET 
+                        DV_VehiclePlate = '$plate', 
+                        DV_ORImg = " . ($orImage ? "'$orImage'" : 'DV_ORImg') . ", 
+                        DV_CRImg = " . ($crImage ? "'$crImage'" : 'DV_CRImg') . "
+                    WHERE DV_ID = $vehicleID;";
+
+    $result = mysqli_query($conn, $sql_Vehicle);
+    
+    if (!$result) {
+        echo "Update failed: " . mysqli_error($conn);
+    } else {
+        echo "Vehicle information updated successfully.";
+    }
 }
 
 //Function for update in Profile Picture

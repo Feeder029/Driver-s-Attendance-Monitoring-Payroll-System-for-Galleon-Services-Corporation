@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driver Portal</title>
+  <link rel="stylesheet" href="Dash.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Profile</h1>
+      <div class="menu-icon" onclick="toggleMenu()">
+        &#9776; <!-- Hamburger icon -->
+      </div>
+      <div class="dropdown" id="dropdown-menu">
+        <a href="#payslip" onclick="showForm('payslip', false)">Payslip</a>
+        <a href="#attendance-summary" onclick="showForm('attendance-summary', false)">Attendance Summary</a>
+        <a href="#submit-attendance" onclick="showForm('submit-attendance', false)">Submit Attendance</a>
+        <a href="#profile" onclick="showForm('profile', true)">Profile</a>
+      </div>
+    </header>
+    
+    <section class="profile"> 
+      <div class="photo-name">
+          <img src="boss.jpg" alt="Driver Photo" class="driver-photo">
+          <div>
+              <h2 class="driver-name">Boss! Kupal kaba?</h2>
+              <button class="edit-photo-btn">Edit Photo</button>
+          </div>
+      </div>
+    </section>
+  
+    
+    
+    <nav class="nav-menu">
+      <a href="#personal-account" onclick="showForm('personal-account', true)">Personal & Account</a>
+      <a href="#vehicle" onclick="showForm('vehicle', true)">Vehicle</a>
+      <a href="#contacts" onclick="showForm('contacts', true)">Contacts</a>
+      <a href="#government-info" onclick="showForm('government-info', true)">Government Information</a>
+    </nav>
+    
+    <!--Personal & Account Info-->
+    <section id="form-container">
+      <div id="personal-account" class="form-section">
+        <h2>Personal & Account Information</h2>
+            <!-- Personal Information Section -->
+            <section id="personal-info" class="info-section">
+              <h3>Personal Information</h3>
+              
+              <label for="first-name">First Name:</label>
+              <input type="text" id="first-name" name="first-name" required>
+
+              <label for="middle-name">Middle Name:</label>
+              <input type="text" id="middle-name" name="middle-name">
+
+              <label for="last-name">Last Name:</label>
+              <input type="text" id="last-name" name="last-name" required>
+
+              <label for="suffix">Suffix:</label>
+              <input type="text" id="suffix" name="suffix" placeholder="Jr., Sr., III">
+
+              <label for="age">Age:</label>
+              <input type="number" id="age" name="age" required min="0">
+
+              <label for="dob">Date of Birth:</label>
+              <input type="date" id="dob" name="dob" required>
+
+              <label for="gender">Gender:</label>
+              <select id="gender" name="gender" required>
+                  <option value="">Select</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+              </select>
+            </section>
+
+          <!-- Address Information Section -->
+            <section id="address-info" class="info-section">
+              <h3>Address Information</h3>
+              
+              <label for="province">Province:</label>
+              <select id="province" name="province" required>
+                  <option value="">Select Province</option>
+                  <option value="province1">Province 1</option>
+                  <option value="province2">Province 2</option>
+                  <option value="province3">Province 3</option>
+                  <!-- Add more provinces as needed -->
+              </select>
+
+              <label for="city-municipality">City/Municipality:</label>
+              <select id="city-municipality" name="city-municipality" required>
+                  <option value="">Select City/Municipality</option>
+                  <option value="city1">City 1</option>
+                  <option value="city2">City 2</option>
+                  <option value="city3">City 3</option>
+                  <!-- Add more cities/municipalities as needed -->
+              </select>
+
+              <label for="barangay">Barangay:</label>
+              <select id="barangay" name="barangay" required>
+                  <option value="">Select Barangay</option>
+                  <option value="barangay1">Barangay 1</option>
+                  <option value="barangay2">Barangay 2</option>
+                  <option value="barangay3">Barangay 3</option>
+                  <!-- Add more barangays as needed -->
+              </select>
+
+              <label for="street">Street:</label>
+              <input type="text" id="street" name="street" required>
+
+              <label for="lot-no">Lot No.:</label>
+              <input type="text" id="lot-no" name="lot-no">
+
+              <label for="house-no">House No.:</label>
+              <input type="text" id="house-no" name="house-no">
+            </section>
+
+
+          <!-- GCash Information Section -->
+            <section id="gcash-info" class="info-section">
+              <h3>GCash Information</h3>
+              
+              <label for="gcash-name">GCash Name:</label>
+              <input type="text" id="gcash-name" name="gcash-name" required>
+
+              <label for="gcash-number">GCash Number:</label>
+              <input type="tel" id="gcash-number" name="gcash-number" required>
+            </section>
+
+          <!-- Driver Hub Information Section -->
+            <section id="driver-hub-info" class="info-section">
+              <h3>Driver Hub Information</h3>
+
+              <label for="driver-id">Driver ID:</label>
+              <input type="text" id="driver-id" name="driver-id" required>
+
+              <label for="unit-type">Unit Type:</label>
+              <select id="unit-type" name="unit-type" required>
+                  <option value="">Select</option>
+                  <option value="two-wheels">Two Wheels</option>
+                  <option value="three-wheels">Three Wheels</option>
+                  <option value="four-wheels">Four Wheels</option>
+                  <option value="flexy">Flexy</option>
+              </select>
+
+              <label for="hub">Hub:</label>
+              <select id="hub" name="hub" required>
+                  <option value="">Select Hub</option>
+                  <option value="north-hub">North Hub</option>
+                  <option value="south-hub">South Hub</option>
+                  <option value="east-hub">East Hub</option>
+                  <option value="west-hub">West Hub</option>
+              </select>
+            </section>
+
+          <!-- Account Information Section -->
+          <section id="account-info" class="info-section">
+              <h3>Account Information</h3>
+              <!-- Add fields for account information (e.g., Username, Password) -->
+              <label for="username">Username:</label>
+              <input type="text" id="username" name="username" required>
+
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" required>
+          </section>
+
+
+          <!-- Edit and Save Buttons -->
+          <div class="button-container">
+            <button type="button" onclick="editProfile()">Edit</button>
+            <button type="submit" onclick="saveProfile()">Save</button>
+          </div>
+      </div>
+      
+      <!--Vehicle Form-->
+      <div id="vehicle" class="form-section">
+        <h2>Vehicle Information</h2>
+    
+        <!-- Driver's License Image Section -->
+        <section id="license-image" class="info-section">
+            <h3>Driver's License</h3>
+    
+            <label for="license-front">Front of License:</label>
+            <div class="image-display">
+                <img src="path/to/front-license.jpg" alt="Front of License" id="license-front-img">
+                <input type="file" id="license-front" name="license-front" accept="image/*" style="display: none;">
+            </div>
+    
+            <label for="license-back">Back of License:</label>
+            <div class="image-display">
+                <img src="path/to/back-license.jpg" alt="Back of License" id="license-back-img">
+                <input type="file" id="license-back" name="license-back" accept="image/*" style="display: none;">
+            </div>
+        </section>
+    
+        <!-- Vehicle Plate Number Section -->
+        <section id="vehicle-plate" class="info-section">
+            <h3>Vehicle Plate Number</h3>
+    
+            <label for="plate-number">Plate Number:</label>
+            <input type="text" id="plate-number" name="plate-number" required>
+        </section>
+    
+        <!-- Official Receipt and Certificate of Registration Section -->
+        <section id="or-cr-images" class="info-section">
+            <h3>Official Receipt & Certificate of Registration</h3>
+    
+            <label for="or-image">Official Receipt (OR) Image:</label>
+            <div class="image-display">
+                <img src="path/to/or-image.jpg" alt="Official Receipt Image" id="or-image-img">
+                <input type="file" id="or-image" name="or-image" accept="image/*" style="display: none;">
+            </div>
+    
+            <label for="cr-image">Certificate of Registration (CR) Image:</label>
+            <div class="image-display">
+                <img src="path/to/cr-image.jpg" alt="Certificate of Registration Image" id="cr-image-img">
+                <input type="file" id="cr-image" name="cr-image" accept="image/*" style="display: none;">
+            </div>
+        </section>
+    
+        <!-- Edit, Save, and Add Buttons -->
+        <div class="button-container">
+            <button type="button" onclick="toggleEditMode()">Edit</button>
+            <button type="submit" onclick="saveVehicleInfo()" id="save-btn" style="display: none;">Save</button>
+            <button type="button" onclick="addNewVehicle()">Add</button>
+        </div>
+    </div>
+    
+    <!-- Link to the external JavaScript file -->
+    <script src="vehicleForm.js"></script>
+    
+
+    
+    
+      
+      <div id="contacts" class="form-section">
+        <h2>Contacts</h2>
+        <!-- Contacts form fields -->
+            <section id="contacts-info" class="info-section">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required>
+
+              <label for="contact-number">Contact Number:</label>
+              <input type="tel" id="contact-number" name="contact-number" required>
+          </section>
+
+          <!-- Edit and Save Buttons -->
+          <div class="button-container">
+              <button type="button" onclick="editContacts()">Edit</button>
+              <button type="submit" onclick="saveContacts()">Save</button>
+          </div>
+      </div>
+      
+
+      <!--Government Information Form -->
+      <div id="government-info" class="form-section">
+        <h2>Government Information</h2>
+    
+        <!-- Benefits Section -->
+        <section id="benefits-info" class="info-section">
+            <h3>Benefits</h3>
+            
+            <label for="sss-number">SSS Number:</label>
+            <input type="text" id="sss-number" name="sss-number" required>
+    
+            <label for="philhealth-number">PhilHealth Number:</label>
+            <input type="text" id="philhealth-number" name="philhealth-number" required>
+    
+            <label for="pagibig-number">Pag-IBIG Number:</label>
+            <input type="text" id="pagibig-number" name="pagibig-number" required>
+        </section>
+    
+        <!-- Clearance Section -->
+        <section id="clearance-info" class="info-section">
+            <h3>Clearance</h3>
+    
+            <!-- NBI Clearance -->
+            <label for="nbi-clearance">NBI Clearance:</label>
+            <div class="image-display">
+                <img src="path/to/nbi-clearance.jpg" alt="NBI Clearance" id="nbi-clearance-img">
+                <input type="file" id="nbi-clearance" name="nbi-clearance" accept="image/*,application/pdf">
+            </div>
+    
+            <!-- Police Clearance -->
+            <label for="police-clearance">Police Clearance:</label>
+            <div class="image-display">
+                <img src="path/to/police-clearance.jpg" alt="Police Clearance" id="police-clearance-img">
+                <input type="file" id="police-clearance" name="police-clearance" accept="image/*,application/pdf">
+            </div>
+    
+            <!-- Barangay Clearance -->
+            <label for="barangay-clearance">Barangay Clearance:</label>
+            <div class="image-display">
+                <img src="path/to/barangay-clearance.jpg" alt="Barangay Clearance" id="barangay-clearance-img">
+                <input type="file" id="barangay-clearance" name="barangay-clearance" accept="image/*,application/pdf">
+            </div>
+        </section>
+    
+        <!-- Edit and Save Buttons -->
+            <div class="button-container">
+                <button type="button" onclick="editGovernmentInfo()">Edit</button>
+                <button type="submit" onclick="saveGovernmentInfo()">Save</button>
+            </div>
+        </div>
+
+        <!-- Link to the external JavaScript file -->
+        <script src="govForm.js"></script>
+    
+
+        <!--Submit Attendance Form -->
+          <div id="payslip" class="form-section">
+            <h2>Payslip</h2>
+            <!-- Payslip form fields -->
+          </div>
+
+          <div id="attendance-summary" class="form-section">
+            <h2>Attendance Summary</h2>
+            <!-- Attendance summary form fields -->
+          </div>
+
+          <div id="submit-attendance" class="form-section">
+            <h2>Submit Attendance</h2>
+          
+            <!-- Date and Time Section -->
+            <div id="date-time-section">
+              <h3>Date and Time</h3>
+              <div id="current-date"></div>
+              <div id="current-time"></div>
+            </div>
+          
+            <!-- Parcel Information Section -->
+            <div id="parcel-info-section">
+              <h3>Parcel Information</h3>
+              <label for="parcel-carried">Parcel Carried:</label>
+              <input type="text" id="parcel-carried" name="parcel-carried" required>
+          
+              <label for="parcel-delivered">Parcel Delivered:</label>
+              <input type="text" id="parcel-delivered" name="parcel-delivered" required>
+          
+              <label for="parcel-returned">Parcel Returned:</label>
+              <input type="text" id="parcel-returned" name="parcel-returned" required>
+            </div>
+          
+            <!-- Remittance Image Section -->
+            <div id="remittance-image-section">
+              <h3>Remittance Image</h3>
+              <label for="remittance-receipt">Upload Remittance Receipt:</label>
+              <input type="file" id="remittance-receipt" name="remittance-receipt" accept="image/*" required>
+            </div>
+          
+            <!-- Submit and Reset Buttons -->
+            <div class="button-container">
+              <button type="submit">Submit</button>
+              <button type="reset">Reset</button>
+            </div>
+          </div>
+
+          <!--For Form nav & menu function-->
+          <script src="subAttendance.js"></script>
+      
+    </section>
+  </div>
+  <!--For Form nav & menu function-->
+  <script src="Dash.js"></script>
+</body>
+</html>

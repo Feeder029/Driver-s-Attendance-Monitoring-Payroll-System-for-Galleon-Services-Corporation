@@ -1,5 +1,5 @@
 window.onload = function() {
-    document.getElementById('iframe-dashboard').src = 'Accounts.html';
+    document.getElementById('iframe-dashboard').src = 'Accounts.php';
 };
 
 

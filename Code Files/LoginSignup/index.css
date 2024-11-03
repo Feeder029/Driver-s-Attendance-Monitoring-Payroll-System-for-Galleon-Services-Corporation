@@ -1,0 +1,193 @@
+/* POPPINS FONT */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/*BASE*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/*Body*/
+body
+{
+    background: url(IMG/BG.png);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding:  0 20px;
+}
+
+/*Form container*/
+
+.form-container
+{display: flex;
+    width: 1000px;
+    height: 600px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    backdrop-filter: blur(8px);
+    overflow: hidden;
+}
+
+/*First Column*/
+.col-1
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 55%;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(30px);
+    border-radius: 0 30% 20% 0;
+    transition: border-radius .3s;
+}
+.image-layer
+{
+    position: relative;
+}
+ 
+.form-image 
+{
+    /*position: fixed;*/
+    left: 0;
+    width: 400px;
+    display: block;
+    margin: 0 auto; /* Center the image within the container */
+    max-width: 100%; /* Ensure the image doesn't exceed the container's width */
+    height: auto;
+    animation: left-right 3s ease-in-out alternate infinite;
+}
+
+.rider
+{
+    animation: up-down 3s ease-in-out alternate infinite;
+}
+
+@keyframes up-down
+{
+    to
+    {
+        transform: translateY(10px) ;
+    }
+}
+
+.featured-word
+{
+    text-align: center;
+    color: whitesmoke;
+    width: 300px;
+}
+/*Featured Words*/
+.featured-word span
+{
+    font-weight: 600;
+    color: #ffc929;
+}
+/*Second Column*/
+.col-2
+{
+    position: relative;
+    width: 45%;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.form-titlemain
+{
+    padding-top: 30px;
+    text-align: center; /* Centers the text horizontally */
+    margin-bottom: 20px; /* Optional: adds space below the title */
+    color: #fff;
+    font-size: 35px;
+    font-weight: 600;
+
+}
+
+.input-submitmain
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3vw;
+    gap: 10px;
+    width: 100%;
+    height: 70px;
+    padding: 0 15px;
+    margin: 10px 0;
+    color: #fff;
+    background: #1a215d;
+    filter: contrast(90%);
+    border: 2px solid  white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2) ;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.input-submitmain:hovers
+{
+    gap: 30px;
+    opacity: 0.80;
+}
+
+
+.form-containermain {
+    padding: 65px 0; /* Adjust the value as needed */
+}
+
+
+/* Responsive adjustments for .input-submitmain */
+@media (max-width: 1200px) {
+    .input-submitmain {
+        font-size: 1.5vw; /* Slightly larger font for medium screens */
+    }
+}
+
+@media (max-width: 892px) {
+    .input-submitmain {
+        font-size: 2vw; /* Increased font-size for smaller screens */
+    }
+}
+
+@media (max-width: 600px) {
+    .input-submitmain {
+        font-size: 3vw; /* Further increased for very small screens */
+    }
+}
+
+/*Responsive admin & employee form*/
+@media (max-width: 892px)
+{
+    .form-container
+    {
+        width: 400px;
+    }
+    .col-1
+    {
+        display: none;
+    }
+    .col-2
+    {
+        width: 100%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+

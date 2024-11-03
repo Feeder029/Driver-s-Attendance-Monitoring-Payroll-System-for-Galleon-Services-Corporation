@@ -1,0 +1,653 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.container {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Adjust container for larger screens */
+@media (min-width: 1800px) {
+  .container {
+    max-width: 1800px;
+    padding: 40px;
+  }
+}
+
+/* Adjust container for tablet screens */
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    padding: 15px;
+  }
+}
+
+/* Adjust container for mobile screens */
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #003135;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+header h1 {
+  color: #003135;
+}
+
+.menu-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.dropdown a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #003135;
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.dropdown a:hover {
+  background-color: #e0f2f1;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 15px;
+}
+
+.photo-name {
+  display: flex;
+  align-items: center;
+}
+
+.driver-name {
+  color: #003135;
+}
+
+.driver-photo {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  margin-right: 15px;
+  border: 2px solid #003135;
+}
+
+
+.edit-photo-btn {
+  background-color: #003135; /* Match the existing theme color */
+  color: #fff; /* Button text color */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Rounded corners */
+  padding: 5px 10px; /* Padding around the text */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+  margin-top: 10px; /* Space above the button */
+  font-size: 16px; /* Font size */
+}
+
+.edit-photo-btn:hover {
+  background-color: #005151; /* Darker shade for hover effect */
+}
+
+/* Responsive styles for button */
+@media (max-width: 768px) {
+  .edit-photo-btn {
+      width: 50%; /* Full width on smaller screens */
+      margin-top: 15px; /* Space above the button on smaller screens */
+  }
+}
+
+
+.nav-menu {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #003135;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s ease;
+  text-align: center;
+  flex: 1;
+}
+
+.nav-menu a:hover {
+  border-color: #003135;
+}
+
+.form-section {
+  display: none;
+  border-top: 2px solid #003135;
+  padding-top: 20px;
+}
+
+#form-container h2 {
+  color: #003135;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .profile {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .driver-photo {
+    margin: 0 auto 10px auto;
+  }
+  
+  .nav-menu {
+    flex-direction: column;
+  }
+  
+  .nav-menu a {
+    width: 100%;
+  }
+}
+
+
+/* For personal-account*/
+/* Personal Account Section Styles */
+#personal-account {
+  display: block; /* Ensure the section is displayed */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-top: 2px solid #003135; /* Match with the existing form section style */
+}
+
+/* Headings */
+#personal-account h2,
+#personal-account h3 {
+  color: #003135; /* Your preferred color */
+  margin-bottom: 10px; /* Space below headings */
+}
+
+/* Info section styles */
+#personal-account .info-section {
+  margin-bottom: 20px;
+}
+
+/* Label styles */
+#personal-account label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+/* Input styles */
+#personal-account input[type="text"],
+#personal-account input[type="number"],
+#personal-account input[type="date"],
+#personal-account input[type="tel"],
+#personal-account input[type="password"],
+#personal-account select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+/* Focus styles */
+#personal-account input:focus,
+#personal-account select:focus {
+  border-color: #003135; /* Your preferred color */
+  outline: none;
+}
+
+/* Button container styles */
+#personal-account .button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Button styles */
+#personal-account button {
+  background-color: #003135; /* Your preferred color */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#personal-account button:hover {
+  background-color: #005151; /* Slightly lighter shade for hover */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  #personal-account .button-container {
+      flex-direction: column;
+  }
+
+  #personal-account button {
+      margin-bottom: 10px;
+      width: 100%;
+  }
+}
+
+
+
+/* Vehicle Information Section Styles */
+#vehicle {
+  display: block; /* Ensure the section is displayed */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-top: 2px solid #003135; /* Match with the existing form section style */
+}
+
+/* Headings */
+#vehicle h2,
+#vehicle h3 {
+  color: #003135;
+  margin-bottom: 10px; /* Space below headings */
+}
+
+/* Info Section Styles */
+#vehicle .info-section {
+  margin-bottom: 20px;
+}
+
+/* Label Styles */
+#vehicle label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Input Styles */
+#vehicle input[type="text"],
+#vehicle input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+/* Focus Styles */
+#vehicle input:focus {
+  border-color: #003135; /* Match with preferred color */
+  outline: none;
+}
+
+/* Image Display Styles */
+#vehicle .image-display {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+#vehicle .image-display img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Button Container */
+#vehicle .button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Button Styles */
+#vehicle button {
+  background-color: #003135; /* Your preferred color */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#vehicle button:hover {
+  background-color: #005151; /* Slightly lighter shade for hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  #vehicle .button-container {
+    flex-direction: column;
+  }
+
+  #vehicle button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  #vehicle .image-display {
+    flex-direction: column;
+  }
+}
+
+
+/*For Contacts Form Style*/
+/* Contacts Section Styles */
+#contacts {
+  display: block; /* Ensure the section is displayed */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-top: 2px solid #003135; /* Match with the existing form section style */
+}
+
+/* Headings */
+#contacts h2 {
+  color: #003135; /* Your preferred color */
+  margin-bottom: 20px; /* Space below the heading */
+}
+
+/* Info Section Styles */
+#contacts .info-section {
+  margin-bottom: 20px; /* Space below the info section */
+}
+
+/* Label Styles */
+#contacts label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333; /* Label color */
+}
+
+/* Input Styles */
+#contacts input[type="email"],
+#contacts input[type="tel"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc; /* Border for inputs */
+  border-radius: 4px; /* Rounded corners */
+  transition: border-color 0.3s ease; /* Smooth border color transition */
+}
+
+/* Focus Styles */
+#contacts input:focus {
+  border-color: #003135; /* Change border color on focus */
+  outline: none; /* Remove default outline */
+}
+
+/* Button Container */
+#contacts .button-container {
+  display: flex;
+  justify-content: space-between; /* Space between buttons */
+  gap: 10px; /* Gap between buttons */
+}
+
+/* Button Styles */
+#contacts button {
+  background-color: #003135; /* Your preferred color */
+  color: #fff; /* Button text color */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Rounded corners */
+  padding: 10px 15px; /* Padding for buttons */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+#contacts button:hover {
+  background-color: #005151; /* Slightly lighter shade for hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  #contacts .button-container {
+    flex-direction: column; /* Stack buttons on smaller screens */
+  }
+
+  #contacts button {
+    width: 100%; /* Full width for buttons on small screens */
+    margin-bottom: 10px; /* Space below buttons */
+  }
+}
+
+
+
+/*For Government Form Styles*/
+/* Government Information Section Styles */
+#government-info {
+  display: block;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-top: 2px solid #003135; /* Matches the existing form section style */
+}
+
+/* Headings */
+#government-info h2,
+#government-info h3 {
+  color: #003135; /* Preferred color */
+  margin-bottom: 15px;
+}
+
+/* Info Section Styles */
+#government-info .info-section {
+  margin-bottom: 20px;
+}
+
+/* Label Styles */
+#government-info label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Input Styles */
+#government-info input[type="text"],
+#government-info input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+/* Focused Input Styles */
+#government-info input:focus {
+  border-color: #003135; /* Focused border color */
+  outline: none;
+}
+
+/* Image Display Styles */
+#government-info .image-display {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+#government-info .image-display img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Button Container Styles */
+#government-info .button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Button Styles */
+#government-info button {
+  background-color: #003135; /* Preferred color */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#government-info button:hover {
+  background-color: #005151; /* Hover color */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  #government-info .button-container {
+    flex-direction: column;
+  }
+
+  #government-info button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  #government-info .image-display {
+    flex-direction: column; /* Stack image and input vertically */
+    align-items: flex-start; /* Align items to the start */
+  }
+}
+
+
+
+/*For Submit Attendance Form*/
+/* General Form Section Styles */
+.form-section {
+  background-color: #fff; /* White background for form sections */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 20px; /* Inner spacing */
+  margin-bottom: 20px; /* Space between sections */
+}
+
+/* Headings */
+.form-section h2 {
+  color: #003135; /* Main color */
+  margin-bottom: 15px; /* Space below headings */
+}
+
+/* Sub-Headings */
+.form-section h3 {
+  color: #003135; /* Main color */
+  margin-top: 20px; /* Space above sub-headings */
+  margin-bottom: 10px; /* Space below sub-headings */
+}
+
+/* Label Styles */
+label {
+  display: block; /* Labels occupy full width */
+  margin-bottom: 8px; /* Space below labels */
+  font-weight: bold; /* Bold text for labels */
+}
+
+/* Input Styles */
+input[type="text"],
+input[type="file"] {
+  width: 100%; /* Full width inputs */
+  padding: 10px; /* Inner padding for inputs */
+  margin-bottom: 15px; /* Space below inputs */
+  border: 1px solid #ccc; /* Light border for inputs */
+  border-radius: 4px; /* Rounded corners for inputs */
+  transition: border-color 0.3s ease; /* Smooth transition for border */
+}
+
+/* Focus Styles */
+input[type="text"]:focus,
+input[type="file"]:focus {
+  border-color: #003135; /* Change border color on focus */
+  outline: none; /* Remove default outline */
+}
+
+/* Button Container Styles */
+.button-container {
+  display: flex; /* Flexbox for buttons */
+  justify-content: space-between; /* Space between buttons */
+}
+
+/* Button Styles */
+button {
+  background-color: #003135; /* Main color for buttons */
+  color: #fff; /* White text for buttons */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded corners */
+  padding: 10px 15px; /* Inner padding for buttons */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for background */
+}
+
+/* Button Hover Effects */
+button:hover {
+  background-color: #005151; /* Slightly lighter shade on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .button-container {
+    flex-direction: column; /* Stack buttons on smaller screens */
+  }
+
+  button {
+    margin-bottom: 10px; /* Space below buttons */
+    width: 100%; /* Full-width buttons on mobile */
+  }
+}

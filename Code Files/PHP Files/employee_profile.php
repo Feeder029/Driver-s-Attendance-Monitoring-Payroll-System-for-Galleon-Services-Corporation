@@ -214,7 +214,7 @@ $CR = [];
 $License = [];
 $V_ID = [];
 
-// Ensure the form is submitted and the correct ID is present
+//Connect to Personal & Accounts Form
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'Vehicles') {
     $vehicleIDs = $_POST['VehicleID'];
     $plates = $_POST['Plate'];
@@ -253,12 +253,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] 
         echo "Error uploading file: " . $DriverLicense['error'];
     }
 
-
-    License_Update($conn,$DriverID, $DriverLicenses);
-
     header("Location: " . $_SERVER['PHP_SELF']);
     exit(); 
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'NewVehicles') {
+    $Plate = htmlspecialchars($_POST['newPlate']);
+    // NewVehicles($conn,$DriveID, $plate, $orImage, $crImage);
+
+
+    if (isset($_FILES['newOR']) && $_FILES['newOR']['error'] == UPLOAD_ERR_OK) {
+        //Get the Binary Data
+        $OR = mysqli_real_escape_string($conn, file_get_contents($_FILES['newOR']['tmp_name']));
+    };
+
+    if (isset($_FILES['newCR']) && $_FILES['newCR']['error'] == UPLOAD_ERR_OK) {
+        //Get the Binary Data
+        $CR = mysqli_real_escape_string($conn, file_get_contents($_FILES['newCR']['tmp_name']));
+    };
+
+    NewVehicles($conn,$DriverID, $Plate,$OR,$CR);
+
+    header(header: "Location: " . $_SERVER['PHP_SELF']);
+    exit(); 
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'Contacts') {
+    $Email = htmlspecialchars($_POST['Email']);
+    $ContactNo = htmlspecialchars($_POST['Contact']);
+
+    Contact_Update($conn, $DriverID, $Email,$ContactNo);
+
+    header(header: "Location: " . $_SERVER['PHP_SELF']);
+    exit(); 
+
+}
+
+function Contact_Update($conn, $DriverID, $Email,$ContactNo) {
+    // Ensure the LicenseImage is properly quoted for SQL
+    $UpdateContact = 
+    "UPDATE driver_information a
+    SET  a.`DI_ContactNo` = '$ContactNo',
+    a.`DI_Email` = '$Email'
+    WHERE a.`DI_ID` = $DriverID;";
+
+    $result = mysqli_query($conn, $UpdateContact);
+    
+    if (!$result) {
+        echo "Update failed: " . mysqli_error($conn);
+    } else {
+        echo "Contact information updated successfully.";
+    }
+}
+
+function NewVehicles($conn,$DriveID, $Plate,$OR,$CR) {
+
+    $InsertNewVehicle = "
+    INSERT INTO driver_vehicle(DV_ID, DV_DriverID, DV_VehiclePlate, DV_ORImg, DV_CRImg)
+     VALUES ('','$DriveID',' $Plate','$OR','$CR');";
+     $result = mysqli_query($conn, $InsertNewVehicle);
+    
+     if (!$result) {
+         echo "Update failed: " . mysqli_error($conn);
+     } else {
+         echo "Vehicle information updated successfully.";
+     }
+
+}
+
 
 function Vehicles_Update($conn, $vehicleID, $plate, $orImage, $crImage) {
     $sql_Vehicle = "UPDATE driver_vehicle SET 
@@ -274,6 +336,29 @@ function Vehicles_Update($conn, $vehicleID, $plate, $orImage, $crImage) {
     } else {
         echo "Vehicle information updated successfully.";
     }
+}
+
+function AddDisplayVehicle($VHC,$i){
+    echo '<div class="ColoredBackground">
+    <input type="hidden" name="VehicleID[]" value="'. htmlspecialchars($VHC[$i]["ID"]) .'">
+    <h4 class="vehicle"> VEHICLE NO. ' . ($i + 1) . ' </h4>
+    <h4 class="vehicle"> PLATE NO: </h4>
+    <input type="text" value="' . htmlspecialchars($VHC[$i]["Plate"]) . '" disabled class="editable_status_Vehicle textbox_vehicle" name="Plate[]">
+    <div class="Two-Textbox center">
+        <div class="Top-Bottom centered">
+            <h4> OR: </h4>
+            <img id="orPreview_' . $i . '" src="data:image/png;base64,' . htmlspecialchars($VHC[$i]["OR"]) . '" alt="OR" style="width:90%; height: auto;" class="ORCR">
+            <label for="OR_' . $i . '" style="cursor: pointer; color: blue; text-decoration: underline; display: none" class="editimage">Edit OR</label>
+            <input type="file" name="OR[]" id="OR_' . $i . '" accept="image/*" style="display: none;" onchange="previewImage(event, \'orPreview_' . $i . '\')">
+        </div>
+        <div class="Top-Bottom centered">
+            <h4> CR: </h4>
+            <img id="crPreview_' . $i . '" src="data:image/png;base64,' . htmlspecialchars($VHC[$i]["CR"]) . '" alt="CR" style="width:90%; height: auto;" class="ORCR">        
+            <label for="CR_' . $i . '" style="cursor: pointer; color: blue; text-decoration: underline; display: none" class="editimage">Edit CR</label>
+            <input type="file" name="CR[]" id="CR_' . $i . '" accept="image/*" style="display: none;" onchange="previewImage(event, \'crPreview_' . $i . '\')">
+        </div>
+    </div>
+</div>'; 
 }
 
 function License_Update($conn, $DriverID, $LicenseImage) {

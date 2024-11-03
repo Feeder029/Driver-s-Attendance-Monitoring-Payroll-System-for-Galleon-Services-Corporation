@@ -255,66 +255,104 @@
 
 <section id="Vehicles_Section" class="content-section">
 <form enctype="multipart/form-data" method="POST">
+    <img id="licensePreview" src="data:image/png;base64,<?php echo $DRV["DriversLicense"]; ?>" alt="Drivers License" style="width:250px; height: auto;">
+    <label for="Licenses" style="cursor: pointer; color: blue; text-decoration: underline; display: none;" class="editimage">Edit Driver License</label>
+    <input type="file" name="License" id="Licenses" accept="image/*" style="display: none;" onchange="previewImage(event, 'licensePreview')">
 
-        <img src="data:image/png;base64,<?php echo $DRV["DriversLicense"] ?>"alt="Drivers License" style="width:250px; height: auto;">
-        <label for="Licenses" style="cursor: pointer; color: blue; text-decoration: underline; display: none;" class="editimage" >Edit Driver License</label>
-        <input type="file" name="License" id="Licenses" accept="image/*" style="display: none;">
+    <h4> DRIVER'S LICENSE </h4>
 
-        <h4> DRIVER'S LICENSE </h4>
-
-        <div class="LICENSECENTER">
+    <div class="LICENSECENTER">
         <?php 
-for ($i = 0; $i < count($VHC); $i++) { 
-echo ' <div class="ColoredBackground"> <input type="hidden" name="VehicleID[]" value="'. htmlspecialchars($VHC[$i]["ID"]) .'"> <h4 class="vehicle"> VEHICLE NO. ' . ($i + 1) . ' </h4> <h4 class="vehicle"> 
-PLATE NO: </h4> <input type="text" value="' . htmlspecialchars($VHC[$i]["Plate"]) . '" disabled class="editable_status_Vehicle textbox_vehicle" name="Plate[]">
-<div class="Two-Textbox center">
+        for ($i = 0; $i < count($VHC); $i++) { 
+            AddDisplayVehicle($VHC,$i );
+        } ?>
+    </div>
+    <FORM  enctype="multipart/form-data" method="POST">
+     <div id="newVehicleForm" style="display: none;" class="ColoredBackground">
+    <h4 class="vehicle">NEW VEHICLE</h4>
+    <label for="newPlate">Plate No:</label>
+    <input type="text" name="newPlate" id="newPlate" class="textbox_vehicle" placeholder="Enter Plate Number">
+
+    <div class="Two-Textbox center">
         <div class="Top-Bottom centered">
             <h4> OR: </h4>
-            <img src="data:image/png;base64,' . htmlspecialchars($VHC[$i]["OR"]) . '" alt="Drivers License" style="width:90%; height: auto;" class="ORCR">
-                <input type="file" name="OR[]" accept="image/*" style="display: none;" class="editimage">
+            <img id="newORPreview" alt="OR" style="width:90%; height: auto;" class="ORCR">
+            <label for="newOR" style="cursor: pointer; color: blue; text-decoration: underline;">Upload OR</label>
+            <input type="file" name="newOR" id="newOR" accept="image/*" style="display: none;" onchange="previewImage(event, 'newORPreview')">
         </div>
-
         <div class="Top-Bottom centered">
             <h4> CR: </h4>
-            <img src="data:image/png;base64,' . htmlspecialchars($VHC[$i]["CR"]) . '" alt="Drivers License" style="width:90%; height: auto;" class="ORCR">
-                <input type="file" name="CR[]" accept="image/*" style="display: none;" class="editimage">
+            <img id="newCRPreview" alt="CR" style="width:90%; height: auto;" class="ORCR">
+            <label for="newCR" style="cursor: pointer; color: blue; text-decoration: underline;">Upload CR</label>
+            <input type="file" name="newCR" id="newCR" accept="image/*" style="display: none;" onchange="previewImage(event, 'newCRPreview')">
         </div>
     </div>
-</div>'; } ?>
-        </div>
 
-        <div class="Two-Textbox">
+    <input type="submit" name="ADD NEW VEHICLE" value="NEW_VEHICLE" id="NEW_VEHICLE" /> 
+    <input type="hidden" name="id" value="NewVehicles">    
+    </div>
 
-         <div class="Top-Bottom">
-        <input type="button" name="ADD+" value="ADD+"/>
+
+
+</FORM>
+
+    <div class="Two-Textbox">
+        <div class="Top-Bottom">
+            <input type="button" name="id" value="ADD" id="add_vehicle"/>
         </div>
         
         <div class="Top-Bottom">
-        <input type="button" name="EDIT" value="EDIT" id="Edit_Vehicle"/>
+            <input type="button" name="EDIT" value="EDIT" id="Edit_Vehicle"/>
         </div>
     
         <div class="Top-Bottom">
         </div>
         <input type="submit" name="SAVE" value="SAVE" id="save" class="editable_status_Vehicle" disabled/> 
         
- 
-
         <input type="hidden" name="id" value="Vehicles">    
-        </div>
+    </div>
 
-    </form>
+    
+</form>
 </section>
 
 <section id="Contacts_Section" class="content-section">
-    <p>This is the Contacts section.</p>
+
+<form method="post">
+        
+<div class="Top-Bottom" class="editable_status_P-A">
+        <h4>EMAIL: </h4>
+        <input type="text" value="<?php echo $DRV["Email"] ?>" disabled class="editable_status_Contacts"  name = "Email">
+        </div>
+    
+        <div class="Top-Bottom" class="editable_status_P-A">
+        <h4>CONTACT NO: </h4>
+        <input type="text" value="<?php echo $DRV["CN"] ?>" disabled class="editable_status_Contacts" name = "Contact">
+        </div>
+
+        
+<div class="Two-Textbox">
+        
+        <div class="Top-Bottom">
+        <input type="button" name="EDIT" value="EDIT" id="edit_Contacts"/>
+        </div>
+    
+        <div class="Top-Bottom">
+        </div>
+        <input type="submit" name="SAVE" value="SAVE" id="save" class="editable_status_Contacts" disabled/>
+
+        <input type="hidden" name="id" value="Contacts">
+    
+        </div>
+        
+</form>
+
+
 </section>
 
 <section id="GovInfo_Section" class="content-section">
     <p>This is the Government Info section.</p>
 </section>
-
-
-
 
 
 
@@ -325,7 +363,7 @@ PLATE NO: </h4> <input type="text" value="' . htmlspecialchars($VHC[$i]["Plate"]
 
 
 
-<script src="../JS Files/Employee_Profile.js"></script>
+<script src="../JS Files/Employee_Profile.js?v=1.0"></script>
     
     </html>
     </body>

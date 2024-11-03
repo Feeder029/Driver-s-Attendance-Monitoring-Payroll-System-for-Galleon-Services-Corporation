@@ -1,10 +1,17 @@
 document.getElementById('edit').addEventListener('click', function() {
     const editableFields = document.querySelectorAll('.editable_status_P-A');
-
     editableFields.forEach(function(field) {
         field.disabled = false; // Make TextBox able to input
     });
 });
+
+document.getElementById('edit_Contacts').addEventListener('click', function() {
+    const editableFields = document.querySelectorAll('.editable_status_Contacts');
+    editableFields.forEach(function(field) {
+        field.disabled = false; // Make TextBox able to input
+    });
+});
+
 
 document.getElementById('Edit_Vehicle').addEventListener('click', function() {
     const editableFields = document.querySelectorAll('.editable_status_Vehicle');
@@ -15,15 +22,22 @@ document.getElementById('Edit_Vehicle').addEventListener('click', function() {
     });
 
     ChooseImage.forEach(function(Text) {
-        Text.style.display = 'block'; // or 'inline', 'flex', etc., depending on your layout needs
+        Text.style.display = 'block';
     });
 
 });
 
-
 document.getElementById("image").addEventListener("change", function() {
     this.form.submit();
 });
+
+document.getElementById('add_vehicle').addEventListener('click', function() {
+    const newVehicleForm = document.getElementById('newVehicleForm');
+    newVehicleForm.style.display = newVehicleForm.style.display === 'none' ? 'block' : 'none';
+});
+
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     const buttons = document.querySelectorAll('#Option button');
@@ -48,3 +62,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+

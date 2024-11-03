@@ -3,6 +3,7 @@
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
     gap: 20px; /* Space between buttons */
+    
 }
 
 .Top-Bottom{
@@ -34,6 +35,7 @@ body{
 
 h4, h1{
     color: blanchedalmond;
+    
 }
 
 .ColoredBackground{
@@ -68,4 +70,12 @@ h4, h1{
 .ORCR{
     margin-bottom: 5%;
 
+}
+
+.LICENSECENTER {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    height: 100%; /* Ensure the parent has a height */
 }

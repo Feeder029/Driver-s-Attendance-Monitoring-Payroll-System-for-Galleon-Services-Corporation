@@ -240,16 +240,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] 
         Vehicles_Update($conn, $vehicleID, $plate, $orImage, $crImage);
     }
 
+    $DriverLicense = $_FILES['License'];
+
+    if ($DriverLicense['error'] == UPLOAD_ERR_OK) {
+        // Get the Binary Data
+        $DriverLicenses = mysqli_real_escape_string($conn, file_get_contents($DriverLicense['tmp_name']));
+        
+        // Assuming $DriverID is defined and valid
+        License_Update($conn, $DriverID, $DriverLicenses);
+    } else {
+        // Handle the error accordingly
+        echo "Error uploading file: " . $DriverLicense['error'];
+    }
+
+
+    License_Update($conn,$DriverID, $DriverLicenses);
+
     header("Location: " . $_SERVER['PHP_SELF']);
     exit(); 
 }
 
 function Vehicles_Update($conn, $vehicleID, $plate, $orImage, $crImage) {
     $sql_Vehicle = "UPDATE driver_vehicle SET 
-                        DV_VehiclePlate = '$plate', 
-                        DV_ORImg = " . ($orImage ? "'$orImage'" : 'DV_ORImg') . ", 
-                        DV_CRImg = " . ($crImage ? "'$crImage'" : 'DV_CRImg') . "
-                    WHERE DV_ID = $vehicleID;";
+    DV_VehiclePlate = '$plate', 
+    DV_ORImg = " . ($orImage ? "'$orImage'" : 'DV_ORImg') . ", 
+    DV_CRImg = " . ($crImage ? "'$crImage'" : 'DV_CRImg') . "
+    WHERE DV_ID = $vehicleID;";
 
     $result = mysqli_query($conn, $sql_Vehicle);
     
@@ -259,6 +275,23 @@ function Vehicles_Update($conn, $vehicleID, $plate, $orImage, $crImage) {
         echo "Vehicle information updated successfully.";
     }
 }
+
+function License_Update($conn, $DriverID, $LicenseImage) {
+    // Ensure the LicenseImage is properly quoted for SQL
+    $UpdateLicense = 
+    "UPDATE driver_information a
+    SET a.`DI_LicenseImg` = '$LicenseImage'
+    WHERE a.`DI_ID` = $DriverID;";
+
+    $result = mysqli_query($conn, $UpdateLicense);
+    
+    if (!$result) {
+        echo "Update failed: " . mysqli_error($conn);
+    } else {
+        echo "Driver license information updated successfully.";
+    }
+}
+
 
 //Function for update in Profile Picture
 function Profile_PicUpdate($conn, $DriverID, $image) {

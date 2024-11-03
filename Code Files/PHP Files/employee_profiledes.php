@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS Files/employeeprofile.css?v=1.0">
+    <link rel="stylesheet" href="../CSS Files/employeeprofile.css?v=1.1">
     <title> EMPLOYEE PROFILE </title>
 </head>
 
@@ -257,34 +257,31 @@
 <form enctype="multipart/form-data" method="POST">
 
         <img src="data:image/png;base64,<?php echo $DRV["DriversLicense"] ?>"alt="Drivers License" style="width:250px; height: auto;">
+        <label for="Licenses" style="cursor: pointer; color: blue; text-decoration: underline; display: none;" class="editimage" >Edit Driver License</label>
+        <input type="file" name="License" id="Licenses" accept="image/*" style="display: none;">
+
         <h4> DRIVER'S LICENSE </h4>
 
+        <div class="LICENSECENTER">
         <?php 
-for ($i = 0; $i < count($VHC); $i++) {
-    echo '
-    <div class="ColoredBackground">
-        <input type="hidden" name="VehicleID[]" value="'. htmlspecialchars($VHC[$i]["ID"]) .'">
-        <h4 class="vehicle"> VEHICLE NO. ' . ($i + 1) . ' </h4>
-        <h4 class="vehicle"> PLATE NO: </h4>
-        <input type="text" value="' . htmlspecialchars($VHC[$i]["Plate"]) . '" disabled class="editable_status_Vehicle textbox_vehicle" name="Plate[]" required>
-        
-        <div class="Two-Textbox center">
-            <div class="Top-Bottom centered">
-                <h4> OR: </h4>
-                <img src="data:image/png;base64,' . htmlspecialchars($VHC[$i]["OR"]) . '" alt="Drivers License" style="width:90%; height: auto;" class="ORCR">
+for ($i = 0; $i < count($VHC); $i++) { 
+echo ' <div class="ColoredBackground"> <input type="hidden" name="VehicleID[]" value="'. htmlspecialchars($VHC[$i]["ID"]) .'"> <h4 class="vehicle"> VEHICLE NO. ' . ($i + 1) . ' </h4> <h4 class="vehicle"> 
+PLATE NO: </h4> <input type="text" value="' . htmlspecialchars($VHC[$i]["Plate"]) . '" disabled class="editable_status_Vehicle textbox_vehicle" name="Plate[]">
+<div class="Two-Textbox center">
+        <div class="Top-Bottom centered">
+            <h4> OR: </h4>
+            <img src="data:image/png;base64,' . htmlspecialchars($VHC[$i]["OR"]) . '" alt="Drivers License" style="width:90%; height: auto;" class="ORCR">
                 <input type="file" name="OR[]" accept="image/*" style="display: none;" class="editimage">
-            </div>
-
-            <div class="Top-Bottom centered">
-                <h4> CR: </h4>
-                <img src="data:image/png;base64,' . htmlspecialchars($VHC[$i]["CR"]) . '" alt="Drivers License" style="width:90%; height: auto;" class="ORCR">
-                <input type="file" name="CR[]" accept="image/*" style="display: none;" class="editimage">
-            </div>
         </div>
-    </div>';
-    }
-?>
 
+        <div class="Top-Bottom centered">
+            <h4> CR: </h4>
+            <img src="data:image/png;base64,' . htmlspecialchars($VHC[$i]["CR"]) . '" alt="Drivers License" style="width:90%; height: auto;" class="ORCR">
+                <input type="file" name="CR[]" accept="image/*" style="display: none;" class="editimage">
+        </div>
+    </div>
+</div>'; } ?>
+        </div>
 
         <div class="Two-Textbox">
 
@@ -298,7 +295,10 @@ for ($i = 0; $i < count($VHC); $i++) {
     
         <div class="Top-Bottom">
         </div>
-        <input type="submit" name="SAVE" value="SAVE" id="save" class="editable_status_Vehicle" disabled/>
+        <input type="submit" name="SAVE" value="SAVE" id="save" class="editable_status_Vehicle" disabled/> 
+        
+ 
+
         <input type="hidden" name="id" value="Vehicles">    
         </div>
 

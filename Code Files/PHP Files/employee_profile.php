@@ -141,56 +141,7 @@ while ($row = mysqli_fetch_assoc($VehiclesInfo)) {
 
 
 // Connection for the Personal and Account Form
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'Personal&Account') {
 
-    //Assigning Values to a Variable (I use htmlspecialchars cause youtube says it make it safe somehow)
-    $FN = htmlspecialchars($_POST['FirstName']);
-    $LN = htmlspecialchars($_POST['LastName']);
-    $UR = htmlspecialchars($_POST['User']);
-    $PS= htmlspecialchars($_POST['Password']);
-    $MN = htmlspecialchars($_POST['Middle']);
-    $SX = htmlspecialchars($_POST['Suffix']);
-    $AG = htmlspecialchars($_POST['Age']);
-    $DB = htmlspecialchars($_POST['DOB']);
-    $HN = htmlspecialchars($_POST['House']);
-    $LT = htmlspecialchars($_POST['Lot']);
-    $ST = htmlspecialchars($_POST['Street']);
-    $BY = htmlspecialchars($_POST['barangay']);
-    $CY = htmlspecialchars($_POST['city']);
-    $PV = htmlspecialchars($_POST['province']);
-    $GNO = htmlspecialchars($_POST['GcashNo']);
-    $GNA = htmlspecialchars($_POST['GcashName']);
-    $ZP = htmlspecialchars($_POST['Zip']);
-
-
-    if (isset($_POST['gender'])) {
-        $GD = $_POST['gender']; 
-    } else {
-        $GD = 'Others';
-    }
-
-    if (isset($_POST['unittype'])) {
-        $UT = $_POST['unittype'];
-        echo $UT;
-        } else {
-        echo "Not working";
-    }
-
-    if (isset($_POST['hub'])) {
-        $HB = $_POST['hub'];
-        echo $HB;
-        } else {
-        echo "Not working";
-    }
-
-
-
-    Personal_AccountUpdate($conn,$AG, $UT,$HB,$DB, $FN, $LN , $GD, $UR , $PS,$MN,
-     $SX, $DriverID,$HN,$LT,$ST,$BY,$CY,$PV,$ZP,$GNO,$GNA);
-
-    header(header: "Location: " . $_SERVER['PHP_SELF']);
-    exit(); 
-}
 
 // Connection for the Profile Picture Form
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'profileform') {
@@ -215,128 +166,7 @@ $License = [];
 $V_ID = [];
 
 //Connect to Personal & Accounts Form
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'Vehicles') {
-    $vehicleIDs = $_POST['VehicleID'];
-    $plates = $_POST['Plate'];
-    $orImages = $_FILES['OR'];
-    $crImages = $_FILES['CR'];
 
-    for ($i = 0; $i < count($vehicleIDs); $i++) {
-        $vehicleID = $vehicleIDs[$i];
-        $plate = mysqli_real_escape_string($conn, $plates[$i]);
-        $orImage = null;
-        $crImage = null;
-
-        // Handle OR image upload
-        if ($orImages['error'][$i] == UPLOAD_ERR_OK) {
-            $orImage = mysqli_real_escape_string($conn, file_get_contents($orImages['tmp_name'][$i]));
-        }
-
-        // Handle CR image upload
-        if ($crImages['error'][$i] == UPLOAD_ERR_OK) {
-            $crImage = mysqli_real_escape_string($conn, file_get_contents($crImages['tmp_name'][$i]));
-        }
-
-        Vehicles_Update($conn, $vehicleID, $plate, $orImage, $crImage);
-    }
-
-    $DriverLicense = $_FILES['License'];
-
-    if ($DriverLicense['error'] == UPLOAD_ERR_OK) {
-        // Get the Binary Data
-        $DriverLicenses = mysqli_real_escape_string($conn, file_get_contents($DriverLicense['tmp_name']));
-        
-        // Assuming $DriverID is defined and valid
-        License_Update($conn, $DriverID, $DriverLicenses);
-    } else {
-        // Handle the error accordingly
-        echo "Error uploading file: " . $DriverLicense['error'];
-    }
-
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit(); 
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'NewVehicles') {
-    $Plate = htmlspecialchars($_POST['newPlate']);
-    // NewVehicles($conn,$DriveID, $plate, $orImage, $crImage);
-
-
-    if (isset($_FILES['newOR']) && $_FILES['newOR']['error'] == UPLOAD_ERR_OK) {
-        //Get the Binary Data
-        $OR = mysqli_real_escape_string($conn, file_get_contents($_FILES['newOR']['tmp_name']));
-    };
-
-    if (isset($_FILES['newCR']) && $_FILES['newCR']['error'] == UPLOAD_ERR_OK) {
-        //Get the Binary Data
-        $CR = mysqli_real_escape_string($conn, file_get_contents($_FILES['newCR']['tmp_name']));
-    };
-
-    NewVehicles($conn,$DriverID, $Plate,$OR,$CR);
-
-    header(header: "Location: " . $_SERVER['PHP_SELF']);
-    exit(); 
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'Contacts') {
-    $Email = htmlspecialchars($_POST['Email']);
-    $ContactNo = htmlspecialchars($_POST['Contact']);
-
-    Contact_Update($conn, $DriverID, $Email,$ContactNo);
-
-    header(header: "Location: " . $_SERVER['PHP_SELF']);
-    exit(); 
-
-}
-
-function Contact_Update($conn, $DriverID, $Email,$ContactNo) {
-    // Ensure the LicenseImage is properly quoted for SQL
-    $UpdateContact = 
-    "UPDATE driver_information a
-    SET  a.`DI_ContactNo` = '$ContactNo',
-    a.`DI_Email` = '$Email'
-    WHERE a.`DI_ID` = $DriverID;";
-
-    $result = mysqli_query($conn, $UpdateContact);
-    
-    if (!$result) {
-        echo "Update failed: " . mysqli_error($conn);
-    } else {
-        echo "Contact information updated successfully.";
-    }
-}
-
-function NewVehicles($conn,$DriveID, $Plate,$OR,$CR) {
-
-    $InsertNewVehicle = "
-    INSERT INTO driver_vehicle(DV_ID, DV_DriverID, DV_VehiclePlate, DV_ORImg, DV_CRImg)
-     VALUES ('','$DriveID',' $Plate','$OR','$CR');";
-     $result = mysqli_query($conn, $InsertNewVehicle);
-    
-     if (!$result) {
-         echo "Update failed: " . mysqli_error($conn);
-     } else {
-         echo "Vehicle information updated successfully.";
-     }
-
-}
-
-
-function Vehicles_Update($conn, $vehicleID, $plate, $orImage, $crImage) {
-    $sql_Vehicle = "UPDATE driver_vehicle SET 
-    DV_VehiclePlate = '$plate', 
-    DV_ORImg = " . ($orImage ? "'$orImage'" : 'DV_ORImg') . ", 
-    DV_CRImg = " . ($crImage ? "'$crImage'" : 'DV_CRImg') . "
-    WHERE DV_ID = $vehicleID;";
-
-    $result = mysqli_query($conn, $sql_Vehicle);
-    
-    if (!$result) {
-        echo "Update failed: " . mysqli_error($conn);
-    } else {
-        echo "Vehicle information updated successfully.";
-    }
-}
 
 function AddDisplayVehicle($VHC,$i){
     echo '<div class="ColoredBackground">
@@ -361,22 +191,6 @@ function AddDisplayVehicle($VHC,$i){
 </div>'; 
 }
 
-function License_Update($conn, $DriverID, $LicenseImage) {
-    // Ensure the LicenseImage is properly quoted for SQL
-    $UpdateLicense = 
-    "UPDATE driver_information a
-    SET a.`DI_LicenseImg` = '$LicenseImage'
-    WHERE a.`DI_ID` = $DriverID;";
-
-    $result = mysqli_query($conn, $UpdateLicense);
-    
-    if (!$result) {
-        echo "Update failed: " . mysqli_error($conn);
-    } else {
-        echo "Driver license information updated successfully.";
-    }
-}
-
 
 //Function for update in Profile Picture
 function Profile_PicUpdate($conn, $DriverID, $image) {
@@ -394,48 +208,4 @@ $sql = "UPDATE driver_information a
         echo "Profile picture updated successfully.";
     }
 }
-
-//Function for update in Personal & Account Details
-function Personal_AccountUpdate($conn,$AG,$UT,$HB,$DB,$FN, $LN , $GD, $UR , $PS,$MN, $SX, $DriverID,$HN,$LT,$ST,$BY,$CY,$PV,$ZP,$GNO,$GNA) {
-    //Update Code
-    $REPLACE =
-    "UPDATE driver_information a
-    JOIN driver_name c ON a.DI_NameID = c.DN_ID
-    JOIN account b on a.`DI_AccountID` = b.`ACC_ID`
-    JOIN driver_address d on a.`DI_AddressID` = d.`DA_ID`
-    SET
-        a.`DI_Age` = $AG,
-        a.`DI_UnitTypeID` = $UT,
-        a.`DI_HubAssignedID` = $HB,
-        a.`DI_DOB` = '$DB',
-        a.`DI_Gender` = '$GD',
-        a.`Gcash_No` = '$GNO',
-        a.`GCash_Name` = '$GNA',
-        b.`ACC_Username` = '$UR',
-        b.`ACC_Password` = '$PS',
-        c.`DN_FName` = '$FN',
-        c.`DN_LName` = '$LN',
-        c.`DN_MName` = '$MN',
-        c.`DN_Suffix` = '$SX',
-        d.`DA_HouseNo` = '$HN', 
-        d.`DA_LotNo` = '$LT', 
-        d.`DA_Street` = '$ST', 
-        d.`DA_Barangay` = '$BY',
-        d.`DA_City` = '$CY', 
-        d.`DA_Province` = '$PV',
-        d.`DA_ZipCode` = '$ZP'
-    WHERE a.DI_ID = $DriverID;";
-    
-    
-    $Replacement = mysqli_query($conn, $REPLACE);
-    if (!$Replacement) {
-        echo "non-working";
-        die("Query failed: " . mysqli_error($conn));
-    }
-}
-
-mysqli_close($conn)
-
 ?>
-
-

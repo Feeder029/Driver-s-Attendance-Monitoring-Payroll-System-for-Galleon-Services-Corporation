@@ -38,7 +38,8 @@
 </section>
 
 <section id="Personal&Account_Section" class="content-section">
-<form method="post" name="id" id="Personal&Account">
+
+<form method="post" name="id" id="Personal&Account" action="employee_perandacc.php">
         <!-- Personal & Account: JOB ONES -->
     
         <div class="Two-Textbox" >
@@ -243,18 +244,19 @@
         </div>
         <input type="submit" name="SAVE" value="SAVE" id="save" class="editable_status_P-A" disabled/>
 
-        <input type="hidden" name="id" value="Personal&Account">
     
         </div>
         
         </div>
         </div>
-        
+    
 </form>
 </section>
 
+
+
 <section id="Vehicles_Section" class="content-section">
-<form enctype="multipart/form-data" method="POST">
+<form enctype="multipart/form-data" method="POST" action="employee_vehicles.php">
     <img id="licensePreview" src="data:image/png;base64,<?php echo $DRV["DriversLicense"]; ?>" alt="Drivers License" style="width:250px; height: auto;">
     <label for="Licenses" style="cursor: pointer; color: blue; text-decoration: underline; display: none;" class="editimage">Edit Driver License</label>
     <input type="file" name="License" id="Licenses" accept="image/*" style="display: none;" onchange="previewImage(event, 'licensePreview')">
@@ -267,7 +269,27 @@
             AddDisplayVehicle($VHC,$i );
         } ?>
     </div>
-    <FORM  enctype="multipart/form-data" method="POST">
+
+    <div class="Two-Textbox">
+        <div class="Top-Bottom">
+            <input type="button" name="id" value="ADD" id="add_vehicle"/>
+        </div>
+        
+        <div class="Top-Bottom">
+            <input type="button" name="EDIT" value="EDIT" id="Edit_Vehicle"/>
+        </div>
+    
+        <div class="Top-Bottom">
+        </div>
+        <input type="submit" name="SAVE" value="SAVE" id="save" class="editable_status_Vehicle" disabled/> 
+        
+        <input type="hidden" name="id" value="Vehicles">    
+    </div>
+
+    
+</form>
+
+<FORM  enctype="multipart/form-data" method="POST" action="employee_vehicles.php">
      <div id="newVehicleForm" style="display: none;" class="ColoredBackground">
     <h4 class="vehicle">NEW VEHICLE</h4>
     <label for="newPlate">Plate No:</label>
@@ -292,33 +314,12 @@
     <input type="hidden" name="id" value="NewVehicles">    
     </div>
 
-
-
 </FORM>
 
-    <div class="Two-Textbox">
-        <div class="Top-Bottom">
-            <input type="button" name="id" value="ADD" id="add_vehicle"/>
-        </div>
-        
-        <div class="Top-Bottom">
-            <input type="button" name="EDIT" value="EDIT" id="Edit_Vehicle"/>
-        </div>
-    
-        <div class="Top-Bottom">
-        </div>
-        <input type="submit" name="SAVE" value="SAVE" id="save" class="editable_status_Vehicle" disabled/> 
-        
-        <input type="hidden" name="id" value="Vehicles">    
-    </div>
-
-    
-</form>
 </section>
 
 <section id="Contacts_Section" class="content-section">
-
-<form method="post">
+<form method="post" action="employee_contacts.php">
         
 <div class="Top-Bottom" class="editable_status_P-A">
         <h4>EMAIL: </h4>
@@ -339,19 +340,67 @@
     
         <div class="Top-Bottom">
         </div>
-        <input type="submit" name="SAVE" value="SAVE" id="save" class="editable_status_Contacts" disabled/>
-
-        <input type="hidden" name="id" value="Contacts">
-    
+        <input type="submit" name="SAVE" value="SAVE" id="save" class="editable_status_Contacts" disabled/>    
         </div>
         
 </form>
-
-
 </section>
 
-<section id="GovInfo_Section" class="content-section">
-    <p>This is the Government Info section.</p>
+<section id="GovInfo_Section" class="content-section" >
+<form method="post" action="employeegovinfo.php"  enctype="multipart/form-data">
+<div class="Top-Bottom">
+
+<div class="Top-Bottom">
+        <h4>PAGIBIG NO: </h4>
+        <input type="text" value="<?php echo $DRV["PagNo"]?>" disabled class="editable_status_GOV" id="ID" name = "PagibigNo">
+</div>
+        
+<div class="Top-Bottom">
+        <h4>PHILHEALTH NO: </h4>
+        <input type="text" value="<?php echo $DRV["PhilNo"]?>" disabled class="editable_status_GOV" id="ID" name = "PhilHealthNo">
+</div>
+
+<div class="Top-Bottom">
+        <h4>SSS NO: </h4>
+        <input type="text" value="<?php echo $DRV["SSSNo"]?>" disabled class="editable_status_GOV" id="ID" name = "SSSNo">
+ </div>
+
+
+ <h4> BARANGAY CLEARANCE: </h4>
+<img id="licensePreview" src="data:image/png;base64,<?php echo $DRV["Brgy_Clear"]; ?>" alt="Drivers License" style="width:250px; height: auto;">
+<label for="Barangay" style="cursor: pointer; color: blue; text-decoration: underline; display: none;" class="editimage_clearance">Edit Barangay Clearance </label>
+<input name="Brgy" type="file" id="Barangay" accept="image/*" style="display: none;" onchange="previewImage(event, 'licensePreview')"  >
+        
+<h4> POLICE CLEARANCE: </h4>
+<img id="licensePreview" src="data:image/png;base64,<?php echo $DRV["Pol_Clear"]; ?>" alt="Drivers License" style="width:250px; height: auto;">
+<label for="Police" style="cursor: pointer; color: blue; text-decoration: underline; display: none;" class="editimage_clearance">Edit Driver Clearance </label>
+<input type="file" name="Pol" id="Police" accept="image/*" style="display: none;" onchange="previewImage(event, 'licensePreview')">
+
+<h4> NBI CLEARANCE: </h4>
+<img id="licensePreview" src="data:image/png;base64,<?php echo $DRV["NBI_Clear"]; ?>" alt="Drivers License" style="width:250px; height: auto;">
+<label for="NBI_" style="cursor: pointer; color: blue; text-decoration: underline; display: none;" class="editimage_clearance">Edit NBI Clearance </label>
+<input type="file" name="NBI" id="NBI_" accept="image/*" style="display: none;" onchange="previewImage(event, 'licensePreview')">
+
+<div class="Two-Textbox">
+        
+    <div class="Top-Bottom">
+        <input type="button" name="EDIT" value="EDIT" id="edit_GOV"/>
+    </div>
+    
+    <div class="Top-Bottom">
+        </div>
+        <input type="submit" name="SAVE" value="SAVE" id="save" class="editable_status_GOV" disabled/>    
+    </div>
+
+
+
+</div>
+
+
+
+
+
+</form>
 </section>
 
 

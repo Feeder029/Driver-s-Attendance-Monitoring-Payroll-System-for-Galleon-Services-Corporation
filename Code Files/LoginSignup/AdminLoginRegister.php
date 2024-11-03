@@ -70,9 +70,9 @@
 
                         <select class="input-field" required name="Position">
                             <option value="" disabled selected>Role</option>
-                            <option value="hr">Human Resources</option>
-                            <option value="coordinator">Agency Coordinator</option>
-                            <option value="payroll">Payroll</option>
+                            <option value="Human Resources">Human Resources</option>
+                            <option value="Agency Coordinator">Agency Coordinator</option>
+                            <option value="Payroll">Payroll</option>
                         </select>
                     </div>
 
@@ -171,6 +171,8 @@
     $conn = mysqli_connect($db_server,$db_user,$db_pass,$db_name);
 
     if ($conn) {
+        
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $Lastname = filter_input(INPUT_POST,"Lastname", FILTER_SANITIZE_SPECIAL_CHARS);
             $Firstname = filter_input(INPUT_POST,"Firstname", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -208,7 +210,7 @@
                         $adminPositionId = mysqli_insert_id($conn);
 
                         // Insert into account
-                        $sql3 = "INSERT INTO account (ACC_Username, ACC_Password) VALUES ('$Username', '$Password')";
+                        $sql3 = "INSERT INTO account (ACC_Username, ACC_Password, ACC_DateCreated) VALUES ('$Username', '$Password', NOW())";
                         if (mysqli_query($conn, $sql3)) {
                             // Get the last inserted ID for account
                             $accountId = mysqli_insert_id($conn);
@@ -228,6 +230,7 @@
                 } else {
                     echo "<script type='text/javascript'>alert('Error inserting into admin_name: " . mysqli_error($conn) . "');</script>";
                 }
+                $currentDateTime = date('Y-m-d H:i:s');
             }
         }
     

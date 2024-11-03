@@ -1,3 +1,52 @@
+<?php
+    // Database connection details
+    $db_server = "localhost";
+    $db_user = "root";
+    $db_pass = "";
+    $db_name = "gsc_attendanceandpayrolltest";
+
+    // Create connection
+    $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name) or die("Connection failed: " . mysqli_connect_error());
+
+    // Get the ID from a GET request, for example
+    // $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+    // // Function to fetch single row data
+    // function fetchSingleRow($conn, $sql) {
+    //     $result = $conn->query($sql);
+    //     return ($result && $result->num_rows > 0) ? $result->fetch_assoc() : null;
+    // }
+
+    // // Queries
+    // $usernameRow = fetchSingleRow($conn, "SELECT ACC_Username FROM account");
+    // $fullnameRow = fetchSingleRow($conn, "SELECT AN_FName, AN_MName, AN_LName FROM admin_name");
+    // $positionRow = fetchSingleRow($conn, "SELECT ARL_Role FROM admin_role");
+    
+
+    //join query
+    $sql = "
+        SELECT
+            a.ACC_Username,
+            a.ACC_DateCreated,
+            n.AN_FName,
+            n.AN_MName,
+            n.AN_LName,
+            r.ARL_Role,
+            i.AI_ProfileImg
+        FROM
+            admin_information i
+        JOIN
+            account a ON i.AI_AccountID = a.ACC_ID
+        JOIN
+            admin_name n ON i.AI_AdminNameID = n.AN_ID
+        JOIN 
+            admin_role r ON i.AI_AdminPositionID = r.ARL_ID
+    ";
+    $result = $conn->query($sql);   
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,35 +114,46 @@
             </div>     
         </nav>
     </div>
-
                 
     <div class="table-container">
         <table class="table-accounts">
-            <tr>
-                <td>
-                    <div class="td-content">
-                        <div class="td-left">
-                            <i class='bx bx-user-circle' ></i>
-                            <div class="td-name">
-                                <h3 id="username">USERNAME</h3>
-                                <h5 id="fullname">FULLNAME</h5>
-                                <h5 id="position-name">(<span id="position">Position</span>&nbsp;:&nbsp;<span id="type">Type</span>)</h5>
-                            </div>
-                        </div>
-                        <div class="td-right">
-                            <h3 id="date">Created on <span id="date-created">MM DD YYYY</span></h3>
-                            <div class="td-btn">
-                                <button id="accept-btn" >ACCEPT</button>
-                                <button id="decline-btn">DECLINE</button>
-                                <button id="view-btn">VIEW MORE</button>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>asdasdasdasdasdasd</td>
-            </tr>
+        <?php
+                if ($result && $result->num_rows > 0) {
+                    // Fetch and display each row from the result set
+                    while ($row = $result->fetch_assoc()) {
+                        // Combine first name, middle name, and last name
+                        $fullname = trim($row['AN_FName'] . ' ' . $row['AN_MName'] . ' ' . $row['AN_LName']);
+                        $dateCreated = date('M-d-y'); 
+                        $profileImageData = base64_encode($row['AI_ProfileImg']);
+                        $profileImage = "data:image/jpeg;base64,$profileImageData";
+                        echo "
+                        <tr>
+                            <td>
+                                <div class='td-content'>
+                                    <div class='td-left'>
+                                        <img src='$profileImage' alt='Profile Image' class='profile-image'>
+                                        <div class='td-name'>
+                                            <h3 id='username' name='Username'>" . htmlspecialchars($row['ACC_Username']) . "</h3>
+                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($fullname) . "</h5>
+                                            <h5 id='position-name' name='Position'>(<span id='position'>Position</span>&nbsp;:&nbsp;<span id='type'>" . htmlspecialchars($row['ARL_Role']) . "</span>)</h5>
+                                        </div>
+                                    </div>
+                                    <div class='td-right'>
+                                        <h3 id='date'>Created on <span id='date-created'>" . $dateCreated . "</span></h3>
+                                        <div class='td-btn'>
+                                            <button id='accept-btn'>ACCEPT</button>
+                                            <button id='decline-btn'>DECLINE</button>
+                                            <button id='view-btn'>VIEW MORE</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>";
+                    }
+                } else {
+                    echo "<tr><td>No data found</td></tr>";
+                }
+            ?>
            
         </table>
     </div>
@@ -101,19 +161,3 @@
 </html>
 
 
-<?php
-
-    $db_server = "localhost";
-    $db_user = "root";
-    $db_pass = "";
-    $db_name = "gsc_attendanceandpayrolltest";
-    $conn = "";
-
-    $conn = mysqli_connect($db_server,$db_user,$db_pass,$db_name);
-
-    if ($conn) {
-        
-    } else {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-?>

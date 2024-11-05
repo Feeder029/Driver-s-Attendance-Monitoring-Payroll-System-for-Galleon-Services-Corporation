@@ -52,7 +52,7 @@
     Personal_AccountUpdate($conn,$AG, $UT,$HB,$DB, $FN, $LN , $GD, $UR , $PS,$MN,
      $SX, $DriverID,$HN,$LT,$ST,$BY,$CY,$PV,$ZP,$GNO,$GNA);
 
-     header("Location: employee_profiledes.php"); // Refresh for updated one!
+     header("Location: employee_profile_design.php"); // Refresh for updated one!
      exit(); 
 }
 

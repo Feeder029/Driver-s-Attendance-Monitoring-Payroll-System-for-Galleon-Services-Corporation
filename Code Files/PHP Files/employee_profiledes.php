@@ -17,11 +17,12 @@
     <form method="post" id="profileform" enctype="multipart/form-data" action="employee_profilepic.php">
     <!-- Profile  -->
     <img src="data:image/png;base64,<?php echo $DRV["Profile"]; ?>" alt="Profile Picture" style="width: 300px; height: 300px"> 
-    <h1> <?php echo "$FullName"; ?></h1>
+     <h1></h1>
     <label for="image" style="cursor: pointer; color: blue; text-decoration: underline;">Edit Profile</label>
     <input type="file" name="profile" id="image" accept="image/*" style="display: none;">
     <input type="hidden" name="id" value="profileform">
     <hr>
+
    </form>
 
     </section>

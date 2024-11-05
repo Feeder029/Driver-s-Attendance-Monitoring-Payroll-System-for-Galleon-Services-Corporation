@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     Contact_Update($conn, $DriverID, $Email,$ContactNo);
 
-    header("Location: employee_profiledes.php"); // Refresh for updated one!
+    header(header: "Location: employee_profiledes.php"); // Refresh for updated one!
     exit();
 }
 

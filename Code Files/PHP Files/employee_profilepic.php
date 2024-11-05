@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] 
 
     Profile_PicUpdate($conn, $DriverID, $profilePic);
     header(header: "Location: employee_profiledes.php"); // Refresh for updated one!
+
     exit(); 
 
 }

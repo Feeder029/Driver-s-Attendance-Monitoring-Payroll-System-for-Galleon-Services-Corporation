@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Call the update function with conditional image update queries
     Gov_Update($conn, $DriverID, $PhilHealthNo, $SSSNo, $PagibigNo, $BrgyClearanceQuery, $PoliceClearanceQuery, $NBIClearanceQuery);
-    header("Location: employee_profiledes.php"); // Refresh for updated information
+    header("Location: employee_profile_design.php"); // Refresh for updated information
     exit();
 }
 

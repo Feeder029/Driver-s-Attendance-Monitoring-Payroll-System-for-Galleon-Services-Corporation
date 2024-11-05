@@ -258,39 +258,46 @@ include("employee_profile.php");
     
     <!-- Contacts Form --> 
       <div id="contacts" class="form-section">
+        <form method="post" action="employee_contacts.php">
         <h2>Contacts</h2>
         <!-- Contacts form fields -->
             <section id="contacts-info" class="info-section">
               <label for="email">Email:</label>
-              <input type="email" id="email" name="email" required>
+              <input type="email" id="email" value="<?php echo $DRV["Email"] ?>" disabled class="editable_status_Contacts"  name = "Email" required>
 
               <label for="contact-number">Contact Number:</label>
-              <input type="tel" id="contact-number" name="contact-number" required>
+              <input type="tel" id="contact-number" value="<?php echo $DRV["CN"] ?>" disabled class="editable_status_Contacts" name = "Contact" required>
           </section>
 
           <!-- Edit and Save Buttons -->
           <div class="button-container">
-              <button type="button" onclick="editContacts()">Edit</button>
-              <button type="submit" onclick="saveContacts()">Save</button>
+              <button type="button" onclick="editContacts()" name="EDIT" value="EDIT" id="edit_Contacts">Edit</button>
+              <button type="submit" onclick="saveContacts()" value="SAVE" id="save" class="editable_status_Contacts" disabled>Save</button>
           </div>
+          </form>
       </div>
 
+
+
       <!--Government Information Form -->
-    <div id="government-info" class="form-section">
+      <form method="post" action="employeegovinfo.php"  enctype="multipart/form-data">
+        <div id="government-info" class="form-section">
         <h2>Government Information</h2>
-    
+        <form method="post" action="employeegovinfo.php"  enctype="multipart/form-data">
+
         <!-- Benefits Section -->
         <section id="benefits-info" class="info-section">
             <h3>Benefits</h3>
             
             <label for="sss-number">SSS Number:</label>
-            <input type="text" id="sss-number" name="sss-number" required>
-    
+            <input type="text" id="pagibig-number" value="<?php echo $DRV["SSSNo"]?>" disabled class="editable_status_GOV" name = "SSSNo" required>
+   
             <label for="philhealth-number">PhilHealth Number:</label>
-            <input type="text" id="philhealth-number" name="philhealth-number" required>
+            <input type="text" id="philhealth-number" value="<?php echo $DRV["PhilNo"]?>" disabled class="editable_status_GOV" name = "PhilHealthNo" required>
     
             <label for="pagibig-number">Pag-IBIG Number:</label>
-            <input type="text" id="pagibig-number" name="pagibig-number" required>
+            <input type="text" id="sss-number" value="<?php echo $DRV["PagNo"]?>" disabled class="editable_status_GOV" name = "PagibigNo" required>
+
         </section>
     
         <!-- Clearance Section -->
@@ -300,32 +307,34 @@ include("employee_profile.php");
             <!-- NBI Clearance -->
             <label for="nbi-clearance">NBI Clearance:</label>
             <div class="image-display">
-                <img src="path/to/nbi-clearance.jpg" alt="NBI Clearance" id="nbi-clearance-img">
-                <input type="file" id="nbi-clearance" name="nbi-clearance" accept="image/*,application/pdf">
+                <img src="data:image/png;base64,<?php echo $DRV["NBI_Clear"]; ?>"  alt="NBI Clearance" id="nbi-clearance-img">
+                <input type="file" id="nbi-clearance" name="NBI" accept="image/*,application/pdf" style="display: none;" class="editimage_clearance">
             </div>
     
             <!-- Police Clearance -->
             <label for="police-clearance">Police Clearance:</label>
             <div class="image-display">
-                <img src="path/to/police-clearance.jpg" alt="Police Clearance" id="police-clearance-img">
-                <input type="file" id="police-clearance" name="police-clearance" accept="image/*,application/pdf">
+                <img src="data:image/png;base64,<?php echo $DRV["Pol_Clear"]; ?>" alt="Police Clearance" id="police-clearance-img">
+                <input type="file" id="police-clearance"name="Pol" accept="image/*,application/pdf" style="display: none;" class="editimage_clearance">
             </div>
     
             <!-- Barangay Clearance -->
             <label for="barangay-clearance">Barangay Clearance:</label>
             <div class="image-display">
-                <img src="path/to/barangay-clearance.jpg" alt="Barangay Clearance" id="barangay-clearance-img">
-                <input type="file" id="barangay-clearance" name="barangay-clearance" accept="image/*,application/pdf">
+                <img src="data:image/png;base64,<?php echo $DRV["Brgy_Clear"]; ?>" alt="Barangay Clearance" id="barangay-clearance-img">
+                <input type="file" name="Brgy" id="barangay-clearance" accept="image/*,application/pdf" style="display: none;" class="editimage_clearance">
             </div>
 
              <!-- Edit and Save Buttons -->
             <div class="button-container">
-                        <button type="button" onclick="editGovernmentInfo()">Edit</button>
+                        <button type="button" onclick="editGovernmentInfo()" id="edit_GOV">Edit</button>
                         <button type="submit" onclick="saveGovernmentInfo()">Save</button>
             </div>
+
         </section>
-    
     </div>
+    </form>
+
 
 
 
@@ -334,7 +343,9 @@ include("employee_profile.php");
   </div>
   <!--For Form nav & menu function-->
   <script src="../JS Files/Dash.js"></script>
-  <script src="../JS Files/Employee_Profile.js?v=1.0"></script>
+  <script src="../JS Files/Employee_Profile.js?v=1.1"></script>
+  <script src="../JS Files/Employee_Profile2.js?v=1.1"></script>
+
 
 </body>
 </html>

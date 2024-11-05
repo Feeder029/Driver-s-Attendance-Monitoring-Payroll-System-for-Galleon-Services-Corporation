@@ -37,7 +37,3 @@ function Contact_Update($conn, $DriverID, $Email, $ContactNo) {
         echo "Statement preparation failed: " . mysqli_error($conn);
     }
 }
-
-mysqli_close($conn)
-
-?>

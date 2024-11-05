@@ -14,7 +14,7 @@
 
     <section id="Profile_Sec">
 
-    <form method="post" id="profileform" enctype="multipart/form-data">
+    <form method="post" id="profileform" enctype="multipart/form-data" action="employee_profilepic.php">
     <!-- Profile  -->
     <img src="data:image/png;base64,<?php echo $DRV["Profile"]; ?>" alt="Profile Picture" style="width: 300px; height: 300px"> 
     <h1> <?php echo "$FullName"; ?></h1>
@@ -27,7 +27,7 @@
     </section>
 
 
-    <section id="Option">
+<section id="Option">
     <div class="Two-Textbox">
         <button type="button" id="Personal&Account_Btn"> PERSONAL&ACCOUNT </button>
         <button type="button" id="Vehicles_Btn"> VEHICLES </button>
@@ -253,8 +253,6 @@
 </form>
 </section>
 
-
-
 <section id="Vehicles_Section" class="content-section">
 <form enctype="multipart/form-data" method="POST" action="employee_vehicles.php">
     <img id="licensePreview" src="data:image/png;base64,<?php echo $DRV["DriversLicense"]; ?>" alt="Drivers License" style="width:250px; height: auto;">
@@ -401,16 +399,6 @@
 
 
 </form>
-</section>
-
-
-
-
-     
-
-
-
-
 
 <script src="../JS Files/Employee_Profile.js?v=1.0"></script>
     

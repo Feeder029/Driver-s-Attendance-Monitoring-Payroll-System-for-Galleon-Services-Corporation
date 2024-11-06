@@ -330,13 +330,9 @@ include("employee_profile.php");
                         <button type="button" onclick="editGovernmentInfo()" id="edit_GOV">Edit</button>
                         <button type="submit" onclick="saveGovernmentInfo()">Save</button>
             </div>
-
         </section>
     </div>
     </form>
-
-
-
 
       
     </section>

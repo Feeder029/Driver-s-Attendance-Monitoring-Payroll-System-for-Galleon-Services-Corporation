@@ -1,0 +1,93 @@
+/* For personal-account */
+  /* Personal Account Section Styles */
+  #personal-account {
+    display: block; /* Ensure the section is displayed */
+    background-color: #F7F9FC; /* Light Blue-Gray */
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for more depth */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-top: 4px solid #003135; /* Thicker border for emphasis */
+  }
+  
+  /* Headings */
+  #personal-account h2,
+  #personal-account h3 {
+    color: #003135; /* Your preferred color */
+    margin-bottom: 10px; /* Space below headings */
+    font-family: 'Arial', sans-serif; /* Modern font for headings */
+  }
+  
+  /* Info section styles */
+  #personal-account .info-section {
+    margin-bottom: 20px;
+  }
+  
+  /* Label styles */
+  #personal-account label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #003135; /* Darker label color for better readability */
+    font-size: 14px; /* Increased font size */
+  }
+  
+  /* Input styles */
+  #personal-account input[type="text"],
+  #personal-account input[type="number"],
+  #personal-account input[type="date"],
+  #personal-account input[type="tel"],
+  #personal-account input[type="password"],
+  #personal-account select {
+    width: 100%;
+    padding: 12px; /* Increased padding for comfort */
+    margin-bottom: 15px;
+    border: 1px solid #D1D5DB; /* Light Gray border */
+    border-radius: 8px; /* More rounded corners */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Added box-shadow transition */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    font-size: 14px; /* Slightly larger font size */
+  }
+  
+  /* Focus styles */
+  #personal-account input:focus,
+  #personal-account select:focus {
+    border-color: #003135; /* Your preferred color */
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 49, 53, 0.5); /* Glow effect on focus */
+  }
+  
+  /* Button container styles */
+  #personal-account .button-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Button styles */
+  #personal-account button {
+    background-color: #003135; /* Your preferred color */
+    color: #fff;
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    padding: 12px 20px; /* Increased padding for a better click area */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform transition */
+    font-size: 14px; /* Consistent font size */
+  }
+  
+  #personal-account button:hover {
+    background-color: #005151; /* Slightly lighter shade for hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    #personal-account .button-container {
+      flex-direction: column;
+    }
+  
+    #personal-account button {
+      margin-bottom: 10px;
+      width: 100%;
+    }
+  }

@@ -9,7 +9,6 @@ $conn = "";
 $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
 
 if ($conn) {
-    echo "Database connected successfully.<br>";
 } else {
     die("Connection failed: " . mysqli_connect_error());
 }
@@ -147,8 +146,8 @@ function AddDisplayVehicle($VHC,$i){
     echo '<div class="ColoredBackground">
     <input type="hidden" name="VehicleID[]" value="'. htmlspecialchars($VHC[$i]["ID"]) .'">
     <h4 class="vehicle"> VEHICLE NO. ' . ($i + 1) . ' </h4>
-    <h4 class="vehicle"> PLATE NO: </h4>
-    <input type="text" value="' . htmlspecialchars($VHC[$i]["Plate"]) . '" disabled class="editable_status_Vehicle textbox_vehicle" name="Plate[]">
+<h4 class="vehicle"> PLATE NO: </h4>
+        <input type="text" value="' . htmlspecialchars($VHC[$i]["Plate"]) . '" disabled class="editable_status_Vehicle textbox_vehicle" name="Plate[]">
     <div class="Two-Textbox center">
         <div class="Top-Bottom centered">
             <h4> OR: </h4>
@@ -164,5 +163,33 @@ function AddDisplayVehicle($VHC,$i){
         </div>
     </div>
 </div>'; 
+
+}
+
+
+function Vehicle($VHC,$i){
+    echo
+'
+<section id="vehicle-info" class="info-section vehicle-info">
+<!-- Delete Icon -->
+<span class="delete-icon" onclick="deleteVehicleInfo(this)">✖</span>
+<input type="hidden" name="VehicleID[]" value="'. htmlspecialchars($VHC[$i]["ID"]) .'">
+<label for="plate-number">Plate Number:</label>
+        <input type="text" value="' . htmlspecialchars($VHC[$i]["Plate"]) . '" disabled class="editable_status_Vehicle textbox_vehicle" name="Plate[]">
+
+<label for="or-image">Official Receipt (OR) Image:</label>
+<div class="image-display">
+  <img alt="Official Receipt Image" id="orPreview_' . $i . '" src="data:image/png;base64,' . htmlspecialchars($VHC[$i]["OR"]) . '"  class="ORCR">
+  <input type="file" name="OR[]" id="OR_' . $i . '" name="or-image" accept="image/*" style="display: none;" class="editimage" onchange="previewImage(event, \'orPreview_' . $i . '\')">
+</div>
+
+<label for="cr-image">Certificate of Registration (CR) Image:</label>
+<div class="image-display">
+  <img alt="Certificate of Registration Image" id="crPreview_' . $i . '" src="data:image/png;base64,' . htmlspecialchars($VHC[$i]["CR"]) . '" class="ORCR">
+  <input type="file" name="CR[]" id="CR_' . $i . '" accept="image/*" style="display: none;" class="editimage"  onchange="previewImage(event, \'crPreview_' . $i . '\')">
+</div>
+
+</section>
+'; 
 }
 ?>

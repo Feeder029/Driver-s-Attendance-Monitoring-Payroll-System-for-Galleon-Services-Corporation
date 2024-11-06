@@ -1,20 +1,20 @@
-document.getElementById('edit').addEventListener('click', function() {
-    alert("Working");
+function editProfile(){
     const editableFields = document.querySelectorAll('.editable_status_P-A');
     editableFields.forEach(function(field) {
         field.disabled = false; // Make TextBox able to input
     });
-});
+};
 
-document.getElementById('edit_Contacts').addEventListener('click', function() {
+function editContacts() {
     const editableFields = document.querySelectorAll('.editable_status_Contacts');
     editableFields.forEach(function(field) {
         field.disabled = false; // Make TextBox able to input
     });
-});
+};
 
 
-document.getElementById('Edit_Vehicle').addEventListener('click', function() {
+function editVehicles() {
+    alert("EWRfd");
     const editableFields = document.querySelectorAll('.editable_status_Vehicle');
     const ChooseImage = document.querySelectorAll('.editimage');
 
@@ -26,7 +26,7 @@ document.getElementById('Edit_Vehicle').addEventListener('click', function() {
         Text.style.display = 'block';
     });
 
-});
+};
 
 document.getElementById('edit_GOV').addEventListener('click', function() {
     alert("edit_GOV");
@@ -43,9 +43,6 @@ document.getElementById('edit_GOV').addEventListener('click', function() {
 
 });
 
-document.getElementById("image").addEventListener("change", function() {
-    this.form.submit();
-});
 
 document.getElementById('add_vehicle').addEventListener('click', function() {
     const newVehicleForm = document.getElementById('newVehicleForm');

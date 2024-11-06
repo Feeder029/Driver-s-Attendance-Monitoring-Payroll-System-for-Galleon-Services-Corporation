@@ -1,0 +1,109 @@
+/* For Government Form Styles */
+  /* Government Information Section Styles */
+  #government-info {
+    display: block;
+    background-color: #F7F9FC; /* Soft neutral with a touch of blue */
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for more depth */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-top: 4px solid #003135; /* Thicker border for emphasis */
+  }
+  
+  /* Headings */
+  #government-info h2,
+  #government-info h3 {
+    color: #003135; /* Preferred color */
+    margin-bottom: 15px;
+    font-family: 'Arial', sans-serif; /* Modern font for headings */
+  }
+  
+  /* Info Section Styles */
+  #government-info .info-section {
+    margin-bottom: 20px;
+  }
+  
+  /* Label Styles */
+  #government-info label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #003135; /* Darker color for better readability */
+  }
+  
+  /* Input Styles */
+  #government-info input[type="text"],
+  #government-info input[type="file"] {
+    width: 100%;
+    padding: 12px; /* Increased padding for comfort */
+    margin-bottom: 15px;
+    border: 1px solid #ccc; /* Border for inputs */
+    border-radius: 8px; /* More rounded corners */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  /* Focused Input Styles */
+  #government-info input:focus {
+    border-color: #003135; /* Focused border color */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 8px rgba(0, 49, 53, 0.5); /* Glow effect on focus */
+  }
+  
+  /* Image Display Styles */
+  #government-info .image-display {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  #government-info .image-display img {
+    width: 140px; /* Increased image size */
+    height: 180px; /* Increased image size */
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Button Container Styles */
+  #government-info .button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  /* Button Styles */
+  #government-info button {
+    background-color: #003135; /* Preferred color */
+    color: #fff; /* Button text color */
+    border: none; /* Remove default border */
+    border-radius: 8px; /* More rounded corners */
+    padding: 12px 20px; /* Increased padding for a better click area */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+  }
+  
+  /* Button hover effect */
+  #government-info button:hover {
+    background-color: #005151; /* Slightly lighter shade for hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    #government-info .button-container {
+      flex-direction: column; /* Stack buttons on smaller screens */
+    }
+  
+    #government-info button {
+      width: 100%; /* Full width for buttons on small screens */
+      margin-bottom: 10px; /* Space below buttons */
+    }
+  
+    #government-info .image-display {
+      flex-direction: column; /* Stack image and input vertically */
+      align-items: flex-start; /* Align items to the start */
+    }
+  }
+  

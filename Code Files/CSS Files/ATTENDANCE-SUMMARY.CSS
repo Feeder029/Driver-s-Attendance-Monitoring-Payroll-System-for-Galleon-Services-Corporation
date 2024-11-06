@@ -1,0 +1,1042 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .container {
+    width: 100vw;
+    height: 100vh;
+    padding: 20px;
+    background: linear-gradient(135deg, #012265, #02387f);
+    border-radius: 0;
+    box-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow-y: auto;
+  }
+  
+  @media (min-width: 1800px) {
+    .container {
+      padding: 40px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      padding: 15px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      padding: 10px;
+    }
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ffffff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  header h1 {
+    color: #ffffff;
+  }
+  
+  .menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #ffffff;
+  }
+  
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 1;
+  }
+  
+  .dropdown a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #003135;
+    border-bottom: 1px solid #f4f4f4;
+  }
+  
+  .dropdown a:hover {
+    background-color: #e0f2f1;
+  }
+  
+  .profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+  }
+  
+  .photo-name {
+    display: flex;
+    align-items: center;
+  }
+  
+  .driver-name {
+    color: #ffffff;
+  }
+  
+  .driver-photo {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 2px solid #003135;
+  }
+  
+  .edit-photo-btn {
+    background-color: #ffffff;
+    color: #003135;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    font-size: 16px;
+  }
+  
+  .edit-photo-btn:hover {
+    background-color: #EEEEEE;
+  }
+  
+  @media (max-width: 768px) {
+    .edit-photo-btn {
+      width: 50%;
+      margin-top: 15px;
+    }
+  }
+  
+  .nav-menu {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .nav-menu a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-bottom: 2px solid transparent;
+    text-align: center;
+    flex: 1;
+    background-color: #012265;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(173, 188, 204, 0.2);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .nav-menu a:hover {
+    border-color: #ffffff;
+    box-shadow: 0 6px 10px rgba(173, 188, 204, 0.3);
+  }
+
+  .form-sections{
+    border-top: 2px solid #003135;
+    padding-top: 20px;
+  }
+  
+  .form-section {
+    /* display: none; */
+    border-top: 2px solid #003135;
+    padding-top: 20px;
+  }
+  
+  #form-container h2 {
+    color: #003135;
+  }
+  
+  @media (max-width: 768px) {
+    .profile {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .driver-photo {
+      margin: 0 auto 10px auto;
+    }
+    
+    .nav-menu {
+      flex-direction: column;
+    }
+    
+    .nav-menu a {
+      width: 100%;
+    }
+  }
+  
+  
+  
+  /* For personal-account */
+  /* Personal Account Section Styles */
+  #personal-account {
+    display: block; /* Ensure the section is displayed */
+    background-color: #F7F9FC; /* Light Blue-Gray */
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for more depth */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-top: 4px solid #003135; /* Thicker border for emphasis */
+  }
+  
+  /* Headings */
+  #personal-account h2,
+  #personal-account h3 {
+    color: #003135; /* Your preferred color */
+    margin-bottom: 10px; /* Space below headings */
+    font-family: 'Arial', sans-serif; /* Modern font for headings */
+  }
+  
+  /* Info section styles */
+  #personal-account .info-section {
+    margin-bottom: 20px;
+  }
+  
+  /* Label styles */
+  #personal-account label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #003135; /* Darker label color for better readability */
+    font-size: 14px; /* Increased font size */
+  }
+  
+  /* Input styles */
+  #personal-account input[type="text"],
+  #personal-account input[type="number"],
+  #personal-account input[type="date"],
+  #personal-account input[type="tel"],
+  #personal-account input[type="password"],
+  #personal-account select {
+    width: 100%;
+    padding: 12px; /* Increased padding for comfort */
+    margin-bottom: 15px;
+    border: 1px solid #D1D5DB; /* Light Gray border */
+    border-radius: 8px; /* More rounded corners */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Added box-shadow transition */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    font-size: 14px; /* Slightly larger font size */
+  }
+  
+  /* Focus styles */
+  #personal-account input:focus,
+  #personal-account select:focus {
+    border-color: #003135; /* Your preferred color */
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 49, 53, 0.5); /* Glow effect on focus */
+  }
+  
+  /* Button container styles */
+  #personal-account .button-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Button styles */
+  #personal-account button {
+    background-color: #003135; /* Your preferred color */
+    color: #fff;
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    padding: 12px 20px; /* Increased padding for a better click area */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform transition */
+    font-size: 14px; /* Consistent font size */
+  }
+  
+  #personal-account button:hover {
+    background-color: #005151; /* Slightly lighter shade for hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    #personal-account .button-container {
+      flex-direction: column;
+    }
+  
+    #personal-account button {
+      margin-bottom: 10px;
+      width: 100%;
+    }
+  }
+  
+  
+  
+  
+  
+  /* Vehicle Information Section Styles */
+  #vehicle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensures button container stays at the bottom */
+    height: auto;
+    background-color: #F7F9FC; /* Soft Light Blue-Gray for background */
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for more depth */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-top: 4px solid #003135; /* Thicker border for emphasis */
+  }
+  
+  /* Headings */
+  #vehicle h2,
+  #vehicle h3 {
+    color: #003135; /* Darker shade for headings */
+    margin-bottom: 10px; /* Space below headings */
+  }
+  
+  /* Info Section Styles */
+  #vehicle .info-section {
+    margin-bottom: 20px;
+    flex-grow: 0; /* Ensure info sections do not grow */
+  }
+  
+  /* Label Styles */
+  #vehicle label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333; /* Darker gray for labels */
+  }
+  
+  /* Input Styles */
+  #vehicle input[type="text"],
+  #vehicle input[type="file"] {
+    width: 100%;
+    padding: 12px; /* Increased padding for comfort */
+    margin-bottom: 15px;
+    border: 1px solid #D1D5DB; /* Light Gray border */
+    border-radius: 8px; /* More rounded corners */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Added transition effects */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  /* Focus Styles */
+  #vehicle input:focus {
+    border-color: #003135; /* Match with preferred color */
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 49, 53, 0.5); /* Glow effect on focus */
+  }
+  
+  #vehicle-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Allow container to grow as sections are added */
+  }
+  
+  /* Image Display Styles */
+  #vehicle .image-display {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  #vehicle .image-display img {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ccc; /* Neutral border for images */
+  }
+  
+  
+  
+  /* Button Container */
+  #vehicle .button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: auto; /* Push the button container to the bottom */
+  }
+  
+  /* Button Styles */
+  #vehicle button {
+    background-color: #003135; /* Your preferred color */
+    color: #fff;
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    padding: 12px 20px; /* Increased padding for a better click area */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform transition */
+  }
+  
+  #vehicle button:hover {
+    background-color: #005151; /* Slightly lighter shade for hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    #vehicle .button-container {
+      flex-direction: column;
+    }
+  
+    #vehicle button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    #vehicle .image-display {
+      flex-direction: column;
+    }
+  }
+  
+  /* Vehicle Info Subsection Styles */
+  #vehicle-info {
+    background-color: #f5f5f5; /* Slightly different shade for separation */
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+    position: relative; /* Needed for the delete icon to position within the section */
+  }
+  
+  /* Delete Icon Styles */
+  #vehicle-info .delete-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #ff0000; /* Red color for delete icon */
+    transition: color 0.3s;
+  }
+  
+  #vehicle-info .delete-icon:hover {
+    color: #d10000; /* Darker red on hover */
+  }
+  
+  /* Subsection Headings */
+  #vehicle-info h3 {
+    color: #003135; /* Heading color */
+    margin-bottom: 8px;
+    font-size: 1.1em;
+  }
+  
+  /* Label Styles for Vehicle Info */
+  #vehicle-info label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #333; /* Darker gray for labels */
+  }
+  
+  /* Input Styles */
+  #vehicle-info input[type="text"],
+  #vehicle-info input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #D1D5DB; /* Light gray border for vehicle info */
+    border-radius: 8px; /* More rounded corners */
+    transition: border-color 0.3s ease; /* Transition for border color */
+  }
+  
+  /* Focus Styles for Inputs */
+  #vehicle-info input:focus {
+    border-color: #003135; /* Preferred focus color */
+    outline: none;
+  }
+  
+  /* Image Display Styles in Vehicle Info */
+  #vehicle-info .image-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  
+  #vehicle-info .image-display img {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ccc; /* Neutral border for images */
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    #vehicle-info .image-display {
+      flex-direction: column;
+    }
+  }
+  
+  
+  
+  
+  
+  /* For Contacts Form Style */
+  /* Contacts Section Styles */
+  #contacts {
+    display: block; /* Ensure the section is displayed */
+    background-color: #F7F9FC; /* Soft neutral with a touch of blue */
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for more depth */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-top: 4px solid #003135; /* Thicker border for emphasis */
+  }
+  
+  /* Headings */
+  #contacts h2 {
+    color: #003135; /* Preferred dark color for headings */
+    margin-bottom: 20px; /* Space below the heading */
+    font-family: 'Arial', sans-serif; /* Modern font for headings */
+  }
+  
+  /* Info Section Styles */
+  #contacts .info-section {
+    margin-bottom: 20px; /* Space below the info section */
+  }
+  
+  /* Label Styles */
+  #contacts label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #003135; /* Darker label color for better readability */
+  }
+  
+  /* Input Styles */
+  #contacts input[type="email"],
+  #contacts input[type="tel"] {
+    width: 100%;
+    padding: 12px; /* Increased padding for comfort */
+    margin-bottom: 15px;
+    border: 1px solid #ccc; /* Border for inputs */
+    border-radius: 8px; /* More rounded corners */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  /* Focus Styles */
+  #contacts input:focus {
+    border-color: #003135; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 8px rgba(0, 49, 53, 0.5); /* Glow effect on focus */
+  }
+  
+  /* Button Container */
+  #contacts .button-container {
+    display: flex;
+    justify-content: space-between; /* Space between buttons */
+    gap: 10px; /* Gap between buttons */
+  }
+  
+  /* Button Styles */
+  #contacts button {
+    background-color: #003135; /* Preferred color */
+    color: #fff; /* Button text color */
+    border: none; /* Remove default border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 12px 20px; /* Increased padding for a better click area */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition effects */
+  }
+  
+  /* Button hover effect */
+  #contacts button:hover {
+    background-color: #005151; /* Slightly lighter shade for hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    #contacts .button-container {
+      flex-direction: column; /* Stack buttons on smaller screens */
+    }
+  
+    #contacts button {
+      width: 100%; /* Full width for buttons on small screens */
+      margin-bottom: 10px; /* Space below buttons */
+    }
+  }
+  
+  
+  
+  
+  /* For Government Form Styles */
+  /* Government Information Section Styles */
+  #government-info {
+    display: block;
+    background-color: #F7F9FC; /* Soft neutral with a touch of blue */
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for more depth */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-top: 4px solid #003135; /* Thicker border for emphasis */
+  }
+  
+  /* Headings */
+  #government-info h2,
+  #government-info h3 {
+    color: #003135; /* Preferred color */
+    margin-bottom: 15px;
+    font-family: 'Arial', sans-serif; /* Modern font for headings */
+  }
+  
+  /* Info Section Styles */
+  #government-info .info-section {
+    margin-bottom: 20px;
+  }
+  
+  /* Label Styles */
+  #government-info label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #003135; /* Darker color for better readability */
+  }
+  
+  /* Input Styles */
+  #government-info input[type="text"],
+  #government-info input[type="file"] {
+    width: 100%;
+    padding: 12px; /* Increased padding for comfort */
+    margin-bottom: 15px;
+    border: 1px solid #ccc; /* Border for inputs */
+    border-radius: 8px; /* More rounded corners */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  /* Focused Input Styles */
+  #government-info input:focus {
+    border-color: #003135; /* Focused border color */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 8px rgba(0, 49, 53, 0.5); /* Glow effect on focus */
+  }
+  
+  /* Image Display Styles */
+  #government-info .image-display {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  #government-info .image-display img {
+    width: 140px; /* Increased image size */
+    height: 180px; /* Increased image size */
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Button Container Styles */
+  #government-info .button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  /* Button Styles */
+  #government-info button {
+    background-color: #003135; /* Preferred color */
+    color: #fff; /* Button text color */
+    border: none; /* Remove default border */
+    border-radius: 8px; /* More rounded corners */
+    padding: 12px 20px; /* Increased padding for a better click area */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+  }
+  
+  /* Button hover effect */
+  #government-info button:hover {
+    background-color: #005151; /* Slightly lighter shade for hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    #government-info .button-container {
+      flex-direction: column; /* Stack buttons on smaller screens */
+    }
+  
+    #government-info button {
+      width: 100%; /* Full width for buttons on small screens */
+      margin-bottom: 10px; /* Space below buttons */
+    }
+  
+    #government-info .image-display {
+      flex-direction: column; /* Stack image and input vertically */
+      align-items: flex-start; /* Align items to the start */
+    }
+  }
+  
+  
+  
+  
+  /* For Submit Attendance Form */
+  /* General Form Section Styles */
+  .form-sections {
+    background-color: #F7F9FC; /* Soft neutral background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for depth */
+    padding: 20px; /* Inner spacing */
+    margin-bottom: 20px; /* Space between sections */
+  }
+  
+  /* Headings */
+  .form-sections h2 {
+    color: #003135; /* Main color */
+    margin-bottom: 15px; /* Space below headings */
+    font-family: 'Arial', sans-serif; /* Modern font for headings */
+  }
+  
+  /* Sub-Headings */
+  .form-sections h3 {
+    color: #003135; /* Main color */
+    margin-top: 20px; /* Space above sub-headings */
+    margin-bottom: 10px; /* Space below sub-headings */
+  }
+  
+  /* Label Styles */
+  label {
+    display: block; /* Labels occupy full width */
+    margin-bottom: 8px; /* Space below labels */
+    font-weight: bold; /* Bold text for labels */
+    color: #003135; /* Darker label color for readability */
+  }
+  
+  /* Input Styles */
+  input[type="text"],
+  input[type="file"] {
+    width: 100%; /* Full width inputs */
+    padding: 12px; /* Increased padding for comfort */
+    margin-bottom: 15px; /* Space below inputs */
+    border: 1px solid #ccc; /* Light border for inputs */
+    border-radius: 8px; /* More rounded corners for inputs */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for border */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  /* Focus Styles */
+  input[type="text"]:focus,
+  input[type="file"]:focus {
+    border-color: #003135; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 8px rgba(0, 49, 53, 0.5); /* Glow effect on focus */
+  }
+  
+  /* Button Container Styles */
+  .button-container {
+    display: flex; /* Flexbox for buttons */
+    justify-content: space-between; /* Space between buttons */
+    gap: 10px; /* Gap between buttons */
+  }
+  
+  /* Button Styles */
+  button {
+    background-color: #003135; /* Main color for buttons */
+    color: #fff; /* White text for buttons */
+    border: none; /* No border */
+    border-radius: 8px; /* More rounded corners */
+    padding: 12px 20px; /* Increased padding for better click area */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for background */
+  }
+  
+  /* Button Hover Effects */
+  button:hover {
+    background-color: #005151; /* Slightly lighter shade on hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .button-container {
+      flex-direction: column; /* Stack buttons on smaller screens */
+    }
+  
+    button {
+      margin-bottom: 10px; /* Space below buttons */
+      width: 100%; /* Full-width buttons on mobile */
+    }
+  }
+  
+  
+  
+  
+  /* Pay Slip Form Section */
+  #payslip {
+    background-color: #F7F9FC; /* Soft neutral background */
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for a softer effect */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-top: 4px solid #003135; /* Slightly thicker top border for emphasis */
+  }
+  
+  #payslip h2 {
+    color: #003135; /* Main color for headings */
+    margin-bottom: 15px;
+    font-family: 'Arial', sans-serif; /* Modern font for headings */
+  }
+  
+  /* Date Range Selection */
+  .date-range {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-weight: bold;
+  }
+  
+  .date-range span {
+    color: #003135; /* Consistent color for text */
+  }
+  
+  .details-button {
+    background-color: #003135; /* Main button color */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 8px; /* More rounded corners */
+    padding: 8px 12px; /* Increased padding for comfort */
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transition for background and transform */
+    margin-left: auto; /* Pushes button to the right in a flex container */
+  }
+  
+  .details-button:hover {
+    background-color: #005151; /* Slightly lighter shade on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+  }
+  
+  /* Details Section */
+  .details {
+    display: none;
+    margin-top: 15px;
+  }
+  
+  .driver-info {
+    font-size: 14px;
+    color: #333; /* Dark color for readability */
+    margin-bottom: 20px;
+  }
+  
+  .driver-info p {
+    margin-bottom: 5px;
+  }
+  
+  /* Earnings and Deductions Summary */
+  .pay-summary h3 {
+    color: #003135; /* Heading color */
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .pay-summary .earnings, 
+  .pay-summary .deductions {
+    border: 1px solid #ccc; /* Light border for summary sections */
+    border-radius: 4px;
+    padding: 15px;
+    background-color: #f9f9f9; /* Light background for sections */
+  }
+  
+  .pay-summary .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0; /* Light border for separation */
+    font-size: 14px;
+  }
+  
+  .pay-summary .row.total {
+    font-weight: bold;
+    border-top: 2px solid #003135; /* Emphasized top border for total */
+    color: #003135; /* Total row text color */
+    border-bottom: none;
+    padding-top: 10px; /* Additional space above total row */
+  }
+  
+  .net-pay {
+    font-weight: bold; /* Emphasized net pay */
+    color: #003135; /* Consistent color for net pay */
+  }
+  
+  /* Download Button */
+  .download-button {
+    background-color: #003135; /* Button color */
+    color: #fff; /* Button text color */
+    border: none;
+    border-radius: 8px; /* More rounded corners */
+    padding: 10px 15px; /* Increased padding */
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transition effects */
+  }
+  
+  .download-button:hover {
+    background-color: #005151; /* Lighter shade on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    #payslip {
+      padding: 15px; /* Adjust padding for mobile */
+    }
+  
+    .date-range, .row {
+      flex-direction: column; /* Stack elements on smaller screens */
+      gap: 5px; /* Space between stacked elements */
+    }
+  
+    .details-button, .download-button {
+      width: 100%; /* Full width for buttons on mobile */
+    }
+  }
+  
+  
+  
+  /*For Attendance Summary Form*/
+  /* Attendance Summary Form Section Styles */
+  
+  .date-range {
+    display: flex;
+    justify-content: space-evenly; /* Center the inputs horizontally */
+    gap: 15px; /* Add spacing between the inputs */
+    margin-bottom: 20px; /* Add bottom margin for spacing */
+  }
+  
+  .date-input {
+    display: flex;
+    flex-direction: column; /* Keep label and input stacked */
+    min-width: 150px; /* Set a minimum width for each date input */
+  }
+  
+  .date-input label {
+    margin-bottom: 5px; /* Spacing between label and input */
+    color: #003135; /* Label color */
+  }
+  
+  /* Media Query for small screens */
+  @media (max-width: 480px) {
+    .date-range {
+      gap: 8px; /* Reduce spacing between inputs on small screens */
+    }
+  }
+  
+  /* Attendance Summary Section */
+  .form-sections h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #003135; /* Heading color */
+  }
+  
+  /* Stats Row */
+  .stats-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    flex-wrap: wrap; /* Allow wrapping to the next line when necessary */
+  }
+  
+  /* Stat Items */
+  .stat {
+    flex: 1 1 20%; /* Adjust this percentage to control how many items per row */
+    text-align: center;
+    margin: 10px; /* Add some margin for spacing */
+    min-width: 150px; /* Ensure minimum width for smaller screens */
+    background-color: #F9F9F9; /* Light background for stat items */
+    border: 1px solid #ddd; /* Light border for stat items */
+    border-radius: 5px; /* Rounded corners for stat items */
+    padding: 15px; /* Padding inside stat items */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  /* Stat Value Styles */
+  .stat-value {
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #003135; /* Color for stat values */
+  }
+  
+  /* Expandable Card Styling */
+  .expandable-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 15px;
+    background-color: #fff; /* White background for cards */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for cards */
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #F7F9FC; /* Soft neutral background for header */
+    cursor: pointer;
+    border-bottom: 1px solid #ddd; /* Light border at the bottom */
+  }
+  
+  .card-content {
+    padding: 10px;
+    display: none; /* Hidden by default */
+  }
+  
+  /* View Button Styling */
+  .view-button {
+    background-color: #003135; /* Button color */
+    color: white; /* Button text color */
+    border: none;
+    padding: 10px; /* Adjust padding for better size */
+    border-radius: 3px; /* Rounded corners */
+    cursor: pointer;
+    width: 100px; /* Fixed width */
+    height: 40px; /* Fixed height */
+    display: flex; /* Center the text vertically */
+    align-items: center; /* Center align text vertically */
+    justify-content: center; /* Center align text horizontally */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+  }
+  
+  .view-button:hover {
+    background-color: #005050; /* Darker shade on hover */
+  }
+  
+  /* Media Queries for Responsiveness */
+  @media (max-width: 768px) {
+    .stat {
+        flex: 1 1 30%; /* Three items per row on medium screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .stat {
+        flex: 1 1 45%; /* Two items per row on small screens */
+    }
+  }
+  

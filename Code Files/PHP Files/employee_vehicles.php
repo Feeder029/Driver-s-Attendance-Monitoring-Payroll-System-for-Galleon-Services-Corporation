@@ -46,10 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] 
         echo "Error uploading file: " . $DriverLicense['error'];
     }
 
-    header("Location: employee_profiledes.php"); // Refresh for updated one!
+    header(header: "Location: EMP_INDEX.PHP"); // Refresh for updated one!
     exit(); 
 }
-
 
 //Connect to Adding a Vehicles Form
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'NewVehicles') {
@@ -69,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] 
 
     NewVehicles($conn,$DriverID, $Plate,$OR,$CR);
 
-    header("Location: employee_profiledes.php"); // Refresh for updated one!
+    header(header: "Location: EMP_INDEX.PHP"); // Refresh for updated one!
     exit(); 
 }
 

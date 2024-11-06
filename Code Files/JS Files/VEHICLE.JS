@@ -74,28 +74,25 @@ function addNewVehicle() {
         return;
     }
 
-    // Clone the vehicle-info section
     const vehicleInfoSection = document.querySelector("#vehicle-info");
     const newVehicleInfoSection = vehicleInfoSection.cloneNode(true);
 
-    // Clear input fields, set image inputs visible, and mark as a new section
-    newVehicleInfoSection.querySelectorAll("input[type='text'], input[type='file']").forEach(input => {
+    newVehicleInfoSection.querySelectorAll("input[type='text'], input[type='file']").forEach((input, index) => {
         if (input.type === 'text') {
-            input.value = ""; // Clear text inputs
+            input.value = "";
+            input.name = `newPlate[]`; // For new Plate input
         } else if (input.type === 'file') {
-            input.value = null; // Clear file inputs
-            input.style.display = 'block'; // Ensure file inputs are visible
+            input.value = null;
+            input.name = index % 2 === 0 ? `newOR[]` : `newCR[]`; // For new OR and CR inputs
+            input.style.display = 'block';
             const img = input.previousElementSibling;
-            if (img) img.src = ""; // Clear any existing image previews
+            if (img) img.src = "";
         }
     });
 
-    // Mark this section as new
     newVehicleInfoSection.setAttribute("data-new", "true");
-
-    // Append the new section to the vehicle-info container
     document.getElementById("vehicle-info-container").appendChild(newVehicleInfoSection);
-    toggleEditMode(); // Enter edit mode for the new section
+    toggleEditMode();
 }
 
 function deleteVehicleInfo(icon) {
@@ -105,8 +102,25 @@ function deleteVehicleInfo(icon) {
         // Show confirmation dialog
         const confirmed = confirm("Are you sure you want to delete this vehicle information?");
         if (confirmed) {
-            // Remove the vehicle-info section if confirmed
-            section.remove();
+            // Retrieve the vehicleID from the hidden input field
+            const vehicleID = section.querySelector('input[name="VehicleID[]"]').value;
+
+            // AJAX request to delete vehicle
+            fetch('../PHP FILES/employee_vehicles.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `deleteVehicleID=${vehicleID}` // Data sent to PHP
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data); // Show success/failure message from PHP
+                // Remove the vehicle-info section if deletion was successful
+                section.remove();
+            })
+            .catch(error => console.error('Error:', error));
         }
     }
 }
+

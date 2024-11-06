@@ -45,7 +45,7 @@
     <div class="button-container">
         <button type="button" onclick="editVehicles()" name="EDIT" value="EDIT" id="edit_Vehicles">Edit</button>
         <button id="save-btn" disabled class="editable_status_Vehicle" value="NEW_VEHICLE">Save</button>
-        <button type="submit">Add Vehicle</button> <!-- Change to submit type -->
+        <button type="button" onclick="addNewVehicle()">Add Vehicle</button>
     </div>
 </FORM>
   </div>

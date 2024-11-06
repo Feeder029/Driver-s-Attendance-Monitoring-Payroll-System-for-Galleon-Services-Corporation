@@ -8,7 +8,9 @@
 </head>
 <body>
   <div class="container">
+    <img src="/PIC" alt="">
     <header>
+      <img src="LOGO.png" alt="Company Logo" class="logo">
       <h1>Driver Portal</h1>
       <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
       <div class="dropdown" id="dropdown-menu">

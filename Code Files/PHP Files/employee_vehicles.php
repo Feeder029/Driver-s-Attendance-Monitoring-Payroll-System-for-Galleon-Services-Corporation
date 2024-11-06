@@ -1,5 +1,5 @@
 <?php
-    include("../employee_profile.php");
+include("employee_profile.php");
 
 
 $OR = [];
@@ -51,26 +51,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] 
 }
 
 //Connect to Adding a Vehicles Form
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'NewVehicles') {
-    $Plate = htmlspecialchars($_POST['newPlate']);
-    // NewVehicles($conn,$DriveID, $plate, $orImage, $crImage);
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'Vehicles') {
+    // Existing vehicles update code here
 
+    // Check for new vehicle data
+    if (isset($_POST['newPlate'])) {
+        $newPlates = $_POST['newPlate'];
+        $newORImages = $_FILES['newOR'];
+        $newCRImages = $_FILES['newCR'];
 
-    if (isset($_FILES['newOR']) && $_FILES['newOR']['error'] == UPLOAD_ERR_OK) {
-        //Get the Binary Data
-        $OR = mysqli_real_escape_string($conn, file_get_contents($_FILES['newOR']['tmp_name']));
-    };
+        for ($i = 0; $i < count($newPlates); $i++) {
+            $newPlate = htmlspecialchars($newPlates[$i]);
 
-    if (isset($_FILES['newCR']) && $_FILES['newCR']['error'] == UPLOAD_ERR_OK) {
-        //Get the Binary Data
-        $CR = mysqli_real_escape_string($conn, file_get_contents($_FILES['newCR']['tmp_name']));
-    };
+            $newOR = null;
+            $newCR = null;
 
-    NewVehicles($conn,$DriverID, $Plate,$OR,$CR);
+            if ($newORImages['error'][$i] == UPLOAD_ERR_OK) {
+                $newOR = mysqli_real_escape_string($conn, file_get_contents($newORImages['tmp_name'][$i]));
+            }
 
-    header(header: "Location: EMP_INDEX.PHP"); // Refresh for updated one!
-    exit(); 
+            if ($newCRImages['error'][$i] == UPLOAD_ERR_OK) {
+                $newCR = mysqli_real_escape_string($conn, file_get_contents($newCRImages['tmp_name'][$i]));
+            }
+
+            // Insert new vehicle data into the database
+            NewVehicles($conn, $DriverID, $newPlate, $newOR, $newCR);
+        }
+    }
+
+    header("Location: EMP_INDEX.PHP");
+    exit();
 }
+
 
 //Function for Adding a New Vehicle
 function NewVehicles($conn,$DriveID, $Plate,$OR,$CR) {
@@ -105,6 +117,28 @@ function Vehicles_Update($conn, $vehicleID, $plate, $orImage, $crImage) {
     }
 }
 
+if (isset($_POST['deleteVehicleID'])) {
+    $vehicleID = $_POST['deleteVehicleID'];
+    DeleteVehicles($conn, $vehicleID); // Call the delete function
+}
+
+// Delete function
+function DeleteVehicles($conn, $vehicleID) {
+    // Sanitize vehicleID to prevent SQL injection
+    $vehicleID = mysqli_real_escape_string($conn, $vehicleID);
+    $DeleteVehicleQuery = "DELETE FROM driver_vehicle WHERE DV_ID ='$vehicleID'";
+
+    // Execute query
+    $result = mysqli_query($conn, $DeleteVehicleQuery);
+
+    if (!$result) {
+        echo "Deletion failed: " . mysqli_error($conn);
+    } else {
+        echo "Vehicle information deleted successfully.";
+    }
+}
+
+
 //Function for License Update
 function License_Update($conn, $DriverID, $LicenseImage) {
     // Ensure the LicenseImage is properly quoted for SQL
@@ -121,5 +155,6 @@ function License_Update($conn, $DriverID, $LicenseImage) {
         echo "Driver license information updated successfully.";
     }
 }
+
 
 ?>

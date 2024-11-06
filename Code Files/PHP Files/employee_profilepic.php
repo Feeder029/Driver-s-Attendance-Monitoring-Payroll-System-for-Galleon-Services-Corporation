@@ -1,6 +1,6 @@
 <?php
 
-include("employee_profile.php");
+include("../employee_profile.php");
 
 
 // Connection for the Profile Picture Form

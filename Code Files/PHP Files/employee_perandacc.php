@@ -1,5 +1,5 @@
 <?php
-    include("employee_profile.php");
+    include("../employee_profile.php");
 
 
  

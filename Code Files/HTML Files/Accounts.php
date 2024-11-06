@@ -53,7 +53,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../CSS Files/Accounts.css">
+    <link rel="stylesheet" href="../CSS Files/Accounts.css?v=1.2">
+    <script src="../JS Files/Accounts.js"></script>
     <title>ACCOUNTS</title>
 </head>
 <body>
@@ -143,7 +144,7 @@
                                         <div class='td-btn'>
                                             <button id='accept-btn'>ACCEPT</button>
                                             <button id='decline-btn'>DECLINE</button>
-                                            <button id='view-btn'>VIEW MORE</button>
+                                            <button id='view-btn' popovertarget='view-more-container'>VIEW MORE</button>
                                         </div>
                                     </div>
                                 </div>
@@ -156,6 +157,75 @@
             ?>
            
         </table>
+    </div>
+
+    <div popover id="view-more-container">
+
+        <div class="view-left">
+            <i class='bx bx-user-circle'></i>
+            <button id="change-view-img">CHANGE IMAGE</button>
+
+            <div id="view-role">
+                <label for="view-role">Role:</label>
+                <input type="text" id="view-role-role" value="ROLE" disabled>
+            </div>
+
+            <div id="account-status">
+                <label for="account-status">Account Status:</label> <br>
+                <input type="radio" name="status" id="Active">ACTIVE <br>
+                <input type="radio" name="status" id="Inactive">INACTIVE <br>
+                <input type="radio" name="status" id="Pending" checked>PENDING
+            </div>
+
+            <button onclick="DisableEnableInput()">EDIT</button>
+        </div>
+
+        <div class="view-right">
+            <div class="view-space">
+                <button popovertarget="view-more-container" popovertargetaction="hide">CLOSE</button>
+            </div>
+            <div class="view-name">
+                <h2>NAME:</h2>
+                <div class="field-group-1" id="fg1">        
+                    <input type="text" id="firstname" value="name" disabled>
+                    <h5 for="firstname">FIRST NAME</h5>
+                </div>
+                <div class="field-group-1" id="fg1">                   
+                    <input type="text" id="middlename" value="name" disabled>
+                    <h5 for="middlename">MIDDLE NAME</h5>
+                </div>
+                <div class="field-group-1" id="fg2">                   
+                    <input type="text" id="lastname" value="name" disabled>
+                    <h5 for="lastname">LAST NAME</h>
+                </div>
+                <div class="field-group-1" id="fg2">                  
+                    <input type="text" id="suffix" value="name" disabled>
+                    <h5 for="suffix">SUFFIX</h5>
+                </div>
+            </div>
+            <div class="view-contact">
+                <h2>CONTACTS:</h2>
+                <div class="field-group-2">
+                    <input type="text" id="contact" value="123123" disabled>
+                    <h5 for="contact">CONTACT NO</h5>
+                </div>
+                <div class="field-group-2">
+                    <input type="text" id="email" value="name@gmail.com" disabled>
+                    <h5 for="email">EMAIL</h5>
+                </div>
+            </div>
+            <div class="view-account">
+                <h2>ACCOUNT:</h2>
+                <div class="field-group-3">
+                    <input type="text" id="user" value="user" disabled>
+                    <h5 for="user">USERNAME</h5>
+                </div>
+                <div class="field-group-3">
+                    <input type="text" id="pass" value="pass" disabled>
+                    <h5 for="pass">PASSWORD</h5>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

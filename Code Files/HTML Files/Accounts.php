@@ -160,72 +160,83 @@
     </div>
 
     <div popover id="view-more-container">
+        <?php
+        echo "
+        <div class='view-left'>
+                    <i class='bx bx-user-circle'></i>
+                    <button id='change-view-img'>CHANGE IMAGE</button>
 
-        <div class="view-left">
-            <i class='bx bx-user-circle'></i>
-            <button id="change-view-img">CHANGE IMAGE</button>
+                    <div id='view-role'>
+                        <label for='view--role'>Role:</label>
+                        <!-- <input type='text' id='view-role-role' value='ROLE' disabled> -->
+                        <select name='' id='view-role-role' value='ROLE' disabled>
+                            <option value='Human Resources'>Human Resources</option>
+                            <option value='Agency Coordinator'>Agency Coordinator</option>
+                            <option value='Payroll'>Payroll</option>
+                        </select>
+                    </div>
 
-            <div id="view-role">
-                <label for="view-role">Role:</label>
-                <input type="text" id="view-role-role" value="ROLE" disabled>
-            </div>
+                    <div id='account-status'>
+                        <label for='account-status'>Account Status:</label> <br>
+                        <input type='radio' name='status' id='Active'>ACTIVE <br>
+                        <input type='radio' name='status' id='Inactive'>INACTIVE <br>
+                        <input type='radio' name='status' id='Pending' checked>PENDING
+                    </div>
 
-            <div id="account-status">
-                <label for="account-status">Account Status:</label> <br>
-                <input type="radio" name="status" id="Active">ACTIVE <br>
-                <input type="radio" name="status" id="Inactive">INACTIVE <br>
-                <input type="radio" name="status" id="Pending" checked>PENDING
-            </div>
+                    <button onclick='DisableEnableInput()'>EDIT</button>
+                </div>
 
-            <button onclick="DisableEnableInput()">EDIT</button>
-        </div>
-
-        <div class="view-right">
-            <div class="view-space">
-                <button popovertarget="view-more-container" popovertargetaction="hide">CLOSE</button>
-            </div>
-            <div class="view-name">
-                <h2>NAME:</h2>
-                <div class="field-group-1" id="fg1">        
-                    <input type="text" id="firstname" value="name" disabled>
-                    <h5 for="firstname">FIRST NAME</h5>
-                </div>
-                <div class="field-group-1" id="fg1">                   
-                    <input type="text" id="middlename" value="name" disabled>
-                    <h5 for="middlename">MIDDLE NAME</h5>
-                </div>
-                <div class="field-group-1" id="fg2">                   
-                    <input type="text" id="lastname" value="name" disabled>
-                    <h5 for="lastname">LAST NAME</h>
-                </div>
-                <div class="field-group-1" id="fg2">                  
-                    <input type="text" id="suffix" value="name" disabled>
-                    <h5 for="suffix">SUFFIX</h5>
-                </div>
-            </div>
-            <div class="view-contact">
-                <h2>CONTACTS:</h2>
-                <div class="field-group-2">
-                    <input type="text" id="contact" value="123123" disabled>
-                    <h5 for="contact">CONTACT NO</h5>
-                </div>
-                <div class="field-group-2">
-                    <input type="text" id="email" value="name@gmail.com" disabled>
-                    <h5 for="email">EMAIL</h5>
-                </div>
-            </div>
-            <div class="view-account">
-                <h2>ACCOUNT:</h2>
-                <div class="field-group-3">
-                    <input type="text" id="user" value="user" disabled>
-                    <h5 for="user">USERNAME</h5>
-                </div>
-                <div class="field-group-3">
-                    <input type="text" id="pass" value="pass" disabled>
-                    <h5 for="pass">PASSWORD</h5>
-                </div>
-            </div>
-        </div>
+                <div class='view-right'>
+                    <div class='view-space'>
+                        <button popovertarget='view-more-container' popovertargetaction='hide'>CLOSE</button>
+                    </div>
+                    <div class='view-name'>
+                        <h2>NAME:</h2>
+                        <div class='field-group-1' id='fg1'>        
+                            <input type='text' id='firstname' value='name' disabled>
+                            <h5 for='firstname'>FIRST NAME</h5>
+                        </div>
+                        <div class='field-group-1' id='fg1'>                   
+                            <input type='text' id='middlename' value='name' disabled>
+                            <h5 for='middlename'>MIDDLE NAME</h5>
+                        </div>
+                        <div class='field-group-1' id='fg2'>                   
+                            <input type='text' id='lastname' value='name' disabled>
+                            <h5 for='lastname'>LAST NAME</h5>
+                        </div>
+                        <div class='field-group-1' id='fg2'>                  
+                            <input type='text' id='suffix' value='name' disabled>
+                            <h5 for='suffix'>SUFFIX</h5>
+                        </div>
+                    </div>
+                    <div class='view-contact'>
+                        <h2>CONTACTS:</h2>
+                        <div class='field-group-2'>
+                            <input type='text' id='contact' value='123123' disabled>
+                            <h5 for='contact'>CONTACT NO</h5>
+                        </div>
+                        <div class='field-group-2'>
+                            <input type='text' id='email' value='name@gmail.com' disabled>
+                            <h5 for='email'>EMAIL</h5>
+                        </div>
+                    </div>
+                    <div class='view-account'>
+                        <h2>ACCOUNT:</h2>
+                        <div class='field-group-3'>
+                            <input type='text' id='user' value='user' disabled>
+                            <h5 for='user'>USERNAME</h5>
+                        </div>
+                        <div class='field-group-3'>
+                            <input type='text' id='pass' value='pass' disabled>
+                            <h5 for='pass'>PASSWORD</h5>
+                        </div>
+                    </div>
+                    <div class='view-date'>
+                        <h2>ACCOUNT CREATED: &nbsp;</h2>
+                        <h2>MM-DD-YYYY</h2>
+                    </div>
+             </div>";
+        ?>
     </div>
 </body>
 </html>

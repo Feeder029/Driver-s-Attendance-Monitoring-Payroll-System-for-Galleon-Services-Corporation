@@ -59,8 +59,9 @@ include("employee_profile.php");
 
     <!-- Edit and Save Buttons -->
     <div class="button-container">
-    <button type="button" onclick="editGovernmentInfo()" id="edit_GOV">Edit</button>
-    <button type="submit" onclick="saveGovernmentInfo()">Save</button>
+    <button type="button" onclick="editGovernmentInfo()" id="edit">Edit</button>
+    <button type="button" onclick="BackGovernmentInfo()" name="BACK" value="BACK" id="back" style="display: none;">Back</button>  
+    <button type="submit" onclick="saveGovernmentInfo()" id="save" style="display: none;">Save</button>
     </div>
   </form>
 

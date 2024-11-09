@@ -53,13 +53,12 @@
   </div>
 
   <script src="../JS Files/INDEX.JS"></script>
-  <script src="../JS Files/VEHICLE.JS?v=1.1"></script>
+  <script src="../JS Files/VEHICLE.JS?v=1.2"></script>
   <script src="../JS Files/GOVERNMENT-INFO.JS?v=1.2"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   <script src="../JS Files/PAYSLIP.JS"></script> 
   <script src="../JS Files/ATTENDANCE-SUMMARY.JS"></script> 
   <script src="../JS Files/SUBMIT-ATTENDANCE.JS"></script> 
-  <script src="../JS Files/Employee_Profile.js?v=1.2"></script>
-  <script src="../JS Files/Employee_Profile2.js?v=1.1"></script>
+  <script src="../JS Files/Employee_Profile.js?v=1.3"></script>
 </body>
 </html>

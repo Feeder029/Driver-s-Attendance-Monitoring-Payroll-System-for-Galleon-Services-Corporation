@@ -3,6 +3,19 @@ function editProfile(){
     editableFields.forEach(function(field) {
         field.disabled = false; // Make TextBox able to input
     });
+    document.getElementById("save").style.display = "block";
+    document.getElementById("back").style.display = "block";
+    document.getElementById("edit").style.display = "none";
+};
+
+function BackProfile(){
+    const editableFields = document.querySelectorAll('.editable_status_P-A');
+    editableFields.forEach(function(field) {
+        field.disabled = true; // Make TextBox able to input
+    });
+    document.getElementById("save").style.display = "none";
+    document.getElementById("back").style.display = "none";
+    document.getElementById("edit").style.display = "block";
 };
 
 function editContacts() {
@@ -10,23 +23,37 @@ function editContacts() {
     editableFields.forEach(function(field) {
         field.disabled = false; // Make TextBox able to input
     });
+
+    document.getElementById("save").style.display = "block";
+    document.getElementById("back").style.display = "block";
+    document.getElementById("edit").style.display = "none";
 };
 
-
-function editVehicles() {
-    alert("EWRfd");
-    const editableFields = document.querySelectorAll('.editable_status_Vehicle');
-    const ChooseImage = document.querySelectorAll('.editimage');
-
+function BackContacts() {
+    const editableFields = document.querySelectorAll('.editable_status_Contacts');
     editableFields.forEach(function(field) {
-        field.disabled = false; // Make TextBox able to input
+        field.disabled = true; // Make TextBox able to input
     });
-
-    ChooseImage.forEach(function(Text) {
-        Text.style.display = 'block';
-    });
-
+    
+    document.getElementById("save").style.display = "none";
+    document.getElementById("back").style.display = "none";
+    document.getElementById("edit").style.display = "block";
 };
+
+// function editVehicles() {
+//     alert("EWRfd");
+//     const editableFields = document.querySelectorAll('.editable_status_Vehicle');
+//     const ChooseImage = document.querySelectorAll('.editimage');
+
+//     editableFields.forEach(function(field) {
+//         field.disabled = false; // Make TextBox able to input
+//     });
+
+//     ChooseImage.forEach(function(Text) {
+//         Text.style.display = 'block';
+//     });
+
+// };
 
 document.getElementById('edit_GOV').addEventListener('click', function() {
     alert("edit_GOV");

@@ -1,5 +1,5 @@
 <?php
-include("../employee_profile.php");
+include("employee_profile.php");
 
 // Connection for the Contacts Form
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

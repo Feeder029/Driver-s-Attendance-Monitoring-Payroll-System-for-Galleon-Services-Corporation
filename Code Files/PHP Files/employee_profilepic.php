@@ -1,6 +1,6 @@
 <?php
 
-include("../employee_profile.php");
+include("employee_profile.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] == 'profileform') {
 

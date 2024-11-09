@@ -20,7 +20,7 @@ function toggleEditMode() {
 
 
 function editVehicles() {
-    alert("EWRfd");
+    alert("4");
     const editableFields = document.querySelectorAll('.editable_status_Vehicle');
     const ChooseImage = document.querySelectorAll('.editimage');
 
@@ -32,7 +32,32 @@ function editVehicles() {
         Text.style.display = 'block';
     });
 
+
+    document.getElementById("save-btn").style.display = "block";
+    document.getElementById("edit").style.display = "none";
+    document.getElementById("add").style.display = "none";
+    document.getElementById("back").style.display = "block";
 };
+
+function BackVehicles() {
+    const editableFields = document.querySelectorAll('.editable_status_Vehicle');
+    const ChooseImage = document.querySelectorAll('.editimage');
+
+    editableFields.forEach(function(field) {
+        field.disabled = true; // Make TextBox able to input
+    });
+
+    ChooseImage.forEach(function(Text) {
+        Text.style.display = 'none';
+    });
+
+
+    document.getElementById("save-btn").style.display = "none";
+    document.getElementById("edit").style.display = "block";
+    document.getElementById("add").style.display = "block";
+    document.getElementById("back").style.display = "none";
+};
+
 
 
 function saveVehicleInfo() {
@@ -93,6 +118,12 @@ function addNewVehicle() {
     newVehicleInfoSection.setAttribute("data-new", "true");
     document.getElementById("vehicle-info-container").appendChild(newVehicleInfoSection);
     toggleEditMode();
+
+    document.getElementById("save-btn").style.display = "block";
+    document.getElementById("edit").style.display = "none";
+    document.getElementById("add").style.display = "none";
+    document.getElementById("back").style.display = "block";
+
 }
 
 function deleteVehicleInfo(icon) {

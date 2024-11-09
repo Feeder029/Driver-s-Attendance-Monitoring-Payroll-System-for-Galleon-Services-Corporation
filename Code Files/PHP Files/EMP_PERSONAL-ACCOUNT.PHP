@@ -136,7 +136,8 @@
     <!-- Edit and Save Buttons -->
     <div class="button-container">
     <button type="button" onclick="editProfile()" name="EDIT" value="EDIT" id="edit">Edit</button>
-    <button type="submit" onclick="saveProfile()" name="SAVE" value="SAVE" id="save"  class="editable_status_P-A" disabled>Save</button>
+    <button type="button" onclick="BackProfile()" name="BACK" value="BACK" id="back" style="display: none;">Back</button>  
+    <button type="submit" onclick="saveProfile()" name="SAVE" value="SAVE" id="save" style="display: none;">Save</button>
     </div>
 
 

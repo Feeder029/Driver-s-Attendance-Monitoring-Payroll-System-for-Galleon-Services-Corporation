@@ -43,9 +43,10 @@
 
     <!-- Button Container stays outside the vehicle-info sections -->
     <div class="button-container">
-        <button type="button" onclick="editVehicles()" name="EDIT" value="EDIT" id="edit_Vehicles">Edit</button>
-        <button id="save-btn" disabled class="editable_status_Vehicle" value="NEW_VEHICLE">Save</button>
-        <button type="button" onclick="addNewVehicle()">Add Vehicle</button>
+       <button type="button" onclick="BackVehicles()" name="BACK" value="BACK" id="back" style="display: none;">Back</button>  
+        <button type="button" onclick="editVehicles()" name="EDIT" value="EDIT" id="edit">Edit</button>
+        <button id="save-btn" disabled class="editable_status_Vehicle" value="NEW_VEHICLE"  style="display: none;">Save</button>
+        <button type="button" onclick="addNewVehicle()" id="add">Add Vehicle</button>
     </div>
 </FORM>
   </div>

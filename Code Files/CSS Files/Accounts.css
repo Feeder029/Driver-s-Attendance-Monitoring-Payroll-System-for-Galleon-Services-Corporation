@@ -51,7 +51,7 @@ html{
     flex-direction: row;
     position: relative;
     line-height: 28px;
-
+    z-index: 100;
 }
 
 .search-bar input{
@@ -70,6 +70,7 @@ html{
     transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1);
     cursor: text;
     margin-right: 5px;
+   
 }
 
 .search-bar input::placeholder{
@@ -167,7 +168,7 @@ html{
     color: white;
     overflow: hidden;
     margin: 0 0 -127px -85px;
-    z-index: 100000000000000000000000000000000000000000000000;
+    z-index: 100;
 }
 
 .selected {
@@ -203,7 +204,7 @@ html{
     position: relative;
     top: -100px;
     opacity: 0;
-    z-index: 20000000000;
+    z-index: 200;
     transition: 300ms;
     cursor: pointer;
 }
@@ -265,14 +266,15 @@ html{
     margin-top: 20px;
     max-height: 6in;
     overflow-y: auto;
-    position: relative;
-    z-index: 0;
+    position:static;
+    z-index: 1;
 }
 
 .table-container .table-accounts{
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 10px;
+    z-index: 10;
 }
 
 tr, td{
@@ -281,6 +283,7 @@ tr, td{
     padding: 30px 10px;
     margin-bottom: 10px;
     border-radius: 15px;
+    z-index: 10;
 }
 
 .td-content{
@@ -289,12 +292,14 @@ tr, td{
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
+    z-index: 10;
 }
 
 .td-left{
     display: flex;
+    margin-left: 20px;
     flex-direction: row;
-
+    z-index: 1;
 }
 
 .td-left .bx{
@@ -324,18 +329,17 @@ tr, td{
     display: flex;
     flex-direction: column;
     align-items: end;
-    position: relative;
-    right: 5%;
+    position: static;
+    margin-right: 45px;
 }
 
 #date{
     font-size: 20px;
     margin-right: -10px;
-    z-index: 1;
+    
 }
 
 .td-btn{
-    position: relative;
     align-content: space-between;
     word-spacing: 20px;
 }

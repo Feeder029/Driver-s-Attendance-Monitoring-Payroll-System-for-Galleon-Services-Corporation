@@ -53,7 +53,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../CSS Files/Accounts.css?v=1.2">
+    <link rel="stylesheet" href="../CSS Files/Accounts.css?v=1.4">
     <script src="../JS Files/Accounts.js"></script>
     <title>ACCOUNTS</title>
 </head>
@@ -140,7 +140,7 @@
                                         </div>
                                     </div>
                                     <div class='td-right'>
-                                        <h3 id='date'>Created on <span id='date-created'>" . $dateCreated . "</span></h3>
+                                        <h3 id='date'>Created on&nbsp;<span id='date-created'>" . $dateCreated . "</span></h3>
                                         <div class='td-btn'>
                                             <button id='accept-btn'>ACCEPT</button>
                                             <button id='decline-btn'>DECLINE</button>

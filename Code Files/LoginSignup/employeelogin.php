@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="employee.css">
 </head>
 <body>
+
+    <?php
+    include("employeeloginfunction.php");
+    ?>
+
     <!-- Form Container -->
     <div class="form-container">
         <div class="col col-1">
@@ -26,7 +31,8 @@
                 <button class="btn btn-1" id="signin">Login</button>
                 <button class="btn btn-2" id="signup">Register</button>
             </div>
-            
+
+            <form action="employeeloginfunction.php" method="post">
             <!-- Login Form Container -->
             <div class="login-form">
                 <div class="form-title">
@@ -34,24 +40,25 @@
                 </div>
                 <div class="form-input">
                     <div class="input-box">
-                        <input type="text" class="input-field" placeholder="Username" required>
+                        <input type="text" class="input-field" placeholder="Username" name="user" required>
                         <i class="bx bx-user icon"></i>
                     </div>
                     <div class="input-box">
-                        <input type="password" class="input-field" placeholder="Password" required>
+                        <input type="password" class="input-field" placeholder="Password" name="pass" required>
                         <i class="bx bx-lock-alt icon"></i>
                     </div>
                     <div class="forgot-pass">
                         <a href="#">Forgot Password?</a>
                     </div>
                     <div class="input-box">
-                        <button class="input-submit">
+                        <button type="submit" class="input-submit">
                             <span>Login</span>  
                         </button>
                     </div>
                 </div>
             </div>
-    
+            </form>
+
             <!-- Register Form Container -->
             <div class="register-form">
                 <div class="form-title">
@@ -312,8 +319,9 @@
             </div>
         </div>
     
-        
+    </div>
+
     <!-- JS -->
-    <script src="employee.js"></script>
+    <script src="employee.js?v=1.1"></script>
 </body>
 </html>

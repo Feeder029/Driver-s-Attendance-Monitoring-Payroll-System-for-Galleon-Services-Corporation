@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && $_POST['id'] 
 function Profile_PicUpdate($conn, $DriverID, $image) {
     $sql = "UPDATE driver_information a
             JOIN account b ON a.`DI_AccountID` = b.`ACC_ID`
-            SET b.`ACC_ProfilePicture` = '$image'
+            SET a.`DI_ProfileImage` = '$image'
             WHERE a.DI_ID = $DriverID";
     
     $result = mysqli_query($conn, $sql);

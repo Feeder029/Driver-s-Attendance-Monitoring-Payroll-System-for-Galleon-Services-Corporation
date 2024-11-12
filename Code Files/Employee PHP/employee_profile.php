@@ -1,9 +1,19 @@
 <?php
+session_start();
+
+if (isset($_SESSION['DVID'])) {
+    $DriverID = $_SESSION['DVID'];
+} else {
+    // Redirect to login if DVID is not set
+    header("Location: ../LoginSignup/employeelogin.php");
+    exit();
+}
+
 //Connect to Database
 $db_server = "localhost";
 $db_user = "root";
 $db_pass = "";
-$db_name = "gsc_attendanceandpayroll";
+$db_name = "gsc_attendanceandpayrolltest";
 $conn = "";
 
 $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
@@ -14,7 +24,6 @@ if ($conn) {
 }
 
 // A Variable for once they sign in, theyll took their driver id and use it to take all of their info! 
-$DriverID = 34534;
 
 //Options for Unit Type
 $unitcount = 0;
@@ -48,7 +57,7 @@ $DriversDetails =
 "SELECT a.`DI_ID`, c.`DN_FName`, c.`DN_MName`, c.`DN_LName`, c.`DN_Suffix`, a.`DI_Age`, a.`DI_ContactNo`, a.`DI_Gender`, a.`DI_DOB`, a.`DI_Email`,
 a.`DI_LicenseImg`, a.`DI_BrgyClearanceImg`, a.`DI_PoliceClearanceImg`,
 a.`DI_NBIClearanceImg`, a.`Gcash_No`, a.`GCash_Name`,
-b.`ACC_Username`, b.`ACC_Password`, b.`ACC_ProfilePicture`,
+b.`ACC_Username`, b.`ACC_Password`, a.`DI_ProfileImage`,
 d.`DA_HouseNo`, d.`DA_LotNo`, d.`DA_Street`, d.`DA_Barangay`,
 d.`DA_City`, d.`DA_Province`, d.`DA_ZipCode`, e.`DUT_UnitType`,
 g.`HASS_Name`, h.`GOV_PhilHealthNo`, h.`GOV_SSSNo`, h.`GOV_PagibigNo`
@@ -98,7 +107,7 @@ while ($row = mysqli_fetch_assoc($DriverInfo)) {
         "PhilNo" => $row['GOV_PhilHealthNo'],
         "SSSNo" => $row['GOV_SSSNo'],
         "PagNo" => $row['GOV_PagibigNo'],
-        "Profile" => base64_encode($row['ACC_ProfilePicture']),
+        "Profile" => base64_encode($row['DI_ProfileImage']),
         "DriversLicense" => base64_encode($row['DI_LicenseImg']),
         "Brgy_Clear" => base64_encode($row['DI_BrgyClearanceImg']),
         "Pol_Clear" => base64_encode($row['DI_PoliceClearanceImg']),

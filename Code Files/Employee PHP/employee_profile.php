@@ -5,7 +5,7 @@ if (isset($_SESSION['DVID'])) {
     $DriverID = $_SESSION['DVID'];
 } else {
     // Redirect to login if DVID is not set
-    header("Location: ../LoginSignup/employeelogin.php");
+    header(header: "Location: ../LoginSignup/employeelogin.php");
     exit();
 }
 

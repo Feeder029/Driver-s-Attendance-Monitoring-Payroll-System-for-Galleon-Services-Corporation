@@ -47,6 +47,10 @@ function showForm(formId, showNav) {
       dropdown.style.display = 'none';
     }
   }
+
+  function logout(){
+    window.logout.href = "../LoginSignup/DriverMainDashBoard.html"
+  }
   
   // Show the default form on page load (e.g., Personal Account Section)
   window.addEventListener('DOMContentLoaded', () => {

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Driver Portal</title>
-  <link rel="stylesheet" href="../CSS Files/INDEX.CSS">
+  <link rel="stylesheet" href="../CSS Files/INDEX.CSS?v=1.2">
 </head>
 <body>
   <div class="container">
@@ -18,6 +18,7 @@
         <a href="javascript:void(0)" onclick="showForm('EMP_PAYSLIP', false)">Payslip</a>
         <a href="javascript:void(0)" onclick="showForm('EMP_ATTENDANCE-SUMMARY', false)">Attendance Summary</a>
         <a href="javascript:void(0)" onclick="showForm('EMP_SUBMIT-ATTENDANCE', false)">Submit Attendance</a>
+        <a href="javascript:void(0)" onclick="logout()">Logout</a>
       </div>
     </header>
     
@@ -52,7 +53,7 @@
     <div id="form-container"></div>
   </div>
 
-  <script src="../JS Files/INDEX.JS"></script>
+  <script src="../JS Files/INDEX.JS?v=1.1"></script>
   <script src="../JS Files/VEHICLE.JS?v=1.2"></script>
   <script src="../JS Files/GOVERNMENT-INFO.JS?v=1.2"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>

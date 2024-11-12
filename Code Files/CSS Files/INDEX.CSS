@@ -135,6 +135,7 @@
       width: 50%;
       margin-top: 15px;
     }
+
   }
   
   .nav-menu {
@@ -190,6 +191,15 @@
     .nav-menu a {
       width: 100%;
     }
+
+    .driver-name {
+      margin-left: 10px;
+    }
+    
+    .edit-photo-btn {
+      margin-left: 10px;
+    }
+    
   }
   
   

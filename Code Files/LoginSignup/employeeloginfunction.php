@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-
-
 //Connect to Database
 $db_server = "localhost";
 $db_user = "root";
@@ -48,18 +46,42 @@ while ($row = mysqli_fetch_assoc($AccInfo)) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $_POST['user'];
     $pass = $_POST['pass'];
+    $Acc = false;
 
-    for ($i = 0; $i < count($DRVACC); $i++) { // Use count() for the array length
-        if ($user == $DRVACC[$i]["Username"] && $pass == $DRVACC[$i]["Password"]) { // Use == for comparison
-            $DVID = $DRVACC[$i]["ID"];
-            $_SESSION['DVID'] = $DVID; // Save DVID to the session
-            header("Location: ../Employee PHP/EMP_INDEX.PHP");
-            exit(); // Ensure no further code is executed after the redirect
+    for ($i = 0; $i < count($DRVACC); $i++) {
+        if ($user == $DRVACC[$i]["Username"] && $pass == $DRVACC[$i]["Password"]) {
+            if ($DRVACC[$i]["Status"] == "Active") {
+                $_SESSION['DVID'] = $DRVACC[$i]["ID"];
+                header("Location: ../Employee PHP/EMP_INDEX.PHP");
+                exit();
+            } elseif ($DRVACC[$i]["Status"] == "Inactive") {
+                echo "<script type='text/javascript'>
+                        alert('This account is currently inactive or has been removed. Please contact the company for assistance.');
+                        window.location.href = '../LoginSignup/employeelogin.php';
+                      </script>";
+                exit();
+            } else {
+                echo "<script type='text/javascript'>
+                        alert('This account is pending approval. Please wait for further updates or contact the company for assistance.');
+                      </script>";
+                exit();
+            }
         }
     }
-    // Redirect here if no match is found
-    header("Location: ../LoginSignup/employeelogin.php");
-    exit();    
+
+    if (!$Acc) {
+        echo "<script type='text/javascript'>
+                alert('Incorrect username or password. Please try again.');
+                window.location.href = '../LoginSignup/employeelogin.php';
+              </script>";
+        exit();
+    }
+}
+
+
+
+function UserCheck(){
+
 }
 
 ?>

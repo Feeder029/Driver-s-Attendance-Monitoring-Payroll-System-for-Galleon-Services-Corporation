@@ -13,10 +13,6 @@
 </head>
 <body>
 
-    <?php
-    include("employeeloginfunction.php");
-    ?>
-
     <!-- Form Container -->
     <div class="form-container">
         <div class="col col-1">
@@ -319,7 +315,6 @@
             </div>
         </div>
     
-    </div>
 
     <!-- JS -->
     <script src="employee.js?v=1.1"></script>

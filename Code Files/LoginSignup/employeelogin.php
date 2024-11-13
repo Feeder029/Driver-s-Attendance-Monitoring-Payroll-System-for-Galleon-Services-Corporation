@@ -9,7 +9,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     
     <!-- STYLE -->
-    <link rel="stylesheet" href="employee.css">
+    <link rel="stylesheet" href="employee.css?v=1.1">
 </head>
 <body>
 
@@ -28,6 +28,28 @@
                 <button class="btn btn-2" id="signup">Register</button>
             </div>
 
+
+            <?php
+         // Check if there's an error in the query string
+         $error_message = '';
+          if (isset($_GET['error'])) {
+        switch ($_GET['error']) {
+        case 'invalid':
+            $error_message = 'Invalid username or password.';
+            break;
+        case 'inactive':
+            $error_message = 'Your account is inactive. Please contact the company.';
+            break;
+        case 'pending':
+            $error_message = 'Your account is pending approval. Please wait for an admin to accept your registration.';
+            break;
+        default:
+            $error_message = 'An error occurred. Please try again.';
+            break;
+        }
+        }
+        ?>
+
             <form action="employeeloginfunction.php" method="post">
             <!-- Login Form Container -->
             <div class="login-form">
@@ -35,6 +57,11 @@
                     <span>Login</span>
                 </div>
                 <div class="form-input">
+            <!-- Display Error Message -->
+            <?php if ($error_message): ?>
+                <p class="errormessage"><?= htmlspecialchars($error_message) ?></p>
+            <?php endif; ?>
+            
                     <div class="input-box">
                         <input type="text" class="input-field" placeholder="Username" name="user" required>
                         <i class="bx bx-user icon"></i>

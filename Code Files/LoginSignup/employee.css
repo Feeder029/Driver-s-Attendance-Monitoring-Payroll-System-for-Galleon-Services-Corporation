@@ -319,6 +319,10 @@ body
     font-size: 7px; /* Font size for the button text */
 }
 
+.errormessage{
+    color: red;
+    font-size: 13px;
+}
 
 
 .input-submit

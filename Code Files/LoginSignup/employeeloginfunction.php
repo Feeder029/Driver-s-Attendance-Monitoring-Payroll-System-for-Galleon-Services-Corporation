@@ -55,33 +55,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: ../Employee PHP/EMP_INDEX.PHP");
                 exit();
             } elseif ($DRVACC[$i]["Status"] == "Inactive") {
-                echo "<script type='text/javascript'>
-                        alert('This account is currently inactive or has been removed. Please contact the company for assistance.');
-                        window.location.href = '../LoginSignup/employeelogin.php';
-                      </script>";
+                header("Location: ../LoginSignup/employeelogin.php?error=inactive");
                 exit();
             } else {
-                echo "<script type='text/javascript'>
-                        alert('This account is pending approval. Please wait for further updates or contact the company for assistance.');
-                      </script>";
+                header("Location: ../LoginSignup/employeelogin.php?error=pending");
                 exit();
             }
         }
     }
 
+    // If no match is found, redirect with an error message
     if (!$Acc) {
-        echo "<script type='text/javascript'>
-                alert('Incorrect username or password. Please try again.');
-                window.location.href = '../LoginSignup/employeelogin.php';
-              </script>";
+        header("Location: ../LoginSignup/employeelogin.php?error=invalid");
         exit();
     }
 }
 
-
-
-function UserCheck(){
-
-}
 
 ?>

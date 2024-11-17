@@ -71,7 +71,7 @@
                         <i class="bx bx-lock-alt icon"></i>
                     </div>
                     <div class="forgot-pass">
-                        <a href="#">Forgot Password?</a>
+                        <a href="forgot-password.php">Forgot Password?</a>
                     </div>
                     <div class="input-box">
                         <button type="submit" class="input-submit">

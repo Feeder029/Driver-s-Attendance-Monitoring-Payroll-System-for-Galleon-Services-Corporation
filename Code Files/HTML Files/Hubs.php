@@ -39,6 +39,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS Files/Hubs.css?v=1.2">
+    <script src="../JS Files/Hubs.js"></script>
     <title>HUBS</title>
 </head>
 <body>
@@ -106,6 +107,13 @@
                                         <button type='submit' name='delete_hub'>Delete</button>
                                     </form>
                                 </td>
+                                <td>
+                                    <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
+                                       <input type='hidden' name='hub_id' value='" . htmlspecialchars($row['HUBR_ID']) . "'>
+                                        <button type='submit' name='edit_hub'>Edit</button>
+                                    </form>
+                                </td>
+
                             </tr>";
                         }
                     } else {
@@ -117,15 +125,13 @@
 
     <div class="hub-btn">
     
-        <button>PRINT HUB</button>
-        <button>DELETE HUB</button>
-        <button>EDIT HUB</button>
+        <button onclick="printTable()">Print Table</button>
         <button id="add-hub-btn" popovertarget="add-hub-container">ADD HUB</button>
     
     </div>
 
     <div popover id="add-hub-container">
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="registerform" enctype="multipart/form-data">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
             <input type="text" id="hub-name" name="name" placeholder="Hub Name">
             <input type="text" id="hub-barangay" name="barangay" placeholder="Hub Barangay">
             <input type="text" id="hub-city" name="city" placeholder="Hub City">
@@ -135,100 +141,163 @@
             <button type="submit" id="submit-hub">Submit</button>
         </form>
     </div>
+
+    <div class="popover-container" style="display:<?php echo isset($_POST['edit_hub']) ? 'block' : 'none'; ?>;">
+        <?php
+        if (isset($_POST['edit_hub'])) {
+            $hub_id = $_POST['hub_id'];
+            
+            // Get the data for the hub_id from the database
+            $sql = "SELECT r.HUBR_ID, d.HASS_Name, a.HADD_Barangay, a.HADD_City, a.HADD_Province, a.HADD_ZipCode, r.HUBR_Rate
+                    FROM hub_rate r
+                    JOIN hub_assigned d ON r.HUBR_HubAssignedID = d.HASS_ID
+                    JOIN hub_address a ON d.HASS_AddressID = a.HADD_ID
+                    WHERE r.HUBR_ID = ?";
+            if ($stmt = mysqli_prepare($conn, $sql)) {
+                mysqli_stmt_bind_param($stmt, 'i', $hub_id);
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_bind_result($stmt, $HUBR_ID, $HASS_Name, $HADD_Barangay, $HADD_City, $HADD_Province, $HADD_ZipCode, $HUBR_Rate);
+                mysqli_stmt_fetch($stmt);
+                mysqli_stmt_close($stmt);
+            }
+        }
+        ?>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <input type="hidden" name="hub_id" value="<?php echo htmlspecialchars($hub_id); ?>">
+            <input type="text" name="name" value="<?php echo htmlspecialchars($HASS_Name); ?>" placeholder="Hub Name">
+            <input type="text" name="barangay" value="<?php echo htmlspecialchars($HADD_Barangay); ?>" placeholder="Hub Barangay">
+            <input type="text" name="city" value="<?php echo htmlspecialchars($HADD_City); ?>" placeholder="Hub City">
+            <input type="text" name="province" value="<?php echo htmlspecialchars($HADD_Province); ?>" placeholder="Hub Province">
+            <input type="text" name="zipcode" value="<?php echo htmlspecialchars($HADD_ZipCode); ?>" placeholder="Hub ZipCode">
+            <input type="text" name="rate" value="<?php echo htmlspecialchars($HUBR_Rate); ?>" placeholder="Hub Rate">
+            <button type="submit" name="update_hub">Update</button>
+            <button type="submit" name="close_popover">Close</button>
+        </form>
+    </div>
+
+
 </body>
 </html>
 
 <?php
-     if ($conn) {
+    if ($conn) {
 
-    if (isset($_POST['delete_hub']) && isset($_POST['hub_id'])) {
-            $hub_id = $_POST['hub_id'];
-
-            // First, get the `HASS_ID` and `HADD_ID` that are related to the `HUBR_ID` from hub_rate
-            $get_hub_info_sql = "SELECT HUBR_HubAssignedID FROM hub_rate WHERE HUBR_ID = ?";
-            if ($stmt = mysqli_prepare($conn, $get_hub_info_sql)) {
-                mysqli_stmt_bind_param($stmt, 'i', $hub_id);
-                mysqli_stmt_execute($stmt);
-                mysqli_stmt_bind_result($stmt, $hub_assigned_id);
-                mysqli_stmt_fetch($stmt);
-                mysqli_stmt_close($stmt);
-
-                // If we have the `HUBR_HubAssignedID` then proceed
-                if ($hub_assigned_id) {
-                    // Get the associated `HASS_AddressID` for deletion from hub_assigned
-                    $get_address_id_sql = "SELECT HASS_AddressID FROM hub_assigned WHERE HASS_ID = ?";
-                    if ($stmt = mysqli_prepare($conn, $get_address_id_sql)) {
-                        mysqli_stmt_bind_param($stmt, 'i', $hub_assigned_id);
-                        mysqli_stmt_execute($stmt);
-                        mysqli_stmt_bind_result($stmt, $address_id);
-                        mysqli_stmt_fetch($stmt);
-                        mysqli_stmt_close($stmt);
-
-                        // Delete from hub_rate
-                        $sql1 = "DELETE FROM hub_rate WHERE HUBR_HubAssignedID = ?";
-                        if ($stmt = mysqli_prepare($conn, $sql1)) {
-                            mysqli_stmt_bind_param($stmt, 'i', $hub_assigned_id);
-                            mysqli_stmt_execute($stmt);
-                            mysqli_stmt_close($stmt);
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST['update_hub'])) {
+                // Update logic
+                $hub_id = $_POST['hub_id'];
+                $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
+                $barangay = filter_input(INPUT_POST, 'barangay', FILTER_SANITIZE_SPECIAL_CHARS);
+                $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_SPECIAL_CHARS);
+                $province = filter_input(INPUT_POST, 'province', FILTER_SANITIZE_SPECIAL_CHARS);
+                $zipcode = filter_input(INPUT_POST, 'zipcode', FILTER_SANITIZE_SPECIAL_CHARS);
+                $rate = filter_input(INPUT_POST, 'rate', FILTER_SANITIZE_SPECIAL_CHARS);
+        
+                $sql = "UPDATE hub_rate r
+                        JOIN hub_assigned d ON r.HUBR_HubAssignedID = d.HASS_ID
+                        JOIN hub_address a ON d.HASS_AddressID = a.HADD_ID
+                        SET d.HASS_Name = ?, a.HADD_Barangay = ?, a.HADD_City = ?, a.HADD_Province = ?, a.HADD_ZipCode = ?, r.HUBR_Rate = ?
+                        WHERE r.HUBR_ID = ?";
+                if ($stmt = mysqli_prepare($conn, $sql)) {
+                    mysqli_stmt_bind_param($stmt, 'ssssssi', $name, $barangay, $city, $province, $zipcode, $rate, $hub_id);
+                    if (mysqli_stmt_execute($stmt)) {
+                        echo "<script>alert('Hub updated successfully!'); window.location.href='" . $_SERVER['PHP_SELF'] . "';</script>";
+                    } else {
+                        echo "Error updating record: " . mysqli_error($conn);
+                    }
+                    mysqli_stmt_close($stmt);
+                }
+            } elseif (isset($_POST['name']) && !isset($_POST['hub_id'])) {
+                // Insert logic
+                $name  = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
+                $barangay  = filter_input(INPUT_POST, "barangay", FILTER_SANITIZE_SPECIAL_CHARS);
+                $city  = filter_input(INPUT_POST, "city", FILTER_SANITIZE_SPECIAL_CHARS);
+                $province  = filter_input(INPUT_POST, "province", FILTER_SANITIZE_SPECIAL_CHARS);
+                $zipcode  = filter_input(INPUT_POST, "zipcode", FILTER_SANITIZE_SPECIAL_CHARS);
+                $rate  = filter_input(INPUT_POST, "rate", FILTER_SANITIZE_SPECIAL_CHARS);
+        
+                if (empty($name) || empty($barangay) || empty($city) || empty($province) || empty($zipcode) || empty($rate)) {
+                    echo "<script type='text/javascript'>alert('EMPTY FIELDS');</script>";
+                } else {
+                    $sql1 = "INSERT INTO hub_address (HADD_Barangay, HADD_City, HADD_Province, HADD_ZipCode) VALUES ('$barangay', '$city', '$province', '$zipcode')";
+                    if (mysqli_query($conn, $sql1)) {
+                        $hubaddressId = mysqli_insert_id($conn);
+        
+                        $sql2 = "INSERT INTO hub_assigned (HASS_AddressID, HASS_Name) VALUES ('$hubaddressId', '$name')";
+                        if (mysqli_query($conn, $sql2)) {
+                            $nameId = mysqli_insert_id($conn);
+        
+                            $sql3 = "INSERT INTO hub_rate (HUBR_HubAssignedID, HUBR_Rate) VALUES ('$nameId', '$rate')";
+                            mysqli_query($conn, $sql3);
+        
+                            echo "<script type='text/javascript'>alert('ADD HUB SUCCESSFULLY');</script>";
+                        } else {
+                            echo "<script type='text/javascript'>alert('Error inserting into Hub Rate: " . mysqli_error($conn) . "');</script>";
                         }
-
-                        // Delete from hub_assigned
-                        $sql2 = "DELETE FROM hub_assigned WHERE HASS_ID = ?";
-                        if ($stmt = mysqli_prepare($conn, $sql2)) {
-                            mysqli_stmt_bind_param($stmt, 'i', $hub_assigned_id);
-                            mysqli_stmt_execute($stmt);
-                            mysqli_stmt_close($stmt);
-                        }
-
-                        // Delete from hub_address
-                        $sql3 = "DELETE FROM hub_address WHERE HADD_ID = ?";
-                        if ($stmt = mysqli_prepare($conn, $sql3)) {
-                            mysqli_stmt_bind_param($stmt, 'i', $address_id);
-                            mysqli_stmt_execute($stmt);
-                            mysqli_stmt_close($stmt);
-                        }
-
-                        echo "<script type='text/javascript'>alert('Hub deleted successfully');</script>";
+                    } else {
+                        echo "<script type='text/javascript'>alert('Error inserting into hub assigned name: " . mysqli_error($conn) . "');</script>";
                     }
                 }
             }
         }
         
-        if($_SERVER["REQUEST_METHOD"] == "POST") {
-            $name  = filter_input(INPUT_POST,"name", FILTER_SANITIZE_SPECIAL_CHARS);
-            $barangay  = filter_input(INPUT_POST,"barangay", FILTER_SANITIZE_SPECIAL_CHARS);
-            $city  = filter_input(INPUT_POST,"city", FILTER_SANITIZE_SPECIAL_CHARS);
-            $province  = filter_input(INPUT_POST,"province", FILTER_SANITIZE_SPECIAL_CHARS);
-            $zipcode  = filter_input(INPUT_POST,"zipcode", FILTER_SANITIZE_SPECIAL_CHARS);
-            $rate  = filter_input(INPUT_POST,"rate", FILTER_SANITIZE_SPECIAL_CHARS);
-            
-            if(empty($name) || empty($barangay) || empty($city) || empty($province) || empty($zipcode) || empty($rate)){
-                echo "<script type='text/javascript'>alert('EMPTY FIELDS');</script>";
-            }
-            else{
-                $sql1 = "INSERT INTO hub_address (HADD_Barangay, HADD_City, HADD_Province, HADD_ZipCode) VALUES ('$barangay', '$city', '$province', '$zipcode')";
-                if(mysqli_query($conn, $sql1)){
-                    $hubaddressId = mysqli_insert_id($conn);
 
-                    $sql2 = "INSERT INTO hub_assigned (HASS_AddressID, HASS_Name) VALUES ('$hubaddressId', '$name')";
-                    if(mysqli_query($conn, $sql2)){
-                        $nameId = mysqli_insert_id($conn);
+        if (isset($_POST['delete_hub']) && isset($_POST['hub_id'])) {
+                $hub_id = $_POST['hub_id'];
 
-                        $sql3 = "INSERT INTO hub_rate (HUBR_HubAssignedID, HUBR_Rate) VALUES ('$nameId', '$rate')";
-                        mysqli_query($conn, $sql3);
+                // First, get the HASS_ID and HADD_ID that are related to the HUBR_ID from hub_rate
+                $get_hub_info_sql = "SELECT HUBR_HubAssignedID FROM hub_rate WHERE HUBR_ID = ?";
+                if ($stmt = mysqli_prepare($conn, $get_hub_info_sql)) {
+                    mysqli_stmt_bind_param($stmt, 'i', $hub_id);
+                    mysqli_stmt_execute($stmt);
+                    mysqli_stmt_bind_result($stmt, $hub_assigned_id);
+                    mysqli_stmt_fetch($stmt);
+                    mysqli_stmt_close($stmt);
 
-                        echo "<script type='text/javascript'>alert('ADD HUB SUCCESSFULLY');</script>";
-                    }
-                    else {
-                        echo "<script type='text/javascript'>alert('Error inserting into Hub Rate: " . mysqli_error($conn) . "');</script>";
+                    // If we have the HUBR_HubAssignedID then proceed
+                    if ($hub_assigned_id) {
+                        // Get the associated HASS_AddressID for deletion from hub_assigned
+                        $get_address_id_sql = "SELECT HASS_AddressID FROM hub_assigned WHERE HASS_ID = ?";
+                        if ($stmt = mysqli_prepare($conn, $get_address_id_sql)) {
+                            mysqli_stmt_bind_param($stmt, 'i', $hub_assigned_id);
+                            mysqli_stmt_execute($stmt);
+                            mysqli_stmt_bind_result($stmt, $address_id);
+                            mysqli_stmt_fetch($stmt);
+                            mysqli_stmt_close($stmt);
+
+                            // Delete from hub_rate
+                            $sql1 = "DELETE FROM hub_rate WHERE HUBR_HubAssignedID = ?";
+                            if ($stmt = mysqli_prepare($conn, $sql1)) {
+                                mysqli_stmt_bind_param($stmt, 'i', $hub_assigned_id);
+                                mysqli_stmt_execute($stmt);
+                                mysqli_stmt_close($stmt);
+                            }
+
+                            // Delete from hub_assigned
+                            $sql2 = "DELETE FROM hub_assigned WHERE HASS_ID = ?";
+                            if ($stmt = mysqli_prepare($conn, $sql2)) {
+                                mysqli_stmt_bind_param($stmt, 'i', $hub_assigned_id);
+                                mysqli_stmt_execute($stmt);
+                                mysqli_stmt_close($stmt);
+                            }
+
+                            // Delete from hub_address
+                            $sql3 = "DELETE FROM hub_address WHERE HADD_ID = ?";
+                            if ($stmt = mysqli_prepare($conn, $sql3)) {
+                                mysqli_stmt_bind_param($stmt, 'i', $address_id);
+                                mysqli_stmt_execute($stmt);
+                                mysqli_stmt_close($stmt);
+                            }
+
+                            echo "<script type='text/javascript'>alert('Hub deleted successfully');</script>";
+                        }
                     }
                 }
-                else {
-                    echo "<script type='text/javascript'>alert('Error inserting into hub assigned name: " . mysqli_error($conn) . "');</script>";
-                }
             }
-            
-        }
+
+        
+        
+        
         mysqli_close($conn);
     }
     else {

@@ -9,19 +9,7 @@ if (isset($_SESSION['DVID'])) {
     exit();
 }
 
-//Connect to Database
-$db_server = "localhost";
-$db_user = "root";
-$db_pass = "";
-$db_name = "gsc_attendanceandpayrolltest";
-$conn = "";
-
-$conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
-
-if ($conn) {
-} else {
-    die("Connection failed: " . mysqli_connect_error());
-}
+require '../DatabaseConnection/Database.php';
 
 // A Variable for once they sign in, theyll took their driver id and use it to take all of their info! 
 

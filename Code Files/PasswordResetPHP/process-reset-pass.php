@@ -14,16 +14,15 @@ $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
 if ($user === null) {
-    die("Token not found");
+    die("Token not found"); //Replace Token is Not Found
 }
 
 // Check if the token has expired
 if (strtotime($user["ACC_ResetExpire"]) <= time()) {
-    die("Token has expired");
+    die("Token has expired"); //Replace Token is Expired
 }
 
 $Pass = $_POST["Password"];
-$hashedPassword = password_hash($Pass, PASSWORD_BCRYPT); // Use password_hash for secure hashing
 $ID = $user["ACC_ID"]; // Use the ID from the fetched user
 
 // Update the account
@@ -40,13 +39,14 @@ if ($stmt === false) {
 }
 
 // Bind parameters
-$stmt->bind_param("ss", $hashedPassword, $token_hash);
+$stmt->bind_param("ss", $Pass, $token_hash);
 $stmt->execute();
 
 if ($stmt->affected_rows > 0) {
-    echo "Password updated successfully";
+    header(header: "Location: ../LoginSignup/employeelogin.php"); // Refresh for updated one!
+    echo "Password updated successfully"; //Replace Successful Form
 } else {
-    echo "Password update failed or no changes made";
+    echo "Password update failed or no changes made"; //If nothing is updated
 }
 
 $stmt->close();

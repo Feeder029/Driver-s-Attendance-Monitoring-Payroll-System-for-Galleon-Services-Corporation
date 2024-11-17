@@ -11,6 +11,7 @@ function SendEmail($email, $token) {
     $mail = new PHPMailer(true);
 
     try {
+        $Server_Address = "localhost";
         // $mail->SMTPDebug = 2; // Enable verbose debug output
 
         $mail->isSMTP();
@@ -21,16 +22,22 @@ function SendEmail($email, $token) {
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port = 465;
 
+
         // Set no-reply email address
         $mail->setFrom('noreply@example.com', 'No Reply'); // No-reply email address
         $mail->addAddress($email);
 
         $mail->isHTML(true);
         $mail->Subject = "GALLEON SERVICES DRIVERS ACCOUNT PASSWORD RESET";
-        $mail->Body = <<<END
-        CLICK <a href="http://192.168.100.5/Driver-s-Attendance-Monitoring-Payroll-System-for-Galleon-Services-Corporation/Code%20Files/LoginSignup/ResetPassword.php?token=$token">here</a>
-        to reset your password.
-        END;
+
+        $emailDesign = file_get_contents('../EmailDesigns/EmailDesign.html');
+
+        // Replace the placeholder with the actual reset link
+        $resetLink = "http://$Server_Address/Driver-s-Attendance-Monitoring-Payroll-System-for-Galleon-Services-Corporation/Code%20Files/PasswordResetPHP/ResetPassword.php?token=$token";
+        $emailBody = str_replace('{reset_link}', $resetLink, $emailDesign);
+
+
+        $mail->Body = $emailBody;
         $mail->send();
         echo "Message sent successfully!";
     } catch (Exception $e) {

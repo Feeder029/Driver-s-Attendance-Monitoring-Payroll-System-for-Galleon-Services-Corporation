@@ -21,5 +21,5 @@ if ($conn->affected_rows) {
 require "emailsend.php";
 SendEmail($email,$token);
 }
-echo("Message Sent,Please check your inbox");
+echo("Message Sent,Please check your inbox"); // Delete once the Account is
 ?>

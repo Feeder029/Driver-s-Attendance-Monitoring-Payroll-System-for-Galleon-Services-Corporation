@@ -29,8 +29,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Submit the attendance
     SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $RRI_FINALE);
-}
+    header(header:"Location: EMP_INDEX.PHP");
+    exit();
+} 
 
+//Submit Attendance to the Database
 function SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $RRI_FINALE) {
     $date = date('Y-m-d');
 

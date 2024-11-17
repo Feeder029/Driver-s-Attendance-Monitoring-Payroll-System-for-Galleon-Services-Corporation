@@ -273,3 +273,14 @@ td{
     margin-left: 10px;
 }
 
+#add-hub-container{
+    background-color: white;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    flex-direction: row;
+    gap: 0;
+}

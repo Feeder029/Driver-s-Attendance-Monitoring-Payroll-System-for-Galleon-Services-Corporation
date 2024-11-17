@@ -28,7 +28,7 @@ function SendEmail($email, $token) {
         $mail->isHTML(true);
         $mail->Subject = "GALLEON SERVICES DRIVERS ACCOUNT PASSWORD RESET";
         $mail->Body = <<<END
-        CLICK <a href="http://localhost/Driver-s-Attendance-Monitoring-Payroll-System-for-Galleon-Services-Corporation/Code%20Files/LoginSignup/ResetPassword.php?token=$token">here</a>
+        CLICK <a href="http://192.168.100.5/Driver-s-Attendance-Monitoring-Payroll-System-for-Galleon-Services-Corporation/Code%20Files/LoginSignup/ResetPassword.php?token=$token">here</a>
         to reset your password.
         END;
         $mail->send();

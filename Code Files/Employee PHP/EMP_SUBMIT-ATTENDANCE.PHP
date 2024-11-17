@@ -9,6 +9,8 @@
 </head>
 <body>
 
+  
+  <form action="employee_submit_attendance.php" method="post" enctype="multipart/form-data">
   <!-- Submit Attendance Form Section -->
   <div id="submit-attendance" class="form-sections">
     <h2>Submit Attendance</h2>
@@ -46,7 +48,7 @@
       <button type="reset">Reset</button>
     </div>
   </div>
-
+  </form>
 
 </body>
 </html>

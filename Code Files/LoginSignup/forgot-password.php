@@ -10,8 +10,8 @@
 
     <form action="send-password-reset.php" method="post">
 
-    <Label for="Username">Username</Label>
-    <input type="Username" name="Username" id="Username">
+    <Label for="Email">EMAIL:</Label>
+    <input type="Email" name="Email" id="Email">
     <button> Send </button>
 
     </form>

@@ -22,18 +22,7 @@ function Contact_Update($conn, $DriverID, $Email, $ContactNo) {
     SET DI_ContactNo = ?, DI_Email = ? 
     WHERE DI_ID = ?";
 
-    $UpdateQuery = mysqli_prepare($conn, $UpdateContact);
-    
-    if ($UpdateQuery) {
-        mysqli_stmt_bind_param($UpdateQuery, "ssi", $ContactNo, $Email, $DriverID);
-
-        if (mysqli_stmt_execute($UpdateQuery)) {
-            echo "Contact information updated successfully.";
-        } else {
-            echo "Update failed: " . mysqli_stmt_error($UpdateQuery);
-        }
-        mysqli_stmt_close($UpdateQuery);
-    } else {
-        echo "Statement preparation failed: " . mysqli_error($conn);
-    }
+    $stmt = $conn->prepare($UpdateContact);
+    $stmt->bind_param("sss",$ContactNo,$Email,$DriverID);
+    $stmt->execute(); //Execute the Query
 }

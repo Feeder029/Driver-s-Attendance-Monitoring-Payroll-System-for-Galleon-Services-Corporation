@@ -48,9 +48,26 @@ function showForm(formId, showNav) {
     }
   }
 
-  function logout(){
-    window.logout.href = "../LoginSignup/DriverMainDashBoard.html"
-  }
+  function logout() {
+    alert("Working");
+    // Send a request to the PHP script
+    fetch('../Employee PHP/employee_logout.php', {
+        method: 'POST',
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if (response.ok) {
+            // Redirect to the login page or any desired location
+            window.location.href = '../LoginSignup/employeelogin.php';
+        } else {
+            alert('Logout failed. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
   
   // Show the default form on page load (e.g., Personal Account Section)
   window.addEventListener('DOMContentLoaded', () => {

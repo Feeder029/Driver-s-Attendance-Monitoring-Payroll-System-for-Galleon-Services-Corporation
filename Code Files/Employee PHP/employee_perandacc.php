@@ -24,7 +24,7 @@
     $PV = htmlspecialchars($_POST['province']);
     $GNO = htmlspecialchars($_POST['GcashNo']);
     $GNA = htmlspecialchars($_POST['GcashName']);
-    $ZP = htmlspecialchars($_POST['Zip']);
+    // $ZP = htmlspecialchars($_POST['Zip']);
 
 
     if (isset($_POST['gender'])) {
@@ -50,7 +50,7 @@
 
 
     Personal_AccountUpdate($conn,$AG, $UT,$HB,$DB, $FN, $LN , $GD, $UR , $PS,$MN,
-     $SX, $DriverID,$HN,$LT,$ST,$BY,$CY,$PV,$ZP,$GNO,$GNA);
+     $SX, $DriverID,$HN,$LT,$ST,$BY,$CY,$PV,$GNO,$GNA);
 
      header(header: "Location: EMP_INDEX.PHP"); // Refresh for updated one!
      exit(); 
@@ -59,43 +59,52 @@
 
 
 
-//Function for update in Personal & Account Details
-function Personal_AccountUpdate($conn,$AG,$UT,$HB,$DB,$FN, $LN , $GD, $UR , $PS,$MN, $SX, $DriverID,$HN,$LT,$ST,$BY,$CY,$PV,$ZP,$GNO,$GNA) {
-    //Update Code
-    $UpdateAccandPer =
+//Function for update in Personal & Account Details using Prepared Statements
+function Personal_AccountUpdate($conn, $AG, $UT, $HB, $DB, $FN, $LN, $GD, $UR, $PS, $MN, $SX, $DriverID, $HN, $LT, $ST, $BY, $CY, $PV, $GNO, $GNA) {
+    //Update Code using prepared statement
+    $UpdateAccandPer = 
     "UPDATE driver_information a
     JOIN driver_name c ON a.DI_NameID = c.DN_ID
     JOIN account b on a.`DI_AccountID` = b.`ACC_ID`
     JOIN driver_address d on a.`DI_AddressID` = d.`DA_ID`
     SET
-        a.`DI_Age` = $AG,
-        a.`DI_UnitTypeID` = $UT,
-        a.`DI_HubAssignedID` = $HB,
-        a.`DI_DOB` = '$DB',
-        a.`DI_Gender` = '$GD',
-        a.`Gcash_No` = '$GNO',
-        a.`GCash_Name` = '$GNA',
-        b.`ACC_Username` = '$UR',
-        b.`ACC_Password` = '$PS',
-        c.`DN_FName` = '$FN',
-        c.`DN_LName` = '$LN',
-        c.`DN_MName` = '$MN',
-        c.`DN_Suffix` = '$SX',
-        d.`DA_HouseNo` = '$HN', 
-        d.`DA_LotNo` = '$LT', 
-        d.`DA_Street` = '$ST', 
-        d.`DA_Barangay` = '$BY',
-        d.`DA_City` = '$CY', 
-        d.`DA_Province` = '$PV',
-        d.`DA_ZipCode` = '$ZP'
-    WHERE a.DI_ID = $DriverID;";
-    
-    
-    $UpdateQuery = mysqli_query($conn, $UpdateAccandPer);
-    if (!$UpdateQuery) {
-        echo "non-working";
-        die("Query failed: " . mysqli_error($conn));
+        a.`DI_Age` = ?, 
+        a.`DI_UnitTypeID` = ?, 
+        a.`DI_HubAssignedID` = ?, 
+        a.`DI_DOB` = ?, 
+        a.`DI_Gender` = ?, 
+        a.`Gcash_No` = ?, 
+        a.`GCash_Name` = ?, 
+        b.`ACC_Username` = ?, 
+        b.`ACC_Password` = ?, 
+        c.`DN_FName` = ?, 
+        c.`DN_LName` = ?, 
+        c.`DN_MName` = ?, 
+        c.`DN_Suffix` = ?, 
+        d.`DA_HouseNo` = ?, 
+        d.`DA_LotNo` = ?, 
+        d.`DA_Street` = ?, 
+        d.`DA_Barangay` = ?, 
+        d.`DA_City` = ?, 
+        d.`DA_Province` = ?
+    WHERE a.DI_ID = ?";
+
+    $stmt = $conn->prepare($UpdateAccandPer);
+
+    if ($stmt === false) {
+        die("Statement preparation failed: " . $conn->error);
     }
+
+    $stmt->bind_param(
+        "iiissssssssssssssssi",$AG,$UT,$HB,$DB,$GD,$GNO,$GNA,$UR,$PS,$FN,$LN,$MN,$SX,$HN,$LT,$ST,$BY,$CY,$PV,$DriverID
+    );
+
+    if ($stmt->execute()) {
+    } else {
+        echo "Update failed: " . $stmt->error;
+    }
+
+    $stmt->close();
 }
 
 

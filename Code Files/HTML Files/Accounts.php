@@ -8,31 +8,22 @@
     // Create connection
     $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name) or die("Connection failed: " . mysqli_connect_error());
 
-    // Get the ID from a GET request, for example
-    // $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-
-    // // Function to fetch single row data
-    // function fetchSingleRow($conn, $sql) {
-    //     $result = $conn->query($sql);
-    //     return ($result && $result->num_rows > 0) ? $result->fetch_assoc() : null;
-    // }
-
-    // // Queries
-    // $usernameRow = fetchSingleRow($conn, "SELECT ACC_Username FROM account");
-    // $fullnameRow = fetchSingleRow($conn, "SELECT AN_FName, AN_MName, AN_LName FROM admin_name");
-    // $positionRow = fetchSingleRow($conn, "SELECT ARL_Role FROM admin_role");
-    
-
     //join query
     $sql = "
         SELECT
             a.ACC_Username,
+            a.ACC_Password,
             a.ACC_DateCreated,
             n.AN_FName,
             n.AN_MName,
             n.AN_LName,
+            n.AN_Suffix,
             r.ARL_Role,
-            i.AI_ProfileImg
+            i.AI_ID,
+            i.AI_ProfileImg,
+            i.AI_Contact,
+            i.AI_Email,
+            i.AI_AccountID
         FROM
             admin_information i
         JOIN
@@ -124,7 +115,7 @@
                     while ($row = $result->fetch_assoc()) {
                         // Combine first name, middle name, and last name
                         $fullname = trim($row['AN_FName'] . ' ' . $row['AN_MName'] . ' ' . $row['AN_LName']);
-                        $dateCreated = date('M-d-y'); 
+                        $dateCreated = date('M-d-y', strtotime($row['ACC_DateCreated'])); 
                         $profileImageData = base64_encode($row['AI_ProfileImg']);
                         $profileImage = "data:image/jpeg;base64,$profileImageData";
                         echo "
@@ -144,7 +135,8 @@
                                         <div class='td-btn'>
                                             <button id='accept-btn'>ACCEPT</button>
                                             <button id='decline-btn'>DECLINE</button>
-                                            <button id='view-btn' popovertarget='view-more-container'>VIEW MORE</button>
+                                            <button popovertarget='view-more-container' id='view-btn' data-id='" . htmlspecialchars($row['AI_AccountID']) . "'>VIEW MORE</button>
+
                                         </div>
                                     </div>
                                 </div>
@@ -161,81 +153,87 @@
 
     <div popover id="view-more-container">
         <?php
-        echo "
-        <div class='view-left'>
-                    <i class='bx bx-user-circle'></i>
-                    <button id='change-view-img'>CHANGE IMAGE</button>
+            if ($result && $result->num_rows > 0) {
+                // Loop through the data again to display additional details for the selected account
+                mysqli_data_seek($result, 0); // Reset the result pointer to the start
+                while ($row = $result->fetch_assoc()) {
+                    $dateCreated = date('M-d-y', strtotime($row['ACC_DateCreated']));
+                    echo "
+                    <div class='view-left'>
+                                <img src='$profileImage' alt='Profile Image' class='profile-image'>
+                                <button id='change-view-img'>CHANGE IMAGE</button>
 
-                    <div id='view-role'>
-                        <label for='view--role'>Role:</label>
-                        <!-- <input type='text' id='view-role-role' value='ROLE' disabled> -->
-                        <select name='' id='view-role-role' value='ROLE' disabled>
-                            <option value='Human Resources'>Human Resources</option>
-                            <option value='Agency Coordinator'>Agency Coordinator</option>
-                            <option value='Payroll'>Payroll</option>
-                        </select>
-                    </div>
+                                <div id='view-role'>
+                                    <label for='view--role'>Role:</label>
+                                    <!-- <input type='text' id='view-role-role' value='ROLE' disabled> -->
+                                    <select name='' id='view-role-role' value='ROLE' disabled>
+                                        <option selected>" . htmlspecialchars($row['ARL_Role']) . "</option>
+                                    </select>
+                                </div>
 
-                    <div id='account-status'>
-                        <label for='account-status'>Account Status:</label> <br>
-                        <input type='radio' name='status' id='Active'>ACTIVE <br>
-                        <input type='radio' name='status' id='Inactive'>INACTIVE <br>
-                        <input type='radio' name='status' id='Pending' checked>PENDING
-                    </div>
+                                <div id='account-status'>
+                                    <label for='account-status'>Account Status:</label> <br>
+                                    <input type='radio' name='status-" . htmlspecialchars($row['AI_AccountID']) . "' value='Active'> ACTIVE <br>
+                                    <input type='radio' name='status-" . htmlspecialchars($row['AI_AccountID']) . "' value='Inactive'> INACTIVE <br>
+                                    <input type='radio' name='status-" . htmlspecialchars($row['AI_AccountID']) . "' value='Pending' checked> PENDING
+                                </div>
 
-                    <button onclick='DisableEnableInput()'>EDIT</button>
-                </div>
+                                <button onclick='DisableEnableInput()'>EDIT</button>
+                            </div>
 
-                <div class='view-right'>
-                    <div class='view-space'>
-                        <button popovertarget='view-more-container' popovertargetaction='hide'>CLOSE</button>
-                    </div>
-                    <div class='view-name'>
-                        <h2>NAME:</h2>
-                        <div class='field-group-1' id='fg1'>        
-                            <input type='text' id='firstname' value='name' disabled>
-                            <h5 for='firstname'>FIRST NAME</h5>
-                        </div>
-                        <div class='field-group-1' id='fg1'>                   
-                            <input type='text' id='middlename' value='name' disabled>
-                            <h5 for='middlename'>MIDDLE NAME</h5>
-                        </div>
-                        <div class='field-group-1' id='fg2'>                   
-                            <input type='text' id='lastname' value='name' disabled>
-                            <h5 for='lastname'>LAST NAME</h5>
-                        </div>
-                        <div class='field-group-1' id='fg2'>                  
-                            <input type='text' id='suffix' value='name' disabled>
-                            <h5 for='suffix'>SUFFIX</h5>
-                        </div>
-                    </div>
-                    <div class='view-contact'>
-                        <h2>CONTACTS:</h2>
-                        <div class='field-group-2'>
-                            <input type='text' id='contact' value='123123' disabled>
-                            <h5 for='contact'>CONTACT NO</h5>
-                        </div>
-                        <div class='field-group-2'>
-                            <input type='text' id='email' value='name@gmail.com' disabled>
-                            <h5 for='email'>EMAIL</h5>
-                        </div>
-                    </div>
-                    <div class='view-account'>
-                        <h2>ACCOUNT:</h2>
-                        <div class='field-group-3'>
-                            <input type='text' id='user' value='user' disabled>
-                            <h5 for='user'>USERNAME</h5>
-                        </div>
-                        <div class='field-group-3'>
-                            <input type='text' id='pass' value='pass' disabled>
-                            <h5 for='pass'>PASSWORD</h5>
-                        </div>
-                    </div>
-                    <div class='view-date'>
-                        <h2>ACCOUNT CREATED: &nbsp;</h2>
-                        <h2>MM-DD-YYYY</h2>
-                    </div>
-             </div>";
+                            <div class='view-right'>
+                                <div class='view-space'>
+                                    <button popovertarget='view-more-container' popovertargetaction='hide'>CLOSE</button>
+                                </div>
+                                <div class='view-name'>
+                                    <h2>NAME:</h2>
+                                    <div class='field-group-1' id='fg1'>        
+                                        <input type='text' id='firstname' value='" . htmlspecialchars($row['AN_FName']) . "' disabled>
+                                        <h5 for='firstname'>FIRST NAME</h5>
+                                    </div>
+                                    <div class='field-group-1' id='fg1'>                   
+                                        <input type='text' id='middlename' value='" . htmlspecialchars($row['AN_MName']) . "' disabled>
+                                        <h5 for='middlename'>MIDDLE NAME</h5>
+                                    </div>
+                                    <div class='field-group-1' id='fg2'>                   
+                                        <input type='text' id='lastname' value='" . htmlspecialchars($row['AN_LName']) . "' disabled>
+                                        <h5 for='lastname'>LAST NAME</h5>
+                                    </div>
+                                    <div class='field-group-1' id='fg2'>                  
+                                        <input type='text' id='suffix' value='" . htmlspecialchars($row['AN_Suffix']) . "' disabled>
+                                        <h5 for='suffix'>SUFFIX</h5>
+                                    </div>
+                                </div>
+                                <div class='view-contact'>
+                                    <h2>CONTACTS:</h2>
+                                    <div class='field-group-2'>
+                                        <input type='text' id='contact' value='" . htmlspecialchars($row['AI_Contact']) . "' disabled>
+                                        <h5 for='contact'>CONTACT NO</h5>
+                                    </div>
+                                    <div class='field-group-2'>
+                                        <input type='text' id='email' value='" . htmlspecialchars($row['AI_Email']) . "' disabled>
+                                        <h5 for='email'>EMAIL</h5>
+                                    </div>
+                                </div>
+                                <div class='view-account'>
+                                    <h2>ACCOUNT:</h2>
+                                    <div class='field-group-3'>
+                                        <input type='text' id='user' value='" . htmlspecialchars($row['ACC_Username']) . "' disabled>
+                                        <h5 for='user'>USERNAME</h5>
+                                    </div>
+                                    <div class='field-group-3'>
+                                        <input type='text' id='pass' value='" . htmlspecialchars($row['ACC_Password']) . "' disabled>
+                                        <h5 for='pass'>PASSWORD</h5>
+                                    </div>
+                                </div>
+                                <div class='view-date'>
+                                    <h2>ACCOUNT CREATED: &nbsp;</h2>
+                                    <h2>" . htmlspecialchars($dateCreated) . "</h2>
+                                </div>
+                        </div>";
+                }
+            }
+    
         ?>
     </div>
 </body>

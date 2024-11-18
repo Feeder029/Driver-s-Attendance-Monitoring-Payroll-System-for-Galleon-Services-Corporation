@@ -276,11 +276,11 @@ td{
 #add-hub-container{
     background-color: white;
     overflow: hidden;
-    top: 0;
+    /* top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
-    display: flex;
+    height: 100vh; */
+ 
     flex-direction: column;
     gap: 0;
 }

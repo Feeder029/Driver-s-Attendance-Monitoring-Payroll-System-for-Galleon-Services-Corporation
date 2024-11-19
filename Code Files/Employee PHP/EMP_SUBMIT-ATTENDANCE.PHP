@@ -47,8 +47,10 @@
 
     <!-- Submit and Reset Buttons -->
     <div class="button-container">
-      <button type="submit">Submit</button>
-      <button type="reset">Reset</button>
+    <button type="submit" <?php if($disableInput == true) echo "disabled"; ?>> 
+    <?php if($disableInput == false) echo "Submit"; else echo "Edit"; ?>
+    </button>      
+    <button type="reset">Reset</button>
     </div>
   </div>
   </form>

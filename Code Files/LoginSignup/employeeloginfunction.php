@@ -1,20 +1,7 @@
 <?php
 session_start();
 
-//Connect to Database
-$db_server = "localhost";
-$db_user = "root";
-$db_pass = "";
-$db_name = "gsc_attendanceandpayrolltest";
-$conn = "";
-
-$conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
-
-if ($conn) {
-} else {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
+require '../DatabaseConnection/Database.php';
 
 $AccDetails = "SELECT a.`ACC_Username`, a.`ACC_Password`, b.`ACCS_Status`, c.`DI_ID` FROM account a
 JOIN account_status b ON a.ACC_AcountStatID = b.ACCS_ID

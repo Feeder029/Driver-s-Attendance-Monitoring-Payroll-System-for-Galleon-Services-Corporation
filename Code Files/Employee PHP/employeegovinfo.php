@@ -40,18 +40,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Function to update government information with conditional image fields
 function Gov_Update($conn, $DriverID, $PhilHealthNo, $SSSNo, $PagibigNo, $BrgyClearanceQuery, $PoliceClearanceQuery, $NBIClearanceQuery) {
-    // Build the SQL query, appending image updates only if files were provided
-    $GovQuery = "UPDATE driver_information a
-    JOIN government_information h ON a.`DI_GovInfoID` = h.`GOV_ID`
-    SET
-        h.`GOV_PhilHealthNo` = '$PhilHealthNo',
-        h.`GOV_SSSNo` = '$SSSNo',
-        h.`GOV_PagibigNo` = '$PagibigNo'
-        $BrgyClearanceQuery
-        $PoliceClearanceQuery
-        $NBIClearanceQuery
-    WHERE DI_ID = $DriverID;";
+    // Collect all updates dynamically in an array
+    $updateFields = [];
+    
+    if (!empty($BrgyClearanceQuery)) {
+        $updateFields[] = substr($BrgyClearanceQuery, 2); // Remove leading comma and space
+    }
+    if (!empty($PoliceClearanceQuery)) {
+        $updateFields[] = substr($PoliceClearanceQuery, 2);
+    }
+    if (!empty($NBIClearanceQuery)) {
+        $updateFields[] = substr($NBIClearanceQuery, 2);
+    }
 
+    // Add mandatory updates
+    $updateFields[] = "c.`PHI_No` = '$PhilHealthNo'";
+    $updateFields[] = "d.`SSS_No` = '$SSSNo'";
+    $updateFields[] = "e.`PBIG_No` = '$PagibigNo'";
+
+    // Join all updates with commas
+    $updateString = implode(", ", $updateFields);
+
+    // Final SQL query
+    $GovQuery = "UPDATE driver_information a
+    JOIN government_information b ON a.`DI_GovInfoID` = b.`GOV_ID`
+    JOIN philhealth c ON b.`GOV_PhilHealthNo` = c.`PHI_No`
+    JOIN sss d ON b.`GOV_SSSNo` = d.`SSS_No`
+    JOIN pagibig e ON b.`Gov_PagibigNo` = e.`PBIG_No`
+    SET $updateString
+    WHERE a.`DI_ID` = $DriverID;";
+
+    // Execute the query and check for errors
     $result = mysqli_query($conn, $GovQuery);
 
     if (!$result) {
@@ -60,6 +79,7 @@ function Gov_Update($conn, $DriverID, $PhilHealthNo, $SSSNo, $PagibigNo, $BrgyCl
         echo "Driver information updated successfully.";
     }
 }
+
 
 mysqli_close($conn);
 ?>

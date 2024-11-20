@@ -18,6 +18,24 @@ function editGovernmentInfo() {
     document.getElementById("edit").style.display = "none";
 }
 
+function BackGovernmentInfo() {
+    const editableFields = document.querySelectorAll('.editable_status_GOV');
+    const ChooseImage = document.querySelectorAll('.editimage_clearance');
+
+    editableFields.forEach(function(field) {
+        field.disabled = true; // Make TextBox able to input
+    });
+
+    ChooseImage.forEach(function(Text) {
+        Text.style.display = 'none';
+    });
+
+    document.getElementById("save").style.display = "none";
+    document.getElementById("back").style.display = "none";
+    document.getElementById("edit").style.display = "block";
+}
+
+
 // Call to hide input fields initially when the page loads
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('#clearance-info input[type="file"]').forEach(input => {

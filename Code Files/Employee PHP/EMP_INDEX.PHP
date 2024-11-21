@@ -59,7 +59,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   <script src="../JS Files/PAYSLIP.JS"></script> 
   <script src="../JS Files/ATTENDANCE-SUMMARY.JS"></script> 
-  <script src="../JS Files/SUBMIT-ATTENDANCE.JS"></script> 
+  <script src="../JS Files/SUBMIT-ATTENDANCE.JS?v=1.1"></script> 
   <script src="../JS Files/Employee_Profile.js?v=1.3"></script>
 </body>
 </html>

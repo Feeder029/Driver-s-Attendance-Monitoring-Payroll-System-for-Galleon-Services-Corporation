@@ -10,6 +10,10 @@
     
     <!-- STYLE -->
     <link rel="stylesheet" href="employee.css?v=1.1">
+
+      <!--JQuery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <body>
 
@@ -131,20 +135,21 @@
                     </div>
                     <div class="input-box address">
                         <select id="province" class="input-field" required>
-                          <option value="">Select Province</option>
-                          <option value="ProvinceA">Province A</option>
-                          <option value="ProvinceB">Province B</option>
-                          <option value="ProvinceC">Province C</option>
                         </select>
+                        <input type="hidden" class="form-control form-control-md" name="province_text" id="province-text" required>
+
                         <select id="city" class="input-field" required>
-                          <option value="">Select City/Municipality</option>
                         </select>
+                        <input type="hidden" class="form-control form-control-md" name="city_text" id="city-text" required>
+
                       </div>
                       <!-- Barangay Dropdown and Street Input -->
                       <div class="input-box address">
                         <select id="barangay" class="input-field" required>
-                          <option value="">Select Barangay</option>
                         </select>
+                        <input type="hidden" class="form-control form-control-md" name="barangay_text" id="barangay-text" required>
+
+
                         <input type="text" class="input-field" placeholder="Street" required>
                       </div>
                     <div class="input-box address">
@@ -345,5 +350,7 @@
 
     <!-- JS -->
     <script src="employee.js?v=1.1"></script>
+    <script src="../Dropdown-Json/ph-address-selector.js?v=1.1"></script>
+
 </body>
 </html>

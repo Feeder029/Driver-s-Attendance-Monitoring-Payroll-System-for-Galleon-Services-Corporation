@@ -1,6 +1,4 @@
-// Function to handle displaying the selected form section and showing or hiding the nav menu
 function showForm(formId, showNav) {
-
   const formContainer = document.getElementById('form-container'); // The container where form content will be loaded
 
   // Clear any existing content in the container
@@ -18,7 +16,35 @@ function showForm(formId, showNav) {
       return response.text();
     })
     .then(html => {
-      formContainer.innerHTML = html; // Insert the loaded HTML content into the container
+      // Create a temporary container to hold the HTML content
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+
+      // Move all content to the actual form container
+      while (tempDiv.firstChild) {
+        formContainer.appendChild(tempDiv.firstChild);
+      }
+
+      // Execute inline scripts
+      const scripts = formContainer.querySelectorAll('script');
+      scripts.forEach(script => {
+        const newScript = document.createElement('script');
+
+        if (script.src) {
+          // For external scripts
+          newScript.src = script.src;
+          newScript.async = false; // Ensure execution order
+        } else {
+          // For inline scripts
+          newScript.textContent = script.textContent;
+        }
+
+        // Append the new script to the document to execute it
+        document.body.appendChild(newScript);
+
+        // Remove the old script from the container
+        script.remove();
+      });
     })
     .catch(error => {
       console.error('Error loading form:', error);
@@ -33,6 +59,7 @@ function showForm(formId, showNav) {
     navMenu.style.display = 'none'; // Hide the navigation menu
   }
 }
+
   
   // Toggle dropdown menu visibility
   function toggleMenu() {

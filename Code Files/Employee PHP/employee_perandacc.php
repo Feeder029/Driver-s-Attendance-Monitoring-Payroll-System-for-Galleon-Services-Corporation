@@ -19,9 +19,9 @@
     $HN = htmlspecialchars($_POST['House']);
     $LT = htmlspecialchars($_POST['Lot']);
     $ST = htmlspecialchars($_POST['Street']);
-    $BY = htmlspecialchars($_POST['barangay']);
-    $CY = htmlspecialchars($_POST['city']);
-    $PV = htmlspecialchars($_POST['province']);
+    $BY = htmlspecialchars($_POST['barangay_text']);
+    $CY = htmlspecialchars($_POST['city_text']);
+    $PV = htmlspecialchars($_POST['province_text']);
     $GNO = htmlspecialchars($_POST['GcashNo']);
     $GNA = htmlspecialchars($_POST['GcashName']);
     // $ZP = htmlspecialchars($_POST['Zip']);

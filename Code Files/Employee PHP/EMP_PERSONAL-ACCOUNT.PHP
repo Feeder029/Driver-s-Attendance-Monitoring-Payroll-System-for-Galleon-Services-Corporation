@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Personal & Account Information</title>
   <link rel="stylesheet" href="../CSS Files/PERSONAL-ACCOUNT.CSS"> <!-- Link to your CSS file -->
+  <!--JQuery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <?php
@@ -49,34 +51,23 @@
     <section id="address-info" class="info-section">
       <h3>Address Information</h3>
       <label for="province">Province:</label>
-      <select id="province" name="province"  disabled class="editable_status_P-A" required>
-        <option value= "<?php echo $DRV["Province"] ?>"> <?php echo $DRV["Province"] ?> </option>
-        <option value="">Select Province</option>
-        <option value="province1">Province 1</option>
-        <option value="province2">Province 2</option>
-        <option value="province3">Province 3</option>
-        <!-- Add more provinces as needed -->
+      <select id="province" name="province" class="editable_status_P-A" disabled required>
+       <option value="<?php echo $DRV['Province']; ?>" selected><?php echo $DRV['Province']; ?></option>
       </select>
+      <input type="hidden" name="province_text" id="province-text" value="<?php echo $DRV['Province']; ?>" required>
 
-      <label for="city-municipality">City/Municipality:</label>
-      <select id="city-municipality" name="city"  disabled class="editable_status_P-A" required>
-                 <option value= "<?php echo $DRV["City"] ?>"> <?php echo $DRV["City"] ?> </option>
-                  <option value="">Select City/Municipality</option>
-                  <option value="city1">City 1</option>
-                  <option value="city2">City 2</option>
-                  <option value="city3">City 3</option>
-                  <!-- Add more cities/municipalities as needed -->
-      </select>
+     <label for="city">City/Municipality:</label>
+     <select id="city" name="city" class="editable_status_P-A" disabled required>
+      <option value="<?php echo $DRV['City']; ?>" selected><?php echo $DRV['City']; ?></option>
+     </select>
+     <input type="hidden" name="city_text" id="city-text" value="<?php echo $DRV['City']; ?>" required>
 
-      <label for="barangay">Barangay:</label>
-      <select id="barangay" name="barangay" disabled class="editable_status_P-A"  required>
-                <option value= "<?php echo $DRV["Brgy"] ?>"> <?php echo $DRV["Brgy"] ?> </option>
-                  <option value="">Select Barangay</option>
-                  <option value="barangay1">Barangay 1</option>
-                  <option value="barangay2">Barangay 2</option>
-                  <option value="barangay3">Barangay 3</option>
-                  <!-- Add more barangays as needed -->
-              </select>
+    <label for="barangay">Barangay:</label>
+    <select id="barangay" name="barangay" class="editable_status_P-A" disabled required>
+     <option value="<?php echo $DRV['Brgy']; ?>" selected><?php echo $DRV['Brgy']; ?></option>
+    </select>
+    <input type="hidden" name="barangay_text" id="barangay-text" value="<?php echo $DRV['Brgy']; ?>" required>
+
 
       <label for="street">Street:</label>
       <input type="text" id="street" name="Street" value="<?php echo $DRV["Street"] ?>" disabled class="editable_status_P-A" required>
@@ -144,7 +135,7 @@
     
   <script src="../JS Files/Employee_Profile.js?v=1.1"></script>
   <script src="../JS Files/Employee_Profile2.js?v=1.1"></script>
-
+  <script src="updateaddress.js?v=1.1"></script>
 
   </section>
   </form>

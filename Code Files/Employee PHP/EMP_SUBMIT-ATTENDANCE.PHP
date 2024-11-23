@@ -9,7 +9,8 @@
 </head>
 <body>
   
- <?php require "../Employee PHP/employee_submit_attendance.php"; ?>
+ <?php require "../Employee PHP/employee_submit_attendance.php"; 
+ ?>
   
  <form action="employee_submit_attendance.php" method="post" enctype="multipart/form-data" onsubmit="return confirmSubmission(event);">
     <div id="submit-attendance" class="form-sections">
@@ -49,5 +50,6 @@
     </div>
 </form>
 
+<script src="../JS Files/subAttendance.js"></script>
 </body>
 </html>

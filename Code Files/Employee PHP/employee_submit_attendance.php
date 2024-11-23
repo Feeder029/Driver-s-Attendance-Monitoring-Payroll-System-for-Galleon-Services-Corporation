@@ -14,7 +14,17 @@ require '../DatabaseConnection/Database.php';
 
 $datetoday = date('Y-m-d');
 
-$sql = "SELECT b.DEL_ParcelCarried, b.DEL_ParcelDelivered, b.DEL_ParcelReturned, b.DEL_RemittanceReciept FROM attendance a JOIN delivery_information b ON a.ATT_DeliveryID = b.DEL_ID WHERE ATT_Date = ? AND ATT_DriverID = ?;"; $stmt = $conn->prepare($sql);
+$sql = "SELECT b.`DEL_ParcelCarried`,
+b.`DEL_ParcelDelivered`,
+b.`DEL_ParcelReturned`,
+b.`DEL_RemittanceReciept`,
+c.`ATT_Date`
+FROM attendance a
+JOIN delivery_information b ON a.ATT_DeliveryID = b.DEL_ID
+JOIN attendance_date_type c ON a.ADT_ID = c.ADT_ID
+WHERE c.`ATT_Date` = ? AND a.`ATT_DriverID` = ?;"; 
+
+$stmt = $conn->prepare($sql);
 
 // Bind parameters 
 $stmt->bind_param("si", $datetoday, $DriverID);
@@ -41,7 +51,8 @@ foreach ($resultsArray as $row) {
 $disableInput = true;
 } else { $disableInput = false; }
 
-// Close the statement $stmt->close();
+// Close the statement 
+$stmt->close();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate and sanitize inputs
@@ -76,10 +87,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Submit Attendance to the Database
 function SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $fileData) {
-    $date = date('Y-m-d');
+// Set the timezone to Philippine Time
+date_default_timezone_set('Asia/Manila');
 
+$date = date('Y-m-d');
+$timesubmission = time(); // Get current Unix timestamp
+$formattedTime = date('H:i:s', $timesubmission); // Convert to 'HH:MM:SS'
     try {
         $conn->begin_transaction();
+
+        // Insert date
+        $dateID = "SELECT ADT_ID FROM attendance_date_type WHERE ATT_Date = ?";
+        $stmt3 = $conn->prepare($dateID);
+        // Bind parameters 
+        $stmt3->bind_param("s", $date);
+        $stmt3->execute();
+        // Get the result set from the statement 
+        $result = $stmt3->get_result();
+        $dateRow = $result->fetch_assoc(); // Fetch single row
+
+        if (!$dateRow) {
+            throw new Exception("No date ID found for today's date: $date");
+        }
+
+        $DateID_Today = $dateRow['ADT_ID']; // Extract the ID
 
         // Insert into delivery_information
         $sql1 = "INSERT INTO delivery_information 
@@ -97,10 +128,10 @@ function SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $fi
 
         // Insert into attendance
         $sql2 = "INSERT INTO attendance 
-                (`ATT_ID`, `ATT_DriverID`, `ATT_DeliveryID`, `ATT_Date`) 
-                VALUES (NULL, ?, ?, ?)";
+                (`ATT_ID`, `ATT_DriverID`, `ATT_DeliveryID`, `ATT_SubmitTime`, `ADT_ID`) 
+                VALUES (NULL, ?, ?, ?, ?)";
         $stmt2 = $conn->prepare($sql2);
-        $stmt2->bind_param("iis", $DriverID, $deliveryID, $date);
+        $stmt2->bind_param("iisi", $DriverID, $deliveryID, $formattedTime, $DateID_Today); // Corrected binding
         if (!$stmt2->execute()) {
             throw new Exception("Error inserting into attendance: " . $stmt2->error);
         }
@@ -112,5 +143,4 @@ function SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $fi
         echo "Transaction error: " . $e->getMessage();
     }
 }
-
 ?>

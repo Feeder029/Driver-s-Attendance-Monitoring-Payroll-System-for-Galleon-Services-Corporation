@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.getElementById('submit-button').addEventListener('click', function(event) {
     // Prevent default form submission
-    event.preventDefault();
+    // event.preventDefault();
 
     // Select all required fields from the registration form
     const requiredFields = document.querySelectorAll(

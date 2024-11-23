@@ -17,6 +17,10 @@
 </head>
 <body>
 
+<?php
+require "HubandType.php";
+?>
+
     <!-- Form Container -->
     <div class="form-container">
         <div class="col col-1">
@@ -54,7 +58,7 @@
         }
         ?>
 
-            <form action="employeeloginfunction.php" method="post">
+ <form action="employeeloginfunction.php" method="post">
             <!-- Login Form Container -->
             <div class="login-form">
                 <div class="form-title">
@@ -86,6 +90,7 @@
             </div>
             </form>
 
+ <form action="employeeregisterfunction.php" method="post" enctype="multipart/form-data">
             <!-- Register Form Container -->
             <div class="register-form">
                 <div class="form-title">
@@ -93,33 +98,33 @@
                 </div>
                 <div class="form-input">
                     <div class="input-box name-info">
-                        <input type="text" class="input-field" placeholder="Last Name" required>
-                        <input type="text" class="input-field" placeholder="First Name" required>
+                        <input type="text" class="input-field" placeholder="Last Name" name="lname" required>
+                        <input type="text" class="input-field" placeholder="First Name" name="fname" required>
                     </div>
                     <div class="input-box name-info">
-                        <input type="text" class="input-field" placeholder="Middle Name" required>
-                        <input type="text" class="input-field" placeholder="Suffix (e.g., Jr., Sr.)">
+                        <input type="text" class="input-field" placeholder="Middle Name" name="mname" >
+                        <input type="text" class="input-field" placeholder="Suffix (e.g., Jr., Sr.)" name="sfx">
                     </div>
                     <div class="input-box">
                         <label for="birthdate" class="input-label bday">Birthdate</label>
-                        <input type="date" id="birthdate" class="input-field" placeholder="MM/DD/YYYY" required>
+                        <input type="date" id="birthdate" class="input-field" placeholder="MM/DD/YYYY" name="DOB" required>
                     </div>
                     <div class="input-box gender-age">
-                        <select id="gender" class="input-field" required>
-                            <option value="" disabled selected>Select Gender</option>
+                        <select id="gender" class="input-field" name="Gender" required>
+                            <option value="" disabled selected >Select Gender</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                             <option value="other">Other</option>
                         </select>
-                        <input type="number" id="age" class="input-field" placeholder="Age" required>
+                        <input type="number" id="age" class="input-field" placeholder="Age" name="Age" required>
                     </div>
                     <div class="input-box file">
-                        <label for="profile-photo" class="input-label" required>Upload a profile photo</label>
-                            <input type="file" class="input-field" accept="image/*" required>
+                        <label for="profile-photo" class="input-label" >Upload a profile photo</label>
+                            <input type="file" class="input-field" accept="image/*" name="Profile" required>
                     </div>
                 </div>
                 <div class="input-box btn-box button">
-                    <button class="btn btn-3" id="next1">Next</button>
+                    <button type="button" class="btn btn-3" id="next1">Next</button>
                     
                 </div>
             </div>
@@ -131,38 +136,38 @@
                 </div>
                 <div class="form-input">
                     <div class="input-box contact">
-                        <input type="email" class="input-field" placeholder="Email" required>
+                        <input type="email" class="input-field" placeholder="Email" name="Email" required>
                     </div>
                     <div class="input-box address">
-                        <select id="province" class="input-field" required>
+                        <select id="province" class="input-field" >
                         </select>
                         <input type="hidden" class="form-control form-control-md" name="province_text" id="province-text" required>
 
-                        <select id="city" class="input-field" required>
+                        <select id="city" class="input-field" >
                         </select>
                         <input type="hidden" class="form-control form-control-md" name="city_text" id="city-text" required>
 
                       </div>
                       <!-- Barangay Dropdown and Street Input -->
                       <div class="input-box address">
-                        <select id="barangay" class="input-field" required>
+                        <select id="barangay" class="input-field" >
                         </select>
                         <input type="hidden" class="form-control form-control-md" name="barangay_text" id="barangay-text" required>
 
 
-                        <input type="text" class="input-field" placeholder="Street" required>
+                        <input type="text" class="input-field" placeholder="Street" name="Street">
                       </div>
                     <div class="input-box address">
-                        <input type="text" class="input-field" placeholder="House Number" required>
-                        <input type="text" class="input-field" placeholder="Lot Number">
+                        <input type="text" class="input-field" placeholder="House Number" name="HouseNo">
+                        <input type="text" class="input-field" placeholder="Lot Number" name="LotNo">
                     </div>
                     <div class="input-box address">
-                        <input type="text" class="input-field" placeholder="ZIP Code" required>
-                        <input type="tel" class="input-field" placeholder="Contact Number" required>
+                        <input type="text" class="input-field" placeholder="ZIP Code" name="Zip" required>
+                        <input type="tel" class="input-field" placeholder="Contact Number" name="Contact" required>
                     </div>
                     <div class="input-box btn-box button">
-                        <button class="btn btn-6" id="back1">Back</button>
-                        <button class="btn btn-4" id="next2">Next</button>
+                        <button class="btn btn-6" id="back1"  type="button" >Back</button>
+                        <button class="btn btn-4" id="next2"  type="button" >Next</button>
                     </div>
                 </div>
             </div>
@@ -174,60 +179,61 @@
                 </div>
                 <div class="form-input">
                     <div class="input-box input">
-                        <input type="text" class="input-field" placeholder="Rider ID Number" required>
-                        <select class="input-field" required>
+                        <input type="text" class="input-field" placeholder="Rider ID Number" name="DriverID">
+                        <select class="input-field" name="UnitID" required>
                             <option value="" disabled selected>Select Rider Type</option>
-                            <option value="full-time">Two Wheels</option>
-                            <option value="part-time">Three Wheels</option>
-                            <option value="contractor">Four Wheels</option>
-                            <option value="contractor">Flexy</option>
+                            <?php 
+                             for ($i = 0; $i < count($UnitTypes); $i++) {
+                              echo '<option value="' . htmlspecialchars($UnitTypesID[$i]) . '"' .'>' . htmlspecialchars($UnitTypes[$i]) . '</option>';
+                            }
+                      ?>
                         </select>
                     </div>
                 
                     <div class="input-box input">
-                        <select class="input-field" required>
-                            <option value="" disabled selected>Select Hub Name</option>
-                            <option value="hub1">Hub 1</option>
-                            <option value="hub2">Hub 2</option>
-                            <option value="hub3">Hub 3</option>
-                            <!-- Add more hub options as needed -->
+                        <select class="input-field" name="HubID" required>
+                            <option value="" disabled selected >Select Hub Name</option>
+                            <?php 
+                             for ($i = 0; $i < count($Hub); $i++) {
+                              echo '<option value="' . htmlspecialchars($HubID[$i]) . '"' .'>' . htmlspecialchars($Hub[$i]) . '</option>';
+                            }
+                      ?>
                         </select>
-                        <select class="input-field" required>
+                        <!-- <select class="input-field" >
                             <option value="" disabled selected>Select Hub Location</option>
                             <option value="location1">Location 1</option>
                             <option value="location2">Location 2</option>
                             <option value="location3">Location 3</option>
-                            <!-- Add more location options as needed -->
-                        </select>
+                        </select> -->
                     </div>
 
                     <div class="input-box file">
                         <div>
                             <label for="official-receipt" class="input-label" required>Upload a photo of OR</label>
-                            <input type="file" class="input-field" accept="image/*" required>
+                            <input type="file" class="input-field" accept="image/*" name="OR">
                         </div>
                         <div>
-                            <label for="certification" class="input-label" required>Upload a photo of CR</label>
-                            <input type="file" class="input-field" accept="image/*" required>
+                            <label for="certification" class="input-label" required >Upload a photo of CR</label>
+                            <input type="file" class="input-field" accept="image/*" name="CR">
                         </div>
                     </div>
                     <div class="input-box file">
                         <div>
                             <label for="license-f" class="input-label" required>Upload a photo of your License (Front)</label>
-                            <input type="file" class="input-field" accept="image/*" required>
+                            <input type="file" class="input-field" accept="image/*" name="License">
                         </div>
-                        <div>
-                            <label for="license-b" class="input-label" required>Upload a photo of your License (Back)</label>
-                            <input type="file" class="input-field" accept="image/*" required>
-                        </div>
+                        <!-- <div>
+                            <label for="license-b" class="input-label" >Upload a photo of your License (Back)</label>
+                            <input type="file" class="input-field" accept="image/*" >
+                        </div> -->
                     </div>
                     
                     <div class="input-box">
-                        <input type="text" class="input-field" placeholder="Vehicle Plate No." required>
+                        <input type="text" class="input-field" placeholder="Vehicle Plate No." name="VehiclePlate" required>
                     </div>
                     <div class="input-box btn-box button">
-                        <button class="btn btn-7" id="back2">Back</button>
-                        <button class="btn btn-5" id="next3">Next</button>
+                        <button class="btn btn-7" id="back2"  type="button"  >Back</button>
+                        <button class="btn btn-5" id="next3"  type="button" >Next</button>
                     </div>
                 </div>
             </div>
@@ -243,21 +249,21 @@
                 
                     <div class="input-box">
                         <div>
-                            <label for="brgy" class="input-label" required>Upload a photo of Barangay Clearance</label>
-                            <input type="file" class="input-field" accept="image/*" required>
+                            <label for="brgy" class="input-label" >Upload a photo of Barangay Clearance</label>
+                            <input type="file" class="input-field" accept="image/*" name="Brgy" required>
                         </div>
                         <div>
-                            <label for="police" class="input-label" required>Upload a photo of Police Clearance</label>
-                            <input type="file" class="input-field" accept="image/*" required>
+                            <label for="police" class="input-label" >Upload a photo of Police Clearance</label>
+                            <input type="file" class="input-field" accept="image/*" name="Police" required>
                         </div>
                         <div>
-                            <label for="nbi" class="input-label" required>Upload a photo of NBI Clearance</label>
-                            <input type="file" class="input-field" accept="image/*" required>
+                            <label for="nbi" class="input-label" >Upload a photo of NBI Clearance</label>
+                            <input type="file" class="input-field" accept="image/*" name="NBI" required>
                         </div>
                     </div>
                     <div class="input-box btn-box button">
-                        <button class="btn btn-7" id="back3">Back</button>
-                        <button class="btn btn-5" id="next4">Next</button>
+                        <button class="btn btn-7" id="back3"  type="button" >Back</button>
+                        <button class="btn btn-5" id="next4"  type="button" >Next</button>
                     </div>
                 </div>
             </div>
@@ -269,24 +275,24 @@
                 </div>
                 <div class="form-input">
                     <div class="input-box">
-                        <input type="text" class="input-field" placeholder="Gcash Account Name" required>
+                        <input type="text" class="input-field" placeholder="Gcash Account Name" name="GcashName" required>
                     </div>
                     <div class="input-box">
-                        <input type="text" class="input-field" placeholder="Gcash Number" required>
+                        <input type="text" class="input-field" placeholder="Gcash Number" name="GcashNo" required>
                     </div>
                     <div class="input-box">
-                        <input type="text" class="input-field" placeholder="Social Security System Number" required>
+                        <input type="text" class="input-field" placeholder="Social Security System Number" name="SSS" required>
                     </div>
                     <div class="input-box">
-                        <input type="text" class="input-field" placeholder="PhilHealth Number" required>
+                        <input type="text" class="input-field" placeholder="PhilHealth Number" name="PH" required>
                     </div>
                     <div class="input-box">
-                        <input type="text" class="input-field" placeholder="Pag-IBIG Number" required>
+                        <input type="text" class="input-field" placeholder="Pag-IBIG Number" name="PIBG" required>
                     </div>
                 
                     <div class="input-box btn-box button">
-                        <button class="btn btn-8" id="back4">Back</button>
-                        <button class="btn btn-6" id="next5">Next</button>
+                        <button class="btn btn-8" id="back4"  type="button" >Back</button>
+                        <button class="btn btn-6" id="next5"  type="button" >Next</button>
                     </div>
 
                     </div>
@@ -296,11 +302,15 @@
             <!-- Password Form Container -->
             <div class="password-form" style="display: none;">
                 <div class="form-title">
-                    <span>Password</span>
+                    <span>Username & Password</span>
                 </div>
+                <div class="input-box">
+                        <input type="text" class="input-field" placeholder="Username" name="user" required>
+                        <i class="bx bx-user icon"></i>
+                    </div>
                  <!-- Password Input Fields -->
                  <div class="input-box">
-                    <input type="password" class="input-field" id="desired-password" placeholder="Desired Password" required>
+                    <input type="password" class="input-field" id="desired-password" placeholder="Desired Password" name="pass" required>
                     <span class="toggle-password" onclick="togglePassword('desired-password', this)">
                         <i class="fas fa-eye-slash"></i>
                     </span>
@@ -320,7 +330,7 @@
 
            <!-- Terms and Conditions Checkbox -->
                 <div class="checkbox-containerterm">
-                    <input type="checkbox" id="terms-conditions" name="terms-conditions" required>
+                    <input type="checkbox" id="terms-conditions" name="terms-conditions" >
                     <label for="terms-conditions">I agree to the <a href="#" id="terms-link" class="terms-link">Terms and Conditions</a></label>
                 </div>
 
@@ -330,6 +340,8 @@
                     </button>
                 </div>
 
+
+           <!-- id="submit-button" -->
            <!-- Information Box for Terms and Conditions -->
                 <div id="terms-info" class="terms-info" style="display: none;">
                     <div class="terms-content">
@@ -346,10 +358,10 @@
                 </div>
             </div>
         </div>
-    
+        </form>
 
     <!-- JS -->
-    <script src="employee.js?v=1.1"></script>
+    <script src="employee.js?v=1.4"></script>
     <script src="../Dropdown-Json/ph-address-selector.js?v=1.1"></script>
 
 </body>

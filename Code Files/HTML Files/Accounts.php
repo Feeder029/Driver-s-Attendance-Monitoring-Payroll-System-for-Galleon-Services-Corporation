@@ -3,7 +3,7 @@
     $db_server = "localhost";
     $db_user = "root";
     $db_pass = "";
-    $db_name = "gsc_attendanceandpayrolltest";
+    $db_name = "gsc_attendanceandpayroll3.0";
 
     // Create connection
     $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name) or die("Connection failed: " . mysqli_connect_error());

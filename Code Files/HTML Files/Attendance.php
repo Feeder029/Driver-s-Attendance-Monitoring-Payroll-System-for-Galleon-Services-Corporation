@@ -3,7 +3,7 @@
     $db_server = "localhost";
     $db_user = "root";
     $db_pass = "";
-    $db_name = "gsc_attendanceandpayrolltest";
+    $db_name = "gsc_attendanceandpayroll3.0";
 
     // Create connection
     $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name) or die("Connection failed: " . mysqli_connect_error());
@@ -42,7 +42,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS Files/Attendance.css">
+    <link rel="stylesheet" href="../CSS Files/Attendance.css?v=1.2">
     <title>ATTENDANCE</title>
 </head>
 <body style="background-color: rgb(25, 0, 255);">
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="pay">
-                    <label for="payperiod">PAY PERIOD: </label>
+                    <label for="payperiod">ATTENDANCE PERIOD: </label>
                     <input type="date" name="payperiod1" id="">
                     <label for="">TO</label>
                     <input type="date" name="payperiod2" id="">

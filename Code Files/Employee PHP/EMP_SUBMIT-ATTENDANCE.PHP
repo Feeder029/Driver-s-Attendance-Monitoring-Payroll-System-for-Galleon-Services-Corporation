@@ -49,5 +49,6 @@
     </div>
 </form>
 
+<script src="../JS Files/subAttendance.js"></script>
 </body>
 </html>

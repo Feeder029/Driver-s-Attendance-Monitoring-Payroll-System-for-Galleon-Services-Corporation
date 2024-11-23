@@ -35,7 +35,26 @@
         JOIN
             hub_assigned h ON i.DI_HubAssignedID = h.HASS_ID
     ";
-    $result = $conn->query($sql);   
+
+    $sql2="
+        SELECT
+            SUM(d.DEL_ParcelCarried) AS TotalCarried,
+            SUM(d.DEL_ParcelDelivered) AS TotalDelivered,
+            SUM(d.DEL_ParcelReturned) AS TotalReturned,
+            h.HASS_Name
+        FROM
+            attendance a
+        JOIN
+            delivery_information d ON a.ATT_DeliveryID = d.DEL_ID
+        JOIN
+            driver_information i ON a.ATT_DriverID = i.DI_ID
+        JOIN
+            hub_assigned h ON i.DI_HubAssignedID = h.HASS_ID
+    ";
+
+
+    $result = $conn->query($sql);  
+    $result2 = $conn->query($sql2); 
 ?>
 
 <!DOCTYPE html>
@@ -43,8 +62,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS Files/Delivery.css?v=1.2">
-    <script src="../JS Files/Delivery.js"></script>
+    <link rel="stylesheet" href="../CSS Files/Delivery.css?v=1.3">
+    <script src="../JS Files/Delivery.js?v=1.2"></script>
     <title>DELIVERY</title>
 </head>
 <body style="background-color: rgb(217, 255, 0);">
@@ -57,10 +76,10 @@
                
 
                 <div class="pay">
-                    <label for="payperiod">DELIVERY PERIOD: </label>
-                    <input type="date" name="payperiod1" id="">
+                    <label for="deliveryperiod">DELIVERY PERIOD: </label>
+                    <input type="date" name="deliveryperiod1" id="deliveryperiod1">
                     <label for="">TO</label>
-                    <input type="date" name="payperiod2" id="">
+                    <input type="date" name="deliveryperiod2" id="deliveryperiod2">
                 </div>
 
                 <div class="search-bar">
@@ -76,17 +95,17 @@
                           </svg>
                         </div>
                         <div class="options">
-                            <div title="dd-all">
-                                <input id="dd-all" name="option" type="radio" checked="" />
-                                <label class="option" for="dd-all" data-txt="Driver"></label>
+                            <div title="dd-driver">
+                                <input id="dd-driver" name="option" type="radio" checked="" />
+                                <label class="option" for="dd-driver" data-txt="Driver"></label>
                             </div>
-                            <div title="dd-active">
-                                <input id="dd-active" name="option" type="radio" />
-                                <label class="option" for="dd-active" data-txt="Hub"></label>
+                            <div title="dd-hub">
+                                <input id="dd-hub" name="option" type="radio" />
+                                <label class="option" for="dd-hub" data-txt="Hub"></label>
                             </div>
-                            <div title="dd-pending">
-                                <input id="dd-pending" name="option" type="radio" />
-                                <label class="option" for="dd-pending" data-txt="Date"></label>
+                            <div title="dd-date">
+                                <input id="dd-date" name="option" type="radio" />
+                                <label class="option" for="dd-date" data-txt="Date"></label>
                             </div>
                         </div>
                 </div>
@@ -97,7 +116,7 @@
         </nav>
     </div>
 
-    <section id="Driver">
+    <div id="DriverSection">
         <div class="table-container">
             <table class="table-accounts">
             <?php
@@ -156,7 +175,45 @@
 
             
         </div>
-    </section>
+    </div>
+
+
+    <div id="HubSection" style="display: none;">
+        <?php
+            if ($result2 && $result2->num_rows > 0) {
+                // Fetch and display each row from the result set
+                while ($row2 = $result2->fetch_assoc()) {
+                    echo"
+                        <div class='hub-container'>
+                            <div class='hub-left'>
+                                <h1>" . htmlspecialchars($row2['HASS_Name']) . "</h1>
+                                <div class='parcel-count'>
+                                    <div class='parcel'id='parcel-carried'>
+                                        <h1>" . htmlspecialchars($row2['TotalCarried']) . "</h1>
+                                        <h3>PARCEL CARRIED</h3>
+                                    </div>
+                                    <div class='parcel' id='parcel-delivered'>
+                                        <h1>" . htmlspecialchars($row2['TotalDelivered']) . "</h1>
+                                        <h3>PARCEL DELIVERED</h3>
+                                    </div>
+                                    <div class='parcel' id='parcel-returned'>
+                                        <h1>" . htmlspecialchars($row2['TotalReturned']) . "</h1>
+                                        <h3>PARCEL RETURNED</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ";
+                }
+            }
+        ?>
+        
+    </div>
+
+    <div id="DateSection" style="display: none;">
+        <h1 style="font-size: 100px;">DATE SECTIONS</h1>
+    </div>
+
     
 </body>
 </html>

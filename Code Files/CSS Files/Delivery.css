@@ -199,13 +199,13 @@ html{
     display: none;
 } */
 
-.dropdown-category:has(.options input[type="radio"]#dd-all:checked) .selected::before {
+.dropdown-category:has(.options input[type="radio"]#dd-driver:checked) .selected::before {
     content: attr(data-default);
 }
-.dropdown-category:has(.options input[type="radio"]#dd-active:checked) .selected::before {
+.dropdown-category:has(.options input[type="radio"]#dd-hub:checked) .selected::before {
     content: attr(data-one);
 }
-.dropdown-category:has(.options input[type="radio"]#dd-pending:checked) .selected::before {
+.dropdown-category:has(.options input[type="radio"]#dd-date:checked) .selected::before {
     content: attr(data-two);
 }
 
@@ -347,4 +347,42 @@ tr, td{
     font-size: 40px;
     font-weight: bold;
     cursor: pointer;
+}
+
+#DriverSection, #HubSection, #DateSection {
+    display: none;
+}
+
+#DriverSection {
+    display: block; /* Default to DriverSection on load */
+}
+
+
+.hub-container{
+    margin-top: 20px;
+    max-height: 8in;
+    overflow-y: auto;
+    position:static;
+    z-index: 1;
+    border: 2px solid;
+    padding: 20px;
+}
+
+.hub-left h1{
+    font-size: 50px;
+}
+
+
+.parcel-count{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    text-align: center;
+    
+}
+
+
+.parcel{
+    border: 1px solid;
+    padding: 30px;
 }

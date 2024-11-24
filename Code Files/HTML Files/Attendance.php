@@ -11,27 +11,29 @@
     //join query
     $sql = "
         SELECT
-            a.ACC_Username,
-            a.ACC_Password,
-            a.ACC_DateCreated,
-            n.AN_FName,
-            n.AN_MName,
-            n.AN_LName,
-            n.AN_Suffix,
-            r.ARL_Role,
-            i.AI_ID,
-            i.AI_ProfileImg,
-            i.AI_Contact,
-            i.AI_Email,
-            i.AI_AccountID
+            i.DI_ProfileImage,
+            n.DN_FName,
+            n.DN_MName,
+            n.DN_LName,
+            n.DN_Suffix,
+            d.DEL_ID,
+            d.DEL_ParcelCarried,
+            d.DEL_ParcelDelivered,
+            d.DEL_ParcelReturned,
+            d.DEL_RemittanceReciept,
+            a.ATT_Date,
+            h.HASS_Name
+
         FROM
-            admin_information i
+            attendance a
         JOIN
-            account a ON i.AI_AccountID = a.ACC_ID
+            delivery_information d ON a.ATT_DeliveryID = d.DEL_ID
         JOIN
-            admin_name n ON i.AI_AdminNameID = n.AN_ID
-        JOIN 
-            admin_role r ON i.AI_AdminPositionID = r.ARL_ID
+            driver_information i ON a.ATT_DriverID = i.DI_ID
+        JOIN
+            driver_name n ON i.DI_NameID = n.DN_ID
+        JOIN
+            hub_assigned h ON i.DI_HubAssignedID = h.HASS_ID
     ";
     $result = $conn->query($sql);   
 ?>
@@ -42,7 +44,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS Files/Attendance.css?v=1.2">
+    <link rel="stylesheet" href="../CSS Files/Attendance.css?v=1.3">
+    <script src="../JS Files/Attendance.js"></script>
     <title>ATTENDANCE</title>
 </head>
 <body style="background-color: rgb(25, 0, 255);">
@@ -120,10 +123,12 @@
                     // Fetch and display each row from the result set
                     while ($row = $result->fetch_assoc()) {
                         // Combine first name, middle name, and last name
-                        $fullname = trim($row['AN_FName'] . ' ' . $row['AN_MName'] . ' ' . $row['AN_LName']);
-                        $dateCreated = date('M-d-y', strtotime($row['ACC_DateCreated'])); 
-                        $profileImageData = base64_encode($row['AI_ProfileImg']);
+                        $fullname = trim($row['DN_FName'] . ' ' . $row['DN_MName'] . ' ' . $row['DN_LName']);
+                        $dateCreated = date('M-d-y', strtotime($row['ATT_Date'])); 
+                        $profileImageData = base64_encode($row['DI_ProfileImage']);
                         $profileImage = "data:image/jpeg;base64,$profileImageData";
+                        $remittanceImageData = base64_encode($row['DEL_RemittanceReciept']);
+                        $remittanceImage = "data:image/jpeg;base64,$remittanceImageData";
                         echo "
                         <tr>
                             <td>
@@ -131,9 +136,11 @@
                                     <div class='td-left'>
                                         <img src='$profileImage' alt='Profile Image' class='profile-image'>
                                         <div class='td-name'>
-                                            <h3 id='username' name='Username'>" . htmlspecialchars($row['ACC_Username']) . "</h3>
-                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($fullname) . "</h5>
-                                            <h5 id='position-name' name='Position'>(<span id='position'>Position</span>&nbsp;:&nbsp;<span id='type'>" . htmlspecialchars($row['ARL_Role']) . "</span>)</h5>
+                                            <h3 id='username' name='Username'>" . htmlspecialchars($fullname) . "</h3>
+                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['HASS_Name']) . "</h5>
+                                            <h5 id='position-name' name='Position'> | <span id='position'>Parcel Carried: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelCarried']) . "</span> | </h5>
+                                            <h5 id='position-name' name='Position'>  <span id='position'>Parcel Delivered: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelDelivered']) . "</span> | </h5>
+                                            <h5 id='position-name' name='Position'>  <span id='position'>Parcel Returned: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelReturned']) . "</span>  </h5>
                                         </div>
                                     </div>
                                     <div class='td-right'>
@@ -141,7 +148,7 @@
                                         <div class='td-btn'>
                                             <button id='accept-btn'>ACCEPT</button>
                                             <button id='decline-btn'>DECLINE</button>
-                                            <button popovertarget='view-more-container' id='view-btn' data-id='" . htmlspecialchars($row['AI_AccountID']) . "'>REMITTANCE RECEIPT</button>
+                                           <button id='view-btn' data-image='$remittanceImage'>REMITTANCE RECEIPT</button>
 
                                         </div>
                                     </div>
@@ -154,6 +161,11 @@
                 }
             ?>
         </table>
+
+        <div id="remittance-modal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="remittance-image">
+        </div>
     </div>
 </body>
 </html>

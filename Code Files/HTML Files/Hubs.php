@@ -25,7 +25,7 @@
         JOIN
             hub_assigned d ON r.HUBR_HubAssignedID = d.HASS_ID
         JOIN
-            hub_address a ON d.HASS_AddressID = a.HADD_ID;
+            hub_address a ON d.HASS_AddressID = a.HADD_ID
             
     ";
     $result = $conn->query($sql);

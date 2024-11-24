@@ -3,6 +3,7 @@
 require '../DatabaseConnection/Database.php';
 
 $email = $_POST["Email"];
+$Role = $_POST["Role"];
 $token = bin2hex(random_bytes(16));
 $token_hash = hash("sha256",$token);
 $expiry = date("Y-m-d H:i:s",time() + 60 * 30);
@@ -22,4 +23,5 @@ require "emailsend.php";
 SendEmail($email,$token);
 }
 echo("Message Sent,Please check your inbox"); // Delete once the Account is
+header(header: "Location: ../PasswordResetPHP/forgot-password.php?$Role=Submitted");
 ?>

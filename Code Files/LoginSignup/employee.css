@@ -285,7 +285,6 @@ body
     top: 50%; /* Center vertically */
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Adjust to truly center it */
-    
     display: flex; /* Flexbox for centering content */
     justify-content: center;
     align-items: center;
@@ -300,12 +299,12 @@ body
     max-width: 600px; /* Adjusted maximum width */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Optional: add shadow for depth */
     text-align: center; /* Center text within the box */
-    font-size: 8px; /* Adjusted font size for content (change this as needed) */
+    font-size: 10px; /* Adjusted font size for content (change this as needed) */
 }
 
 .terms-content h3 {
     margin-top: 0; /* No margin at the top */
-    font-size: 10px; /* Adjusted font size for the heading */
+    font-size: 12px; /* Adjusted font size for the heading */
 }
 
 #close-terms {
@@ -319,10 +318,10 @@ body
     font-size: 7px; /* Font size for the button text */
 }
 
-.errormessage{
-    color: red;
-    font-size: 13px;
+#close-terms:hover {
+    background-color: #0056b3; /* Darker blue on hover */
 }
+
 
 
 .input-submit
@@ -720,3 +719,63 @@ color: #fff;
 .new-password-form .input-submit:hover {
     background: #141a48;
 }
+
+/* Floating Info Box */
+.floating-info {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    border: 1px solid #003135; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    padding: 20px;
+    z-index: 1000;
+    width: 300px;
+    text-align: center;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif; 
+}
+
+/* Floating Info Text */
+.floating-info .info-content p {
+    color: #003135; 
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+/* Floating Info Button */
+.floating-info button {
+    padding: 10px 20px;
+    background-color: #003135;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease; /
+}
+
+/* Button Hover Effect */
+.floating-info button:hover {
+    background-color: #004d4d; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

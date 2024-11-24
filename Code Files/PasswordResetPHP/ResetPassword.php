@@ -48,7 +48,7 @@ if (strtotime($user["ACC_ResetExpire"]) <= time()){
         <div class="form-container">
             <div class="col col-1">
                 <div class="image-layer">
-                    <img src="IMG/IMG1.png" class="form-image rider">
+                    <img src="../LoginSignup/IMG/IMG1.png" class="form-image rider">
                 </div>
                 <p class="featured-word">Your one-stop workforce <span>Solution.</span></p>
             </div>
@@ -84,7 +84,9 @@ if (strtotime($user["ACC_ResetExpire"]) <= time()){
                             </button>
                         </div>
                     </div>
-                </div>              
+                </div>     
+                
+
             </div>
         </div>
     </form>

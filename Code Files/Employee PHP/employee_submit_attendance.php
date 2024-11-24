@@ -14,7 +14,9 @@ require '../DatabaseConnection/Database.php';
 
 $datetoday = date('Y-m-d');
 
-$sql = "SELECT b.`DEL_ParcelCarried`,
+$sql = "SELECT 
+
+b.`DEL_ParcelCarried`,
 b.`DEL_ParcelDelivered`,
 b.`DEL_ParcelReturned`,
 b.`DEL_RemittanceReciept`,

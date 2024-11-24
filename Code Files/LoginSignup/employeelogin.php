@@ -39,8 +39,8 @@ require "HubandType.php";
 
             <?php
          // Check if there's an error in the query string
-         $error_message = '';
-          if (isset($_GET['error'])) {
+           $error_message = '';
+        if (isset($_GET['error'])) {
         switch ($_GET['error']) {
         case 'invalid':
             $error_message = 'Invalid username or password.';
@@ -79,7 +79,7 @@ require "HubandType.php";
                         <i class="bx bx-lock-alt icon"></i>
                     </div>
                     <div class="forgot-pass">
-                        <a href="../PasswordResetPHP/forgot-password.php">Forgot Password?</a>
+                        <a href="../PasswordResetPHP/forgot-password.php?Driver">Forgot Password?</a>
                     </div>
                     <div class="input-box">
                         <button type="submit" class="input-submit">

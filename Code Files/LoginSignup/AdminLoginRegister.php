@@ -42,7 +42,7 @@
                         <i class="bx bx-lock-alt icon"></i>
                     </div>
                     <div class="forgot-pass">
-                        <a href="#">Forgot Password?</a>
+                        <a href="../PasswordResetPHP/forgot-password.php?Admin">Forgot Password?</a>
                     </div>
                     <div class="input-box">
                         <button class="input-submit">

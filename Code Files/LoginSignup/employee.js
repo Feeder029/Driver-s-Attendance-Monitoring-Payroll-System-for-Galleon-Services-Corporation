@@ -114,8 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.getElementById('submit-button').addEventListener('click', function(event) {
-    // Prevent default form submission
-    // event.preventDefault();
+    // Prevent default form submission temporarily
+    event.preventDefault();
 
     // Select all required fields from the registration form
     const requiredFields = document.querySelectorAll(
@@ -163,8 +163,13 @@ document.getElementById('submit-button').addEventListener('click', function(even
     if (!allFilled) {
         alert("Please fill all required fields.");
     } else {
-        // If all fields are filled, passwords match, and checkbox is checked, you can submit the form here
-        console.log("Form submitted!"); // Placeholder for actual form submission logic
+        // Submit the form if everything is valid
+        const form = this.closest('form'); // Find the closest form element
+        if (form) {
+            form.submit(); // Submit the form
+        } else {
+            console.error("Form not found for submit button.");
+        }
     }
 });
 
@@ -247,4 +252,33 @@ const locationData = {
           barangaySelect.appendChild(option);
         });
       }
+    });
+
+
+    const imageInputs = document.querySelectorAll('.image-input');
+    const maxFileSize = 40 * 1024 * 1024; // 40 MiB in bytes
+  
+    // Function to validate all inputs
+    function validateAllInputs() {
+      let hasError = false;
+      let errorMessages = [];
+  
+      imageInputs.forEach((input) => {
+        const file = input.files[0]; // Get the selected file
+        if (file && file.size > maxFileSize) {
+          hasError = true;
+          errorMessages.push(`${input.name}: File is too large (${(file.size / (1024 * 1024)).toFixed(2)} MiB).`);
+          input.value = ''; // Clear the invalid input
+        }
+      });
+  
+      // Show all error messages in one alert if there's an error
+      if (hasError) {
+        alert(`Errors:\n\n${errorMessages.join('\n')}`);
+      }
+    }
+  
+    // Attach event listener to validate all inputs on change
+    imageInputs.forEach((input) => {
+      input.addEventListener('change', validateAllInputs);
     });

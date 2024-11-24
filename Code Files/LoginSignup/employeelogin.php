@@ -120,7 +120,7 @@ require "HubandType.php";
                     </div>
                     <div class="input-box file">
                         <label for="profile-photo" class="input-label" >Upload a profile photo</label>
-                            <input type="file" class="input-field" accept="image/*" name="Profile" required>
+                            <input type="file" class="input-field image-input" accept="image/*" name="Profile" required>
                     </div>
                 </div>
                 <div class="input-box btn-box button">
@@ -210,17 +210,17 @@ require "HubandType.php";
                     <div class="input-box file">
                         <div>
                             <label for="official-receipt" class="input-label" required>Upload a photo of OR</label>
-                            <input type="file" class="input-field" accept="image/*" name="OR">
+                            <input type="file" class="input-field image-input" accept="image/*" name="OR">
                         </div>
                         <div>
                             <label for="certification" class="input-label" required >Upload a photo of CR</label>
-                            <input type="file" class="input-field" accept="image/*" name="CR">
+                            <input type="file" class="input-field image-input" accept="image/*" name="CR">
                         </div>
                     </div>
                     <div class="input-box file">
                         <div>
                             <label for="license-f" class="input-label" required>Upload a photo of your License (Front)</label>
-                            <input type="file" class="input-field" accept="image/*" name="License">
+                            <input type="file" class="input-field image-input" accept="image/*" name="License">
                         </div>
                         <!-- <div>
                             <label for="license-b" class="input-label" >Upload a photo of your License (Back)</label>
@@ -250,15 +250,15 @@ require "HubandType.php";
                     <div class="input-box">
                         <div>
                             <label for="brgy" class="input-label" >Upload a photo of Barangay Clearance</label>
-                            <input type="file" class="input-field" accept="image/*" name="Brgy" required>
+                            <input type="file" class="input-field image-input" accept="image/*" name="Brgy" required>
                         </div>
                         <div>
                             <label for="police" class="input-label" >Upload a photo of Police Clearance</label>
-                            <input type="file" class="input-field" accept="image/*" name="Police" required>
+                            <input type="file" class="input-field image-input" accept="image/*" name="Police" required>
                         </div>
                         <div>
                             <label for="nbi" class="input-label" >Upload a photo of NBI Clearance</label>
-                            <input type="file" class="input-field" accept="image/*" name="NBI" required>
+                            <input type="file" class="input-field image-input" accept="image/*" name="NBI" required>
                         </div>
                     </div>
                     <div class="input-box btn-box button">
@@ -361,7 +361,7 @@ require "HubandType.php";
         </form>
 
     <!-- JS -->
-    <script src="employee.js?v=1.4"></script>
+    <script src="employee.js?v=1.5"></script>
     <script src="../Dropdown-Json/ph-address-selector.js?v=1.1"></script>
 
 </body>

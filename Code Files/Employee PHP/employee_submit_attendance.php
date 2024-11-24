@@ -128,10 +128,11 @@ $formattedTime = date('H:i:s', $timesubmission); // Convert to 'HH:MM:SS'
 
         // Insert into attendance
         $sql2 = "INSERT INTO attendance 
-                (`ATT_ID`, `ATT_DriverID`, `ATT_DeliveryID`, `ATT_SubmitTime`, `ADT_ID`) 
-                VALUES (NULL, ?, ?, ?, ?)";
+                (`ATT_ID`, `ATT_DriverID`, `ATT_DeliveryID`, `ATT_SubmitTime`, `ADT_ID`,`ATT_Status`) 
+                VALUES (NULL, ?, ?, ?, ?, ?)";
         $stmt2 = $conn->prepare($sql2);
-        $stmt2->bind_param("iisi", $DriverID, $deliveryID, $formattedTime, $DateID_Today); // Corrected binding
+        $StatID = 1;
+        $stmt2->bind_param("iisii", $DriverID, $deliveryID, $formattedTime, $DateID_Today,$StatID); // Corrected binding
         if (!$stmt2->execute()) {
             throw new Exception("Error inserting into attendance: " . $stmt2->error);
         }

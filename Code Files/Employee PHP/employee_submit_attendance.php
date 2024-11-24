@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $fileData);
 
     // Redirect after success
-    header(header: "Location: EMP_INDEX.PHP");
+    // header(header: "Location: EMP_INDEX.PHP");
     exit();
 }
 

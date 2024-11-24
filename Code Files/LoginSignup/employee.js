@@ -282,3 +282,5 @@ const locationData = {
     imageInputs.forEach((input) => {
       input.addEventListener('change', validateAllInputs);
     });
+
+    

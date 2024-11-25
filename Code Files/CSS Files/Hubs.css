@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-
-body{
-    background-color:#7e83bf;
+body {
+    background-color: #464866;
+    font-family: 'Poppins', sans-serif;
+    margin: 12px;
     overflow-x: hidden;
 }
 
@@ -14,10 +15,11 @@ html{
     overflow: visible;
 }
 .navbar {
-    background-color: rgba(0, 5, 151, 0.316);
+    background-color: #25274D;
     backdrop-filter: blur(10px);
     padding: 1px;
     border-radius: 10px;
+    border: 2px solid #29648A;
     z-index: 1000;
 }
 
@@ -26,66 +28,60 @@ html{
     justify-content: space-between;
 }
 
-.navbar h3{
-    color: black;
+.navbar h3 {
+    color: #F9F4EF;
     font-size: 40px;
-    font-family: 'Poppins','sans-serif';
+    font-family: 'Poppins', sans-serif;
     padding-left: 30px;
     margin-top: 10px;
+    margin-bottom: 0; /* Ensure no extra bottom margin */
 }
 
-
-.search-bar{
-
-    right: -65%;
+/* Search bar styling */
+.search-bar {
+    right: 0;
     padding: 5px;
     border-radius: 15px;
     margin: -75px 50px 30px 0;
     display: flex;
     align-items: center;
     flex-direction: row;
-    position: relative;
+    position: absolute; /* Right side positioning */
     line-height: 28px;
-
+    width: auto; /* Use natural width */
+    max-width: 600px; /* Max width limit */
+    box-sizing: border-box; /* Prevent overflow */
 }
 
 .search-bar input{
     flex-grow: 1;
     font-size: 19px;
     width: 100%;
-    height: 100%;
+    height: 40px; /* Increased height */
     padding-left: 2rem;
     padding-right: 5.5rem;
-    box-shadow: 0 0 0 1.5px #2b2c37, 0 0 25px -17px #000;
+    box-shadow: 0 0 0 1.5px #5C6A8A, 0 0 10px rgba(0, 0, 0, 0.1);
     border: 0;
     border-radius: 12px;
-    background-color:#7e83bf;
+    background-color: #3E4E6C;
     outline: none;
-    color: black;
+    color: #D1DAF2;
     transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1);
     cursor: text;
     margin-right: 5px;
 }
 
 .search-bar input::placeholder{
-    color: black;
+    color: rgba(209, 218, 242, 0.7);
 }
 
 .search-bar input:hover{
-    box-shadow: 0 0 0 2.5px #2f303d, 0px 0px 25px -15px #000;
+    box-shadow: 0 0 0 2.5px #5C6A8A, 0 0 15px rgba(92, 106, 138, 0.4);
 }
-
-/* .search-bar input:active{
-    transform: scale(0.95);
-}
-
-.search-bar .bx-search:active{
-    transform: scale(0.95);
-} */
 
 .search-bar input:focus {
-    box-shadow: 0 0 0 2.5px #2f303d;
-  }
+    box-shadow: 0 0 0 2.5px #5C6A8A;
+}
 
 .search-bar .bx-search{
     position: absolute;
@@ -94,6 +90,44 @@ html{
     color: #ffffff;
     pointer-events: none;
     z-index: 1;
+}
+
+/* Media Query for small screens (max-width: 768px) */
+@media (max-width: 768px) {
+    .search-bar {
+        position: relative; /* Change positioning to avoid overlap */
+        width: 90%; /* Responsive width */
+        margin: 10px auto; /* Center it */
+        right: 0; /* Reset positioning */
+        flex-wrap: wrap; /* Wrap contents if needed */
+    }
+
+    .search-bar input {
+        height: 35px; /* Smaller height */
+        padding-left: 1rem; /* Adjust padding */
+        padding-right: 2.5rem; /* Adjust padding */
+    }
+
+    .search-bar .bx-search {
+        left: 0.5rem; /* Keep consistent spacing */
+    }
+}
+
+/* Media Query for very small screens (max-width: 480px) */
+@media (max-width: 480px) {
+    .search-bar {
+        width: 95%; /* Use almost full width */
+        padding: 5px;
+    }
+
+    .search-bar input {
+        height: 30px; /* Even smaller height */
+        font-size: 14px; /* Smaller font for smaller screens */
+    }
+
+    .search-bar .bx-search {
+        font-size: 1.2rem; /* Adjust icon size */
+    }
 }
 
 
@@ -130,157 +164,278 @@ html{
     color: var(--font-color-light);
 }
 
-.dropdown-category {
-    width: fit-content;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    position:relative;
-    transition: 300ms;
-    color: white;
-    overflow: hidden;
-    margin: 0 0 -127px -85px;
-    z-index: 100;
-}
 
-.selected {
-    background-color: #2a2f3b;
-    padding: 5px;
-    margin-bottom: 3px;
-    border-radius: 0 10px 10px 0 ;
-    position: relative;
-    z-index: 10000;
-    font-size: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
 
-.arrow {
-    position: relative;
-    right: 0px;
-    height: 10px;
-    transform: rotate(-90deg);
-    width: 15px;
-    fill: white;
-    z-index: 1;
-    transition: 300ms;
-}
-
-.options {
-    display: flex;
-    flex-direction: column;
-    border-radius: 5px;
-    padding: 5px;
-    background-color: #2a2f3b;
-    position: relative;
-    top: -100px;
-    opacity: 0;
-    z-index: 10;
-    transition: 300ms;
-    cursor: pointer;
-}
-
-.dropdown-category:hover > .options {
-    opacity: 1;
-    top: 0;
-}
-
-.dropdown-category:hover > .selected .arrow {
-    transform: rotate(0deg);
-}
-
-.option {
-    border-radius: 5px;
-    padding: 5px;
-    transition: 300ms;
-    background-color: #2a2f3b;
-    width: 60px;
-    font-size: 15px;
-    z-index: 200;
-    cursor: pointer;
-}
-.option:hover {
-    background-color: #323741;
-}
-
-.options input[type="radio"] {
-    display: none;
-}
-
-.options label {
-    display: inline-block;
-}
-.options label::before {
-    content: attr(data-txt);
-}
-
-/* .options input[type="radio"]:checked + label {
-    display: none;
-}
-
-.options input[type="radio"]#dd-all:checked + label {
-    display: none;
-} */
-
-.dropdown-category:has(.options input[type="radio"]#dd-all:checked) .selected::before {
-    content: attr(data-default);
-}
-.dropdown-category:has(.options input[type="radio"]#dd-active:checked) .selected::before {
-    content: attr(data-one);
-}
-.dropdown-category:has(.options input[type="radio"]#dd-pending:checked) .selected::before {
-    content: attr(data-two);
-}
-
-.table-container{
-    margin-top: 20px;
+.table-container {
+    margin-top: 30px;
     text-align: center;
     justify-items: center;
-}
-
-
-
-td, tr, th{
-    border: 1px solid;
-}
-
-td, th{
-    font-size: 30px;
-    padding: 10px 20px;
-
-}
-
-th{
-    padding: 10px 80px;
-    border-radius: 10px 10px 0 0;
-    background-color: rgba(0, 5, 151, 0.316);
-}
-
-td{
-    margin-top: 10px;
-    background-color: rgba(57, 61, 187, 0.316);
-}
-
-.hub-btn button{
-    background-color: rgba(0, 5, 151, 0.316);
-    gap: 10px;
-    font-size: 30px;
+    overflow-x: auto;
+    padding: 20px;
     border-radius: 10px;
-    float: right;
-    padding: 15px;
-    margin-top: 200px;
-    margin-left: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #F9F4EF;
 }
 
-#add-hub-container{
-    background-color: white;
-    overflow: hidden;
-    /* top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh; */
- 
-    flex-direction: column;
-    gap: 0;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
 }
+
+th, td {
+    text-align: left;
+    padding: 15px;
+    font-size: 16px;
+}
+
+th {
+    background-color: #003135;
+    color: #ffffff;
+    border-bottom: 2px solid #ddd;
+    text-transform: uppercase;
+}
+
+td {
+    border-bottom: 1px solid #ddd;
+    background-color: #ffffff;
+}
+
+tr:hover {
+    background-color: rgba(0, 49, 53, 0.05);
+}
+
+td button {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+td button[name="delete_hub"] {
+    background-color: #d9534f;
+    color: #fff;
+}
+
+td button[name="delete_hub"]:hover {
+    background-color: #c9302c;
+}
+
+td button[name="edit_hub"] {
+    background-color: #5bc0de;
+    color: #fff;
+}
+
+td button[name="edit_hub"]:hover {
+    background-color: #31b0d5;
+}
+
+
+.hub-btn {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 30px; /* Reduced top and bottom padding */
+    background-color: #25274D;
+    border-radius: 10px;
+    margin-top: 0; /* Ensure no space at the top */
+    margin-bottom: 15px; /* Optional: Adds a little space below the buttons */
+}
+
+
+
+.hub-btn button {
+    width: 130px; /* Smaller width */
+    height: 45px; /* Smaller height */
+    background-color: #3E4E6C; /* Muted slate blue for a complementary feel */
+    border: 2px solid #6C79A3; /* Slightly thicker border for emphasis */
+    border-radius: 10px; /* Rounded corners */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 
+        background-color 0.4s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        color 0.3s ease;
+    font-size: 16px; /* Smaller font size for better proportion */
+    font-weight: bold;
+    color: #FFFFFF; /* Bright white for text contrast */
+    padding: 8px; /* Reduced padding for a more compact button */
+}
+
+.hub-btn button:hover {
+    background-color: #7079A8; /* A slightly brighter slate blue on hover */
+    box-shadow: 0 4px 12px rgba(112, 121, 168, 0.2); /* Reduced shadow effect */
+    transform: translateY(-2px) scale(1.05); /* Subtle hover animation */
+    color: #F5F5F5; /* Softer white for hover contrast */
+}
+
+
+
+
+
+
+#add-hub-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 800px; /* Increased width for larger layout */
+    margin: 200px auto; /* Increased top margin for more vertical spacing */
+    box-sizing: border-box;
+}
+
+#add-hub-container h2 {
+    font-size: 1.5em; /* Adjust size */
+    margin-bottom: 20px; /* Space below the heading */
+    margin-top: 20px;
+    text-align: center; /* Center the heading */
+    color: #333; /* Set the color */
+}
+
+
+
+#add-hub-container input {
+    width: 100%;
+    padding: 12px 16px; /* Comfortable padding for a refined feel */
+    border-radius: 8px; /* Slightly rounder corners for a modern look */
+    border: 1px solid #ccc; /* Neutral border for subtle styling */
+    font-size: 15px; /* Slightly larger text for better readability */
+    margin-bottom: 15px; /* More spacing between inputs */
+    outline: none;
+    box-sizing: border-box; /* Ensures padding is included in the total width */
+    background-color: #f9f9f9; /* Light background for softness */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 0 2px 6px rgba(0, 0, 0, 0.1); /* Inner and outer shadows */
+    transition: 
+        border-color 0.3s ease, 
+        box-shadow 0.3s ease, 
+        background-color 0.3s ease;
+}
+
+#add-hub-container input:focus {
+    border-color: #003135; /* Highlight border color on focus */
+    background-color: #ffffff; /* Brighten background on focus */
+    box-shadow: 0 0 10px rgba(0, 49, 53, 0.2), inset 0 0 5px rgba(0, 49, 53, 0.1); /* Soft glowing effect */
+}
+
+
+
+#add-hub-container input:focus {
+    border-color: #003135;
+}
+
+#add-hub-container button {
+    padding: 12px 20px; /* Adjust padding for consistency */
+    font-size: 16px; /* Match the input font size */
+    font-weight: bold; /* Make the text bold */
+    color: #ffffff; /* White text */
+    border: none; /* Remove border */
+    border-radius: 8px; /* Slightly rounded corners */
+    cursor: pointer;
+    transition: 
+        background-color 0.3s ease, 
+        transform 0.2s ease;
+}
+
+/* Submit Button Styling */
+#submit-hub {
+    background-color: #003135; /* Deep greenish-blue */
+}
+
+#submit-hub:hover {
+    background-color: #005f5f; /* Lighter shade on hover */
+    transform: translateY(-2px); /* Subtle hover animation */
+    box-shadow: 0 6px 20px rgba(0, 95, 95, 0.4); /* Add shadow effect */
+}
+
+/* Cancel Button Styling */
+#cancel-hub {
+    background-color: #d9534f; /* Red for cancel */
+}
+
+#cancel-hub:hover {
+    background-color: #c9302c; /* Darker red on hover */
+    transform: translateY(-2px); /* Hover animation */
+    box-shadow: 0 6px 20px rgba(201, 48, 44, 0.4); /* Add shadow effect */
+}
+
+/* Dropdown Styling */
+#add-hub-container select {
+    width: 100%;
+    padding: 12px 16px; /* Same padding as input fields */
+    border-radius: 8px;
+    border: 1px solid #ccc; /* Match input field border */
+    font-size: 15px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9; /* Light background for softness */
+    color: #333; /* Neutral text color */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: 
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        background-color 0.3s ease;
+}
+
+#add-hub-container select:focus {
+    border-color: #003135;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 49, 53, 0.2), inset 0 0 5px rgba(0, 49, 53, 0.1);
+    outline: none;
+    color: #000; /* Enhance text visibility */
+}
+
+#add-hub-container select option {
+    font-size: 15px;
+    padding: 10px; /* Add padding inside dropdown options */
+    color: #333;
+}
+
+/* For Medium Screens (Tablets) */
+@media (max-width: 768px) {
+    #add-hub-container {
+        padding: 15px; /* Adjust padding */
+        gap: 8px; /* Reduce gap between elements */
+    }
+
+    #add-hub-container input,
+    #add-hub-container select,
+    #add-hub-container button {
+        font-size: 14px; /* Smaller font size */
+    }
+}
+
+/* For Small Screens (Phones) */
+@media (max-width: 480px) {
+    #add-hub-container {
+        padding: 10px; /* Further reduce padding */
+        gap: 6px; /* Reduce gap between elements */
+    }
+
+    #add-hub-container input,
+    #add-hub-container select,
+    #add-hub-container button {
+        font-size: 12px; /* Even smaller font size for compact view */
+        padding: 8px 10px; /* Adjust padding inside inputs */
+    }
+
+    #add-hub-container button {
+        height: auto; /* Ensure buttons resize dynamically */
+        font-size: 13px; /* Adjust button text size */
+    }
+}
+
+
+
+
+
+
+

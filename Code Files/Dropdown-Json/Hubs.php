@@ -38,27 +38,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS Files/Hubs.css?v=1.3">
-    <script src="../JS Files/Hubs.js?v=1.1"></script>
-        <!--JQuery-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../CSS Files/Hubs.css?v=1.2">
+    <script src="../JS Files/Hubs.js"></script>
     <title>HUBS</title>
 </head>
 <body>
-    
-<div class="navbar">
+    <div class="navbar">
         <nav>
+            
             <h3>HUBS LIST</h3>
-            <div class="hub-btn">
-                <button onclick="printTable()">Print Table</button>
-                <button id="add-hub-btn" popovertarget="add-hub-container">Add Hub</button>
-            </div>
+
             <div class="navbar-input">
+
                 <div class="search-bar">
                     <i class='bx bx-search'></i>
-                    <input type="search" name="search" id="search" placeholder="Search">
-                    </div>
+                    <input type="search" name="search" id="search" placeholder="Search" > 
+                    
+                    <div class="dropdown-category">
+                        <div class="selected" data-default="All" data-one="Active" data-two="Pending">
+                          <svg height="1em" viewBox="0 0 512 512" class="arrow">
+                            <path
+                              d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                            ></path>
+                          </svg>
+                        </div>
+                        <div class="options">
+                            <div title="dd-all">
+                                <input id="dd-all" name="option" type="radio" checked="" />
+                                <label class="option" for="dd-all" data-txt="All"></label>
+                            </div>
+                            <div title="dd-active">
+                                <input id="dd-active" name="option" type="radio" />
+                                <label class="option" for="dd-active" data-txt="Active"></label>
+                            </div>
+                            <div title="dd-pending">
+                                <input id="dd-pending" name="option" type="radio" />
+                                <label class="option" for="dd-pending" data-txt="Pending"></label>
+                            </div>
+                        </div>
                 </div>
+
             </div>     
         </nav>
     </div>
@@ -70,8 +89,6 @@
             <th>&nbsp;Hub Name&nbsp;</th>
             <th>&nbsp;Hub Address&nbsp;</th>
             <th>&nbsp;Salary Rate&nbsp;</th>
-            <th class="actions">Actions</th> <!-- Add class 'actions' -->
-
         </tr>
         <?php
                 if ($result && $result->num_rows > 0) {
@@ -106,38 +123,30 @@
         </table>
     </div>
 
-    <!-- <div class="hub-btn">
+    <div class="hub-btn">
     
         <button onclick="printTable()">Print Table</button>
-        <button id="add-hub-btn" popovertarget="add-hub-container" style="display: none;">ADD HUB</button>
+        <button id="add-hub-btn" popovertarget="add-hub-container">ADD HUB</button>
     
-    </div> -->
+    </div>
 
     <div popover id="add-hub-container">
-        <h2>Add Hub</h2> <!-- Heading added -->
-        <form action="#" method="post" enctype="multipart/form-data">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
             <input type="text" id="hub-name" name="name" placeholder="Hub Name">
-            
-            <select id="barangay" name="barangay">
-            </select>
-            <input type="hidden" class="form-control form-control-md" name="barangay_text" id="barangay-text" required>
-            
-            <select id="city" name="city">
-            </select>
+            <select name="province" class="form-control form-control-md" id="province"></select>
+            <input type="hidden" class="form-control form-control-md" name="province_text" id="province-text" required>
+
+            <select name="city" class="form-control form-control-md" id="city"></select>
             <input type="hidden" class="form-control form-control-md" name="city_text" id="city-text" required>
 
-            <select id="province" name="province">
-            </select>
-            <input type="hidden" class="form-control form-control-md" name="province_text" id="province-text" required>
-            
+            <select name="barangay" class="form-control form-control-md" id="barangay"></select>
+            <input type="hidden" class="form-control form-control-md" name="barangay_text" id="barangay-text" required>
+
+            <script src="ph-address-selector.js"></script>
+
             <input type="text" id="hub-zipcode" name="zipcode" placeholder="Hub ZipCode">
-            <input type="text" id="hub-rate" name="rate" placeholder="Hub Rate">                            
-            
-            <!-- Button Section -->
-            <div class="form-buttons">
-                <button type="submit" id="submit-hub">Submit</button>
-                <button type="button" id="cancel-hub">Cancel</button>
-            </div>
+            <input type="text" id="hub-rate" name="rate" placeholder="Hub Rate">
+            <button type="submit" id="submit-hub">Submit</button>
         </form>
     </div>
 
@@ -206,14 +215,12 @@
                     }
                     mysqli_stmt_close($stmt);
                 }
-
-                
             } elseif (isset($_POST['name']) && !isset($_POST['hub_id'])) {
                 // Insert logic
                 $name  = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
-                $barangay  = filter_input(INPUT_POST, "barangay_text", FILTER_SANITIZE_SPECIAL_CHARS);
-                $city  = filter_input(INPUT_POST, "city_text", FILTER_SANITIZE_SPECIAL_CHARS);
-                $province  = filter_input(INPUT_POST, "province_text", FILTER_SANITIZE_SPECIAL_CHARS);
+                $barangay  = filter_input(INPUT_POST, "barangay", FILTER_SANITIZE_SPECIAL_CHARS);
+                $city  = filter_input(INPUT_POST, "city", FILTER_SANITIZE_SPECIAL_CHARS);
+                $province  = filter_input(INPUT_POST, "province", FILTER_SANITIZE_SPECIAL_CHARS);
                 $zipcode  = filter_input(INPUT_POST, "zipcode", FILTER_SANITIZE_SPECIAL_CHARS);
                 $rate  = filter_input(INPUT_POST, "rate", FILTER_SANITIZE_SPECIAL_CHARS);
         

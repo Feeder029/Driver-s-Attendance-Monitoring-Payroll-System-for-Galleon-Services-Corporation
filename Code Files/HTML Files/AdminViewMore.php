@@ -58,7 +58,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../CSS Files/Accounts.css?v=1.4">
+    <link rel="stylesheet" href="../CSS Files/Accounts.css?v=1.5">
 </head>
 <body>
     <?php
@@ -91,7 +91,7 @@ $conn->close();
 
     <div class='view-right'>
         <div class='view-space'>
-            <button popovertarget='view-more-container' popovertargetaction='hide'>CLOSE</button>
+            <button  popovertarget='view-more-container' popovertargetaction='hide' id='close-btn' onclick='closeView()'>CLOSE</button>
         </div>
         <div class='view-name'>
             <h2>NAME:</h2>
@@ -140,5 +140,11 @@ $conn->close();
         </div>
     </div>";
     ?>
+    <script>
+        function closeView() {
+            window.history.back();
+        }
+
+    </script>
 </body>
 </html>

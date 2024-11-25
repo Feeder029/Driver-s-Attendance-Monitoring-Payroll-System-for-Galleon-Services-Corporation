@@ -426,3 +426,22 @@ tr, td{
 .table-container {
     display: block; 
 }
+
+form{
+    position: relative;
+    
+}
+
+form #accept-btn-3{
+    background-color: rgb(23, 99, 23);
+}
+
+form #decline-btn-3{
+    background-color: rgb(137, 40, 40);
+    margin-right: 10px;
+}
+
+.table-accounts-3 .td-btn {
+    display: flex;
+    flex-direction: row;
+}

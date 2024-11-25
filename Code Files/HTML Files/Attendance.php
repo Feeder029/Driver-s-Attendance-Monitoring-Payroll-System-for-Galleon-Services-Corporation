@@ -22,6 +22,7 @@
             d.DEL_ParcelReturned,
             d.DEL_RemittanceReciept,
             t.ATT_Date,
+            a.ATT_ID,
             h.HASS_Name
 
         FROM
@@ -53,6 +54,7 @@
                 SUM(d.DEL_ParcelReturned) AS Returned_Sum,
                 d.DEL_RemittanceReciept,
                 t.ATT_Date,
+                a.ATT_ID,
                 a.ATT_Status,
                 h.HASS_Name
             FROM
@@ -82,6 +84,7 @@
                 d.DEL_ParcelDelivered,
                 d.DEL_ParcelReturned,
                 d.DEL_RemittanceReciept,
+                a.ATT_ID,
                 t.ATT_Date,
                 h.HASS_Name
     
@@ -114,6 +117,7 @@
                 d.DEL_ParcelReturned,
                 d.DEL_RemittanceReciept,
                 t.ATT_Date,
+                a.ATT_ID,
                 h.HASS_Name
 
             FROM
@@ -145,6 +149,7 @@
                 d.DEL_ParcelReturned,
                 d.DEL_RemittanceReciept,
                 t.ATT_Date,
+                a.ATT_ID,
                 h.HASS_Name
 
             FROM
@@ -168,6 +173,7 @@
         $result3 = $conn->query($sql3); 
         $result4 = $conn->query($sql4); 
         $result5 = $conn->query($sql5); 
+        
 ?>
 
 
@@ -378,10 +384,13 @@
                                     <div class='td-right'>
                                         <h3 id='date'>Submitted on&nbsp;<span id='date-created'>" . $dateCreated . "</span></h3>
                                         <div class='td-btn'>
-                                            <button id='accept-btn'>ACCEPT</button>
-                                            <button id='decline-btn'>DECLINE</button>
-                                           <button id='view-btn-3' data-image-3='$remittanceImage3'>REMITTANCE RECEIPT</button>
-
+                                            <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
+                                                <input type='hidden' name='ATT_ID' value='" . htmlspecialchars($row['ATT_ID']) . "'>
+                                                <button type='submit'  id='accept-btn-3' name='accept_btn-3'>ACCEPT</button>
+                                                <button type='submit'  id='decline-btn-3' name='decline_btn-3'>DECLINE</button>
+                                                
+                                            </form>
+                                            <button id='view-btn-3' data-image-3='$remittanceImage3'>REMITTANCE RECEIPT</button>
                                         </div>
                                     </div>
                                 </div>
@@ -391,7 +400,44 @@
                 } else {
                     echo "<tr><td>No data found</td></tr>";
                 }
-            ?>
+            
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    // Check if the ACCEPT button was clicked
+                    if (isset($_POST['accept_btn-3'])) {
+                        // Retrieve the record ID
+                        $att_id = intval($_POST['ATT_ID']); // Sanitize input
+                
+                        // Prepare and execute the SQL update
+                        $stmt = $conn->prepare("UPDATE attendance SET ATT_Status = ? WHERE ATT_ID = ?");
+                        $status = 2;
+                        $stmt->bind_param("ii", $status, $att_id);
+                
+                        if ($stmt->execute()) {
+                            echo "Status updated successfully!";
+                        } else {
+                            echo "Error updating status: " . $stmt->error;
+                        }
+                
+                        $stmt->close();
+                    } else if (isset($_POST['decline_btn-3'])) {
+                        // Retrieve the record ID
+                        $att_id = intval($_POST['ATT_ID']); // Sanitize input
+                
+                        // Prepare and execute the SQL update
+                        $stmt = $conn->prepare("UPDATE attendance SET ATT_Status = ? WHERE ATT_ID = ?");
+                        $status = 3;
+                        $stmt->bind_param("ii", $status, $att_id);
+                
+                        if ($stmt->execute()) {
+                            echo "Status updated successfully!";
+                        } else {
+                            echo "Error updating status: " . $stmt->error;
+                        }
+                
+                        $stmt->close();
+                    }
+                }
+                ?>
         </table>
 
         <div id="remittance-modal-3" class="modal-3">
@@ -501,3 +547,7 @@
     </div>
 </body>
 </html>
+
+<?php
+
+?>

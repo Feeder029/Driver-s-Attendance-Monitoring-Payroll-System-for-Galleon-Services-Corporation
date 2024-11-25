@@ -45,7 +45,7 @@ html{
     
     padding: 5px;
     border-radius: 15px;
-    margin: -75px 50px 30px 0;
+    margin: -150px 50px -50px 0;
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -59,7 +59,7 @@ html{
     flex-grow: 1;
     font-size: 19px;
     width: 100%;
-    height: 100%;
+    height: 38px;
     padding-left: 2rem;
     padding-right: 5.5rem;
     box-shadow: 0 0 0 1.5px #2b2c37, 0 0 25px -17px #000;
@@ -168,7 +168,7 @@ html{
     transition: 300ms;
     color: white;
     overflow: hidden;
-    margin: 0 0 -127px -85px;
+    margin: 38px 0 -127px -85px;
     z-index: 100;
 }
 
@@ -261,9 +261,12 @@ html{
 .dropdown-category:has(.options input[type="radio"]#dd-pending:checked) .selected::before {
     content: attr(data-two);
 }
+.dropdown-category:has(.options input[type="radio"]#dd-denied:checked) .selected::before {
+    content: attr(data-three);
+}
 
 
-.table-container, .table-container-2{
+.table-container, .table-container-2, .table-container-3, .table-container-4, .table-container-5{
     margin-top: 20px;
     max-height: 6in;
     overflow-y: auto;
@@ -272,7 +275,7 @@ html{
 }
 
 
-.table-container .table-accounts, .table-container-2 .table-accounts-2{
+.table-container .table-accounts, .table-container-2 .table-accounts-2, .table-container-3 .table-accounts-3, .table-container-4 .table-accounts-4, .table-container-5 .table-accounts-5{
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 10px;
@@ -370,7 +373,7 @@ tr, td{
     background-color: rgb(137, 40, 40);
 }
 
-#view-btn, #view-btn-2{
+#view-btn, #view-btn-2, #view-btn-3, #view-btn-4, #view-btn-5{
     background-color: #967d38;
 }
 
@@ -386,7 +389,7 @@ tr, td{
 
 }
 
-.modal, .modal-2 {
+.modal, .modal-2, .modal-3, .modal-4, .modal-5 {
     display: none; 
     position: fixed; 
     z-index: 1000; 
@@ -399,14 +402,14 @@ tr, td{
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-.modal-content, .modal-content-2 {
+.modal-content, .modal-content-2, .modal-content-3, .modal-content-4, .modal-content-5 {
     margin: auto;
     display: block;
     width: 80%;
     max-width: 700px;
 }
 
-.close, .close-2 {
+.close, .close-2, .close-3, .close-4, .close-5 {
     position: absolute;
     top: 50px;
     right: 50px;
@@ -416,7 +419,7 @@ tr, td{
     cursor: pointer;
 }
 
-.table-container, .table-container-2 {
+.table-container, .table-container-2, .table-container-3, .table-container-4 , .table-container-5  {
     display: none;
 }
 

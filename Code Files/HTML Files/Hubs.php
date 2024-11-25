@@ -100,7 +100,7 @@
                                 <td>" . htmlspecialchars($row['HUBR_ID']) . "</td>
                                 <td>" . htmlspecialchars($row['HASS_Name']) . "</td>
                                 <td>" . htmlspecialchars($address) . "</td>
-                                <td>" . htmlspecialchars($row['HUBR_Rate']) . "</td>
+                                <td>₱ " . htmlspecialchars($row['HUBR_Rate']) . "</td>
                                 <td>
                                     <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
                                         <input type='hidden' name='hub_id' value='" . htmlspecialchars($row['HUBR_ID']) . "'>

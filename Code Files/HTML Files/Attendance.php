@@ -21,7 +21,7 @@
             d.DEL_ParcelDelivered,
             d.DEL_ParcelReturned,
             d.DEL_RemittanceReciept,
-            a.ATT_Date,
+            t.ATT_Date,
             h.HASS_Name
 
         FROM
@@ -33,9 +33,44 @@
         JOIN
             driver_name n ON i.DI_NameID = n.DN_ID
         JOIN
+        	attendance_date_type t ON a.ADT_ID = t.ADT_ID
+        JOIN
             hub_assigned h ON i.DI_HubAssignedID = h.HASS_ID
+         WHERE a.ATT_Status = 1
     ";
-    $result = $conn->query($sql);   
+
+    $sql2="
+        SELECT
+                i.DI_ProfileImage,
+                n.DN_FName,
+                n.DN_MName,
+                n.DN_LName,
+                n.DN_Suffix,
+                d.DEL_ID,
+                SUM(d.DEL_ParcelCarried) AS Carried_Sum,
+                SUM(d.DEL_ParcelDelivered) AS Delivered_Sum,
+                SUM(d.DEL_ParcelReturned) AS Returned_Sum,
+                d.DEL_RemittanceReciept,
+                t.ATT_Date,
+                a.ATT_Status,
+                h.HASS_Name
+            FROM
+                attendance a
+            JOIN
+                delivery_information d ON a.ATT_DeliveryID = d.DEL_ID
+            JOIN
+                driver_information i ON a.ATT_DriverID = i.DI_ID
+            JOIN
+                driver_name n ON i.DI_NameID = n.DN_ID
+            JOIN
+                attendance_date_type t ON a.ADT_ID = t.ADT_ID
+            JOIN
+                hub_assigned h ON i.DI_HubAssignedID = h.HASS_ID
+            WHERE a.ATT_Status = 2
+            ";
+
+        $result = $conn->query($sql); 
+        $result2 = $conn->query($sql2);  
 ?>
 
 
@@ -44,8 +79,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS Files/Attendance.css?v=1.3">
-    <script src="../JS Files/Attendance.js"></script>
+    <link rel="stylesheet" href="../CSS Files/Attendance.css?v=1.4">
+    <script src="../JS Files/Attendance.js?v=1.2"></script>
     <title>ATTENDANCE</title>
 </head>
 <body style="background-color: rgb(25, 0, 255);">
@@ -57,20 +92,15 @@
             <div class="navbar-input">
                 <div class="category-btn">
                     <div class="btn-option">
-                        <input class="input" type="radio" name="btn" value="btn-all" checked="">
+                        <input class="input" type="radio" name="btn" value="btn-list" checked="" onclick="toggleTable('list')">
                         <div class="btn">
-                            <span class="span">ALL</span>
+                            <span class="span">LIST</span>
                         </div>
                     </div>
                     <div class="btn-option">
-                        <input class="input" type="radio" name="btn" value="btn-accepted">
+                        <input class="input" type="radio" name="btn" value="btn-summary"  onclick="toggleTable('summary')">
                         <div class="btn">
-                            <span class="span">ACCEPTED</span>
-                        </div>  </div>
-                    <div class="btn-option">
-                        <input class="input" type="radio" name="btn" value="btn-pending">
-                        <div class="btn">
-                            <span class="span">&nbsp;PENDING&nbsp;</span>
+                            <span class="span"> SUMMARY</span>
                         </div>  
                     </div>
                 </div>
@@ -165,6 +195,55 @@
         <div id="remittance-modal" class="modal">
             <span class="close">&times;</span>
             <img class="modal-content" id="remittance-image">
+        </div>
+    </div>
+
+    <div class="table-container-2">
+        <table class="table-accounts-2">
+        <?php
+                if ($result2 && $result2->num_rows > 0) {
+                    // Fetch and display each row from the result set
+                    while ($row = $result2->fetch_assoc()) {
+                        // Combine first name, middle name, and last name
+                        $fullname = trim($row['DN_FName'] . ' ' . $row['DN_MName'] . ' ' . $row['DN_LName']);
+                        $dateCreated = date('M-d-y', strtotime($row['ATT_Date'])); 
+                        $profileImageData = base64_encode($row['DI_ProfileImage']);
+                        $profileImage = "data:image/jpeg;base64,$profileImageData";
+                        $remittanceImageData2 = base64_encode($row['DEL_RemittanceReciept']);
+                        $remittanceImage2 = "data:image/jpeg;base64,$remittanceImageData2";
+                        echo "
+                        <tr>
+                            <td>
+                                <div class='td-content'>
+                                    <div class='td-left'>
+                                        <img src='$profileImage' alt='Profile Image' class='profile-image'>
+                                        <div class='td-name'>
+                                            <h3 id='username' name='Username'>" . htmlspecialchars($fullname) . "</h3>
+                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['HASS_Name']) . "</h5>
+                                            <h5 id='position-name' name='Position'> | <span id='position'>Parcel Carried: </span><span id='type'>" . htmlspecialchars($row['Carried_Sum']) . "</span> | </h5>
+                                            <h5 id='position-name' name='Position'>  <span id='position'>Parcel Delivered: </span><span id='type'>" . htmlspecialchars($row['Delivered_Sum']) . "</span> | </h5>
+                                            <h5 id='position-name' name='Position'>  <span id='position'>Parcel Returned: </span><span id='type'>" . htmlspecialchars($row['Returned_Sum']) . "</span>&nbsp;  </h5>
+                                        </div>
+                                    </div>
+                                    <div class='td-right'>
+                                        <div class='td-btn'>
+                                           <button id='view-btn-2' data-image-2='$remittanceImage2'>REMITTANCE RECEIPT</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>";
+                    }
+                } else {
+                    echo "<tr><td>No data found</td></tr>";
+                }
+            ?>
+        </table>
+
+        <div id="remittance-modal-2" class="modal-2">
+            <span class="close-2">&times;</span>
+            <img class="modal-content-2" id="remittance-image-2">
         </div>
     </div>
 </body>

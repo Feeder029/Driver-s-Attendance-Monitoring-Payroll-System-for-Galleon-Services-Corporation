@@ -21,7 +21,7 @@
             d.DEL_ParcelDelivered,
             d.DEL_ParcelReturned,
             d.DEL_RemittanceReciept,
-            a.ATT_Date,
+            t.ATT_Date,
             h.HASS_Name
 
         FROM
@@ -32,6 +32,8 @@
             driver_information i ON a.ATT_DriverID = i.DI_ID
         JOIN
             driver_name n ON i.DI_NameID = n.DN_ID
+        JOIN
+        	attendance_date_type t ON a.ADT_ID = t.ADT_ID
         JOIN
             hub_assigned h ON i.DI_HubAssignedID = h.HASS_ID
     ";

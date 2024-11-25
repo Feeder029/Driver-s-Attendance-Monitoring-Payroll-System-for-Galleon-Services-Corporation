@@ -52,10 +52,14 @@ SELECT
         account a ON i.AI_AccountID = a.ACC_ID
     JOIN
         admin_name n ON i.AI_AdminNameID = n.AN_ID
-    JOIN 
+    JOIN
         admin_role r ON i.AI_AdminPositionID = r.ARL_ID
+WHERE
+    a.ACC_AcountStatID = 1
 
     UNION
+
+
 
     SELECT
         b.ACC_Username AS Username,
@@ -107,38 +111,15 @@ SELECT
         hub_assigned g ON a.DI_HubAssignedID = g.HASS_ID
     JOIN
         government_information h ON a.DI_GovInfoID = h.GOV_ID
+WHERE
+    b.ACC_AcountStatID < 3
 
-    ORDER BY DateCreated DESC;
-    ";
+ ORDER BY Status ASC, DateCreated DESC;";
 
     $result = $conn->query($sql);   
 
-    if (isset($_POST['action']) && isset($_POST['AccountID'])) {
-        $AccID = $_POST['AccountID'];
-        $action = $_POST['action'];
+
     
-        if ($action === 'Accept') {
-            Accept($conn, $AccID);
-        } elseif ($action === 'Deny') {
-            Deny($conn, $AccID);
-        }
-    }
-    
-    function Accept($conn, $AccID) {
-        $sql = "UPDATE account SET ACC_AcountStatID = 2 WHERE ACC_ID = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $AccID);
-        $stmt->execute();
-        $stmt->close();
-    }
-    
-    function Deny($conn, $AccID) {
-        $sql = "UPDATE account SET ACC_AcountStatID = 3 WHERE ACC_ID = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $AccID);
-        $stmt->execute();
-        $stmt->close();
-    }
     ?>
     
 

@@ -69,7 +69,7 @@ require "GetAccount.php";
             </div>     
         </nav>
     </div>
-                
+ 
     <div class="table-container">
         <table class="table-accounts">
         <?php
@@ -95,27 +95,34 @@ require "GetAccount.php";
                                     </div>
                                     <div class='td-right'>
                                         <h3 id='date'>Created on&nbsp;<span id='date-created'>" . htmlspecialchars($dateCreated) . "</span></h3>
-                                        <div class='td-btn'>
+                                        <div class='td-btn'>";
 
 
-                                                    
-                                            <button id='accept-btn' onclick="."Accept()".">ACCEPT</button>
-                                            <button id='decline-btn'>DECLINE</button>";
-                        
+
+                                           if ($row['Status'] == 1) {
+                                            echo " <form action='AcceptDenyAcc.php' method='post' target='iframe-dashboard'>
+                                            <input type='hidden' name='ID' value=".htmlspecialchars($row['ID'])." >
+                                            <button id='accept-btn' name='action' value='Accept' onclick="."Accept()".">ACCEPT</button>
+                                            <button id='decline-btn' name='action' value='Deny' >DECLINE</button>";
+                                           } else {
+                                           echo "<button id='decline-btn' name='action' value='Delete' > DELETE </button>";
+                                           };
+
                                             // Conditional rendering based on UserType
                                             if ($row['UserType'] == "Admin") {
                                                 echo "
                                                 <a href='AdminViewMore.php?id=" . htmlspecialchars($row['ID']) . "'>
-                                                    <button popovertarget='view-more-container' id='view-btn' data-id='" . htmlspecialchars($row['ID']) . "'>VIEW MORE</button>
+                                                    <button type='button' popovertarget='view-more-container' id='view-btn' data-id='" . htmlspecialchars($row['ID']) . "'>VIEW MORE</button>
                                                 </a>";
                                             } else {
                                                 echo "
                                                 <a href='DriverViewMore.php?id=" . htmlspecialchars($row['ID']) . "'>
-                                                    <button popovertarget='view-more-container' id='view-btn' data-id='" . htmlspecialchars($row['ID']) . "'>VIEW MORE</button>
+                                                    <button type='button'  popovertarget='view-more-container' id='view-btn' data-id='" . htmlspecialchars($row['ID']) . "'>VIEW MORE</button>
                                                 </a>";
                                             }
+                                            
                         
-                        echo "
+                        echo "</form>
                                         </div>
                                     </div>
                                 </div>
@@ -125,11 +132,12 @@ require "GetAccount.php";
                 } else {
                     echo "<tr><td>No data found</td></tr>";
                 }
-                
-            ?>
            
+            ?>
         </table>
     </div>
+   
+
 
 
 </body>

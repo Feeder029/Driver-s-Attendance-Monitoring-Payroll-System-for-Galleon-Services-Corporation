@@ -87,9 +87,9 @@ $conn->close();
 
         <div id='account-status'>
             <label for='account-status'>Account Status:</label> <br>
-            <input  type='radio' name='status' id='Active' value='Active' " . ($status == 2 ? "checked" : "") . "> ACTIVE <br>
-            <input  type='radio' name='status' id='Inactive' value='Inactive' " . ($status == 3 ? "" : "") . "> INACTIVE <br>
-            <input  type='radio' name='status' id='Pending' value='Pending' " . ($status == 1 ? "checked" : "") . "> PENDING
+            <input  type='radio' name='status' id='Active' value='Active' " . ($status == 2 ? "checked" : "disabled") . "> ACTIVE <br>
+            <input  type='radio' name='status' id='Inactive' value='Inactive' " . ($status == 3 ? "" : "disabled") . "> INACTIVE <br>
+            <input  type='radio' name='status' id='Pending' value='Pending' " . ($status == 1 ? "checked" : "disabled") . "> PENDING
         </div>
 
         <button onclick='DisableEnableInput()'>EDIT</button>

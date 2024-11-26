@@ -1,15 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 body {
     background-color: #464866;
-   
-    /*
-    background-image: url('BG5.jpg');
-    background-size: cover;  
-    background-position: center;  
-    background-attachment: fixed; 
-   */
+    font-family: 'Poppins', sans-serif;
+    margin: 12px;
+    overflow-x: hidden;
 }
 
 html{
@@ -19,12 +15,17 @@ html{
 .navbar, html{
     overflow: visible;
 }
+
 .navbar {
     background-color: #25274D;
     backdrop-filter: blur(10px);
-    padding: 1px;
+    padding: 1px 15px; 
     border-radius: 10px;
     border: 2px solid #29648A;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    position: relative; 
     z-index: 1000;
 }
 
@@ -33,33 +34,32 @@ html{
     justify-content: space-between;
 }
 
-.navbar h3{
+.navbar h3 {
     color: #F9F4EF;
     font-size: 40px;
-    font-family: 'Poppins','sans-serif';
+    font-family: 'Poppins', sans-serif;
     padding-left: 30px;
     margin-top: 10px;
+    margin-bottom: 0; 
 }
-
 
 .category-btn {
     display: flex;
-    justify-content: flex-start; 
-    gap: 10px; 
-    padding: 8px 0; 
-    width: 100%; 
-    margin-top: -30px; 
-    margin-left: 20px; 
+    gap: 15px;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px 30px;
+    background-color: #25274D;
+    border-radius: 10px;
+    margin-top: 0;
     margin-bottom: 15px;
-    /*#6B3F20*/
 }
 
-
-.btn-option {
-    width: 105px;
-    height: 35px;
-    background-color: #3E4E6C; /* Muted blue-gray for default */
-    border: 1px solid #5C6A8A; /* Slightly lighter border for subtle contrast */
+.category-btn .btn {
+    width: 130px;
+    height: 45px;
+    background-color: #3E4E6C;
+    border: 2px solid #6C79A3;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -70,117 +70,214 @@ html{
         transform 0.3s ease,
         box-shadow 0.3s ease,
         color 0.3s ease;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
-    color: #FFFFFF; /* Bright white text for contrast */
+    color: #FFFFFF;
+    padding: 8px;
+}
+
+.category-btn .btn:hover {
+    background-color: #7079A8;
+    box-shadow: 0 4px 12px rgba(112, 121, 168, 0.2);
+    transform: translateY(-2px) scale(1.05);
+    color: #F5F5F5;
+}
+
+.btn-option {
     position: relative;
-    overflow: hidden;
 }
-
-.btn-option:hover {
-    background-color: #4F6286; /* Slightly lighter blue-gray on hover */
-    box-shadow: 0 4px 15px rgba(79, 98, 134, 0.4); /* Cool shadow */
-    transform: translateY(-2px) scale(1.08);
-    color: #FFFFFF; /* Keep text clean and readable */
-}
-
-.input:checked + .btn-option {
-    background-color: #4F6286; /* Slightly lighter for active state */
-    color: #D1DAF2; /* Soft light blue-gray text */
-    border-color: #374960; /* Refined darker border */
-}
-
 
 .input {
+    position: absolute;
     width: 100%;
     height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    appearance: none;
+    opacity: 0;
     cursor: pointer;
 }
 
 .btn {
-    width: 100%;
-    height: 100%;
-    background-color: var(--bg-color);
-
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.span {
-    color: var(--font-color-dark);
+    padding: 8px 16px;
+    background-color: #3E4E6C;
+    border-radius: 5px;
+    color: #D1DAF2;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .input:checked + .btn {
-    border-radius: 0;
-    background-color: #262E47;
+    background-color: #243C85;
+    color: #FFF;
 }
 
-.input:checked + .btn .span {
-    color: var(--font-color-light);
-}
-
-.table-container{
-    margin-top: 20px;
-    max-height: 6in;
-    overflow-y: auto;
-    position:static;
-    z-index: 1;
-    justify-items: center;
-}
-
-.table-container table{
-    text-align: center;
-    border: 2px solid;
-    padding: 10px;
-}
-
-td, th{
-    border: 1px solid;
-}
-
-td{
-    font-size: 30px;
-    padding: 10px;
-    text-align: center;
-}
-
-th{
-    font-size: 40px;
-    text-align: center;
-}
-
-.text-box{
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    right: 60px;
-    top: -50px;
-}
-
-.text-box input, button, ::placeholder{
+.table-container {
+    margin: 30px 0;
+    padding: 20px;
+    background-color: #F9F4EF;
     border-radius: 10px;
-    background-color:#5C6A8A;
-    color: #FFFFFF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-x: auto;
 }
 
-.btns{
-    position: absolute;
-    right: 5%;
-    bottom: 100px;
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px 15px;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background-color: #003135;
+    color: #FFF;
+    text-transform: uppercase;
+}
+
+td {
+    background-color: #FFF;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: rgba(0, 49, 53, 0.05);
+}
+
+
+/* Container that wraps text-box and btns */
+.container {
     display: flex;
-    overflow: hidden;
-    gap: 10px;
+    flex-direction: column; 
+    align-items: center; 
+    gap: 10px; 
+    margin-top: 5px; 
+    margin-right: 20px; 
+    position: absolute; 
+    right: 0; 
+    top: 50%; 
+    transform: translateY(-50%); 
 }
 
-.btns button{
-    color: #FFFFFF;
-    font-size: 40px;
-    background-color: #29648A;
+
+/* Text-box style */
+.text-box {
+    display: flex;
+    flex-direction: row; 
+    align-items: flex-end; 
+    gap: 10px; 
+}
+
+/* Select, input, and button inside text-box */
+.text-box select, .text-box input, .text-box button {
     padding: 10px;
+    font-size: 14px;
+    background-color: #3E4E6C;
+    color: #D1DAF2;
+    width: 200px; 
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 2px solid #6C79A3;
+}
+
+.text-box ::placeholder{
+    color: #D1DAF2;
+}
+
+.text-box select {
+    width: auto; 
+    color: #D1DAF2;
+}
+
+.text-box button {
+    background-color: #3E4E6C;
+    color: #FFF;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: auto; 
+}
+
+.text-box button:hover {
+    background-color: #7079A8;
+    box-shadow: 0 4px 12px rgba(112, 121, 168, 0.2);
+    transform: translateY(-2px) scale(1.05);
+    color: #F5F5F5;
+}
+
+
+
+.percentage input {
+    padding: 10px;
+    font-size: 14px;
+    background-color: #3E4E6C;
+    box-shadow: 0 0 0 1.5px #6C79A3, 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1);
+    color: #D1DAF2;
+    width: 200px; 
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 1px solid #6C79A3;
+}
+
+.percentage input::placeholder {
+    color: rgba(209, 218, 242, 0.7); /* Softer version of light text color */
+}
+
+.percentage input:hover {
+    box-shadow: 0 0 0 2.5px #5C6A8A, 0 0 15px rgba(92, 106, 138, 0.4); /* Brightened border and subtle glow */
+}
+
+.percentage input:focus {
+    box-shadow: 0 0 0 2.5px #5C6A8A; /* Focus outline with cool tone */
+}
+
+/* Buttons section (below text-box) */
+.btns {
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    margin-bottom: 0;
+    gap: 10px;
+    width: 100%; 
+}
+
+.btns button {
+    padding: 10px 20px;
+    background-color: #3E4E6C;
+    color: #FFF;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid #6C79A3;
+}
+
+.btns button:hover {
+    background-color: #7079A8;
+    box-shadow: 0 4px 12px rgba(112, 121, 168, 0.2);
+    transform: translateY(-2px) scale(1.05);
+    color: #F5F5F5;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .navbar h3 {
+        font-size: 28px;
+    }
+
+    .text-box input {
+        width: 120px;
+    }
+
+    .btns button {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
 }

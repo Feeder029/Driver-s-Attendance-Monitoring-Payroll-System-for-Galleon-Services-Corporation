@@ -161,9 +161,9 @@ while ($row = mysqli_fetch_assoc($DriverInfo)) {
 
             <div id="account-status" disabled>
                 <label for="account-status">Account Status:</label><br>
-                <input type="radio" name="status" id="Active" value="2" <?php if($DRV["STAT"] == 2) echo "checked"; ?>> ACTIVE<br>
-                <input type="radio" name="status" id="Inactive" value="3" <?php if($DRV["STAT"] == 3) echo "checked"; ?>> INACTIVE<br>
-                <input type="radio" name="status" id="Pending" value="1" <?php if($DRV["STAT"] == 1) echo "checked"; ?>> PENDING<br>
+                <input type="radio" name="status" id="Active" value="2" <?php if($DRV["STAT"] == 2) echo "checked"; else { echo "disabled";} ?>> ACTIVE<br>
+                <input type="radio" name="status" id="Inactive" value="3" <?php if($DRV["STAT"] == 3) echo "checked"; else { echo "disabled";}  ?>> INACTIVE<br>
+                <input type="radio" name="status" id="Pending" value="1" <?php if($DRV["STAT"] == 1) echo "checked"; else { echo "disabled";}  ?>> PENDING<br>
 
             </div>
             <button onclick="DisableEnableInput()">EDIT</button>
@@ -171,7 +171,7 @@ while ($row = mysqli_fetch_assoc($DriverInfo)) {
 
         <div class="view-right">
             <div class="view-space">
-                <button popovertarget="view-more-container" popovertargetaction="hide">CLOSE</button>
+                <button popovertarget="view-more-container" popovertargetaction="hide" onclick='closeView()'>CLOSE</button>
             </div>
             <div class="view-name">
                 <h2>NAME:</h2>
@@ -328,6 +328,11 @@ while ($row = mysqli_fetch_assoc($DriverInfo)) {
         </div>
     </div>
     <script src="updateaddress.js?v=1.1"></script>
+    <script>
+        function closeView() {
+            window.history.back();
+        }
 
+    </script>
 </body>
 </html>

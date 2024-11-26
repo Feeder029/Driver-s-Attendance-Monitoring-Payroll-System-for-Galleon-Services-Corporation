@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS Files/Contribution.css?v=1.2">
+    <link rel="stylesheet" href="../CSS Files/Contribution.css?v=1.3">
     <title>CONTRIBUTION</title>
 </head>
 <body>
@@ -14,30 +14,39 @@
 
             <div class="navbar-input">
                 <div class="category-btn">
-                    <div class="btn-option">
-                        <input class="input" type="radio" name="btn" value="btn-all" checked="">
-                        <div class="btn">
-                            <span class="span">PHILHEALTH</span>
-                        </div>
+                    <button onclick="selectCategory('btn-all')" class="btn">
+                        <span>PhilHealth</span>
+                    </button>
+                    <button onclick="selectCategory('btn-active')" class="btn">
+                        <span>Pag-IBIG</span>
+                    </button>
+                    <button onclick="selectCategory('btn-pending')" class="btn">
+                        <span>SSS</span>
+                    </button>
+                </div>
+                
+                <div class="container">
+                    <div class="text-box">
+                        <select>
+                            <option value="" disabled selected>Hub</option>
+                            <option value="hub1">Lower</option>
+                            <option value="hub2">Upper</option>
+                            <option value="hub3">East</option>
+                            <option value="hub3">West</option>
+                        </select>
+                    <div class="percentage">
+                            <input type="text" placeholder="Percentage">
+                            <button>Apply</button>
                     </div>
-                    <div class="btn-option">
-                        <input class="input" type="radio" name="btn" value="btn-active">
-                        <div class="btn">
-                            <span class="span">PAGIBIG</span>
-                        </div>  </div>
-                    <div class="btn-option">
-                        <input class="input" type="radio" name="btn" value="btn-pending">
-                        <div class="btn">
-                            <span class="span">&nbsp;SSS&nbsp;</span>
-                        </div>  
+                    </div>
+                    
+                    <div class="btns">
+                        <button>Print</button>
+                        <button>Generate</button>
                     </div>
                 </div>
 
-                <div class="text-box">
-                    <input type="text" placeholder="HUB">
-                    <input type="text" placeholder="PERCENTAGE">
-                    <button>APPLY</button>
-                </div>
+                
             </div>     
         </nav>
     </div>
@@ -54,43 +63,47 @@
                 <th>TOTAL CONTRIBUTION</th>
             </tr>
             <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
+                <td>2024-11-01</td>
+                <td>DR001</td>
+                <td>John Doe</td>
+                <td>500.00</td>
+                <td>500.00</td>
+                <td>1000.00</td>
             </tr>
             <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
+                <td>2024-11-02</td>
+                <td>DR002</td>
+                <td>Jane Smith</td>
+                <td>450.00</td>
+                <td>450.00</td>
+                <td>900.00</td>
             </tr>
             <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
+                <td>2024-11-03</td>
+                <td>DR003</td>
+                <td>Michael Brown</td>
+                <td>600.00</td>
+                <td>600.00</td>
+                <td>1200.00</td>
             </tr>
             <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
+                <td>2024-11-04</td>
+                <td>DR004</td>
+                <td>Emily Davis</td>
+                <td>550.00</td>
+                <td>550.00</td>
+                <td>1100.00</td>
+            </tr>
+            <tr>
+                <td>2024-11-05</td>
+                <td>DR005</td>
+                <td>Chris Wilson</td>
+                <td>480.00</td>
+                <td>480.00</td>
+                <td>960.00</td>
             </tr>
         </table>
     </div>
-
-    <div class="btns">
-        <button>PRINT</button>
-        <button>GENERATE</button>
-    </div>
+    
 </body>
 </html>

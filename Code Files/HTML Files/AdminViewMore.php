@@ -59,7 +59,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../CSS Files/Accounts.css?v=1.5">
-    <script src="../JS Files/Accounts.js"></script>
+    <script src="../JS Files/Accounts.js?v=1.1"></script>
     <style>
         body{
             overflow-x: hidden; /* Disable scrolling on both */
@@ -87,9 +87,9 @@ $conn->close();
 
         <div id='account-status'>
             <label for='account-status'>Account Status:</label> <br>
-            <input type='radio' name='status' value='Active' " . ($status == 2 ? "checked" : "") . "> ACTIVE <br>
-            <input type='radio' name='status' value='Inactive' " . ($status == 3 ? "checked" : "") . "> INACTIVE <br>
-            <input type='radio' name='status' value='Pending' " . ($status == 1 ? "checked" : "") . "> PENDING
+            <input  type='radio' name='status' id='Active' value='Active' " . ($status == 2 ? "checked" : "") . "> ACTIVE <br>
+            <input  type='radio' name='status' id='Inactive' value='Inactive' " . ($status == 3 ? "" : "") . "> INACTIVE <br>
+            <input  type='radio' name='status' id='Pending' value='Pending' " . ($status == 1 ? "checked" : "") . "> PENDING
         </div>
 
         <button onclick='DisableEnableInput()'>EDIT</button>

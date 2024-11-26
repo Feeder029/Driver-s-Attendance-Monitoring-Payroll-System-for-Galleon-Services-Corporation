@@ -8,55 +8,43 @@
 
     // Create connection
     $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name) or die("Connection failed: " . mysqli_connect_error());
-    if(isset($_POST['input'])) {
-
- 
-    $input = $_POST['input'];
-    $Type = "";
-
-        $Search = "AND Username LIKE '%$input%' OR
-    FirstName LIKE '%$input%' OR
-    LastName LIKE '%$input%' OR
-    Suffix LIKE '%$input%' OR
-    MiddleName LIKE '%$input%'";
-        $Status = "Status < 3";
-        GETTABLE($conn,$Search,$Status,$Type);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $input = isset($_POST['input']) ? $_POST['input'] : '';
+        $status = isset($_POST['status']) ? $_POST['status'] : 'btn-all';
+        $option = isset($_POST['option']) ? $_POST['option'] : 'all';
     
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
-    $status = $_POST['status'];
-    $Search = "";
-    $Type = "";
-    if ($status === 'btn-active') {
-        $Statuss = "Status = 2";
-        GETTABLE($conn,$Search,$Statuss,$Type);   
-    } elseif ($status === 'btn-pending') {
-        $Statuss = "Status = 1";
-        GETTABLE($conn,$Search,$Statuss,$Type);    
-    } elseif ($status === 'btn-all') {
-        $Statuss = "Status < 3";
-        GETTABLE($conn,$Search,$Statuss,$Type);    
+        // Build status filter
+        $statusFilter = "";
+        if ($status === 'btn-active') {
+            $statusFilter = "Status = 2";
+        } elseif ($status === 'btn-pending') {
+            $statusFilter = "Status = 1";
+        } elseif ($status === 'btn-all') {
+            $statusFilter = "Status < 3";
+        }
+    
+        // Build type filter
+        $typeFilter = "";
+        if ($option === 'admin') {
+            $typeFilter = "AND UserType LIKE 'Admin'";
+        } elseif ($option === 'driver') {
+            $typeFilter = "AND UserType LIKE 'Driver'";
+        }
+    
+        // Build search filter
+        $searchFilter = "";
+        if (!empty($input)) {
+            $searchFilter = "AND (Username LIKE '%$input%' OR
+                                 FirstName LIKE '%$input%' OR
+                                 LastName LIKE '%$input%' OR
+                                 Suffix LIKE '%$input%' OR
+                                 MiddleName LIKE '%$input%')";
+        }
+    
+        // Pass combined filters to GETTABLE
+        GETTABLE($conn, $searchFilter, $statusFilter, $typeFilter);
     }
-    $StatVal = $Statuss;
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['option'])) {
-    $option = $_POST['option'];
-    $Status = "Status < 3";
-    $Search = "";
-    if ($option === 'all') {
-        $Type = "";
-        GETTABLE($conn,$Search,$Status,$Type );
-    } elseif ($option === 'admin') {
-        $Type = "AND UserType LIKE 'Admin'";
-        GETTABLE($conn,$Search,$Status,$Type );
-    } elseif ($option === 'driver') {
-        $Type = "AND UserType LIKE 'Driver'";
-        GETTABLE($conn,$Search,$Status,$Type );
-    }
-}
-
+    
 function START($conn) {
     $Search = "";
     $Status = "Status < 3";

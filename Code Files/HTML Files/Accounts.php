@@ -15,70 +15,35 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
     <script> 
-     $(document).ready(function(){
-       $("#search").keyup(function(){
-        var input = $(this).val();
-      
-            $.ajax({
-                url: "GetAccount.php", // Use a comma here
-                method: "POST", // Use a comma here
-                data: {input: input}, // Use a comma here
+$(document).ready(function () {
+    // Attach listeners to all inputs
+    const fetchFilteredData = () => {
+        const input = $("#search").val();
+        const status = $('input[name="btn"]:checked').val();
+        const option = $('input[name="option"]:checked').val();
 
-                success: function(data){
-                    $("#searchresult").html(data);
-                }
-            });
-        
-    });
-    });
-
-    document.addEventListener("DOMContentLoaded", () => {
-            document.querySelectorAll('.btn-option .input').forEach(button => {
-                button.addEventListener('change', (event) => {
-                    const status = event.target.value;
-                    fetchAccounts(status);
-                });
-            });
+        $.ajax({
+            url: "GetAccount.php",
+            method: "POST",
+            data: { input: input, status: status, option: option },
+            success: function (data) {
+                $("#searchresult").html(data);
+            },
+            error: function (error) {
+                console.error("Error fetching accounts:", error);
+            }
         });
+    };
 
-        function fetchAccounts(status) {
-            fetch('GetAccount.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `status=${status}`
-            })
-            .then(response => response.text())
-            .then(data => {
-                document.querySelector('.table-accounts').innerHTML = data;
-            })
-            .catch(error => console.error('Error fetching accounts:', error));
-        }
-   
-   
-        document.addEventListener("DOMContentLoaded", () => {
-    const options = document.querySelectorAll('.options input[name="option"]');
+    // Trigger AJAX on search input
+    $("#search").keyup(fetchFilteredData);
 
-    options.forEach(option => {
-        option.addEventListener('change', () => {
-            const selectedOption = option.value;
-            handleOptionChange(selectedOption);
-        });
-    });
+    // Trigger AJAX on status change
+    $('input[name="btn"]').change(fetchFilteredData);
+
+    // Trigger AJAX on type change
+    $('input[name="option"]').change(fetchFilteredData);
 });
-
-       function handleOptionChange(option) {
-        fetch('GetAccount.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `option=${option}`
-            })
-            .then(response => response.text())
-            .then(data => {
-                document.querySelector('.table-accounts').innerHTML = data;
-            })
-            .catch(error => console.error('Error fetching accounts:', error));
-       }
- 
    </script>
 </head>
 <body>

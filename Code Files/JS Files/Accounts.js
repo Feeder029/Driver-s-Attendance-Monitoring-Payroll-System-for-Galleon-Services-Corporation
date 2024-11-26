@@ -1,5 +1,5 @@
 function DisableEnableInput(){
-    var inputs = document.querySelectorAll('#firstname, #middlename, #lastname, #suffix, #contact, #email, #user, #pass, #view-role-role');
+    var inputs = document.querySelectorAll('#Active,#Inactive,#Pending,#role,#hub, #unit-type, #view-role-role');
     var isDisabled = inputs[0].disabled;
 
     inputs.forEach(function(input) {

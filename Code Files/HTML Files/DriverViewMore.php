@@ -44,14 +44,14 @@ a.`DI_NBIClearanceImg`, a.`Gcash_No`, a.`GCash_Name`,
 b.`ACC_Username`, b.`ACC_Password`, a.`DI_ProfileImage`,
 d.`DA_HouseNo`, d.`DA_LotNo`, d.`DA_Street`, d.`DA_Barangay`,
 d.`DA_City`, d.`DA_Province`, d.`DA_ZipCode`, e.`DUT_UnitType`,
-g.`HASS_Name`, h.`GOV_PhilHealthNo`, h.`GOV_SSSNo`, h.`GOV_PagibigNo`
+g.`HASS_Name`, h.`GOV_PhilHealthNo`, h.`GOV_SSSNo`, h.`GOV_PagibigNo`,b.`ACC_AcountStatID`
 FROM driver_information a
 JOIN account b on a.`DI_AccountID` = b.`ACC_ID`
 JOIN driver_name c on a.`DI_NameID` = c.`DN_ID`
 JOIN driver_address d on a.`DI_AddressID` = d.`DA_ID`
 JOIN driver_unit_type e on a.`DI_UnitTypeID` = e.`DUT_ID`
 JOIN hub_assigned g on a.`DI_HubAssignedID` = g.`HASS_ID`
-JOIN government_information h on a.`DI_GovInfoID` = h.`GOV_ID` 
+JOIN government_information h on a.`DI_GovInfoID` = h.`GOV_ID`
 where b.`ACC_ID` = $AccID";
 
 //Mysql Code to Select every drivers information
@@ -65,6 +65,7 @@ while ($row = mysqli_fetch_assoc($DriverInfo)) {
  
     //Drivers Variable
     $DRV = [
+        "STAT" => $row['ACC_AcountStatID'],
         "ID" => $row['DI_ID'],
         "FN" => $row['DN_FName'],
         "MN" => $row['DN_MName'],
@@ -109,7 +110,6 @@ while ($row = mysqli_fetch_assoc($DriverInfo)) {
 
 
 
-
 ?>
 
 
@@ -121,7 +121,7 @@ while ($row = mysqli_fetch_assoc($DriverInfo)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="ACC_DRIVER.CSS">
-    <script src="../JS Files/Accounts.js"></script>
+    <script src="../JS Files/Accounts.js?v=1.1"></script>
     <link rel="stylesheet" href="../CSS Files/DriverView.css">
     <title>ACCOUNTS</title>
       <!--JQuery-->
@@ -139,7 +139,7 @@ while ($row = mysqli_fetch_assoc($DriverInfo)) {
             </div>
             <div id="view-hub">
                 <label for="hub">Hub:</label>
-                <select id="hub" class="editable_status_P-A" name="hub" disabled required>
+                <select id="hub" class="editable_status_P-A" name="hub" class="inputs" disabled required>
               <?php for ($i = 0; $i < count($Hub); $i++){
              $selectedunit =  ($DRV["Hub"] == $Hub[$i]) ? 'selected' : '';
              echo '<option value="' . htmlspecialchars($HubID[$i]) . '"' . $selectedunit . '>' . htmlspecialchars($Hub[$i]) . '</option>';
@@ -159,11 +159,12 @@ while ($row = mysqli_fetch_assoc($DriverInfo)) {
                  </select>
             </div>
 
-            <div id="account-status">
+            <div id="account-status" disabled>
                 <label for="account-status">Account Status:</label><br>
-                <input type="radio" name="status" id="Active">ACTIVE<br>
-                <input type="radio" name="status" id="Inactive">INACTIVE<br>
-                <input type="radio" name="status" id="Pending" checked>PENDING
+                <input type="radio" name="status" id="Active" value="2" <?php if($DRV["STAT"] == 2) echo "checked"; ?>> ACTIVE<br>
+                <input type="radio" name="status" id="Inactive" value="3" <?php if($DRV["STAT"] == 3) echo "checked"; ?>> INACTIVE<br>
+                <input type="radio" name="status" id="Pending" value="1" <?php if($DRV["STAT"] == 1) echo "checked"; ?>> PENDING<br>
+
             </div>
             <button onclick="DisableEnableInput()">EDIT</button>
         </div>

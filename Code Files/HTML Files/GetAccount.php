@@ -55,11 +55,9 @@ SELECT
     JOIN
         admin_role r ON i.AI_AdminPositionID = r.ARL_ID
 WHERE
-    a.ACC_AcountStatID = 1
+    a.ACC_AcountStatID < 3
 
     UNION
-
-
 
     SELECT
         b.ACC_Username AS Username,
@@ -118,8 +116,6 @@ WHERE
 
     $result = $conn->query($sql);   
 
-
-    
     ?>
     
 

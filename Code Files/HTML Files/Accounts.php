@@ -111,7 +111,7 @@ require "GetAccount.php";
                                             <button id='accept-btn' name='action' value='Accept' onclick="."Accept()".">ACCEPT</button>
                                             <button id='decline-btn' name='action' value='Deny' >DECLINE</button>";
                                            } else {
-                                           echo "<button id='decline-btn' name='action' value='Delete' > DELETE </button>";
+                                           echo "<button id='decline-btn' name='action' value='Inactive' > DEACTIVATE </button>";
                                            };
 
                                             // Conditional rendering based on UserType

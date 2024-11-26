@@ -62,11 +62,11 @@
      </select>
      <input type="hidden" name="city_text" id="city-text" value="<?php echo $DRV['City']; ?>" required>
 
-    <label for="barangay">Barangay:</label>
-    <select id="barangay" name="barangay" class="editable_status_P-A" disabled required>
-     <option value="<?php echo $DRV['Brgy']; ?>" selected><?php echo $DRV['Brgy']; ?></option>
-    </select>
-    <input type="hidden" name="barangay_text" id="barangay-text" value="<?php echo $DRV['Brgy']; ?>" required>
+      <label for="barangay">Barangay:</label>
+      <select id="barangay" name="barangay" class="editable_status_P-A" disabled required>
+      <option value="<?php echo $DRV['Brgy']; ?>" selected><?php echo $DRV['Brgy']; ?></option>
+     </select>
+     <input type="hidden" name="barangay_text" id="barangay-text" value="<?php echo $DRV['Brgy']; ?>" required>
 
 
       <label for="street">Street:</label>

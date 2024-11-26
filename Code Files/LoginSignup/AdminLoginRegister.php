@@ -165,7 +165,7 @@
     $db_server = "localhost";
     $db_user = "root";
     $db_pass = "";
-    $db_name = "gsc_attendanceandpayrolltest";
+    $db_name = "gsc_attendanceandpayroll3.0";
     $conn = "";
 
     $conn = mysqli_connect($db_server,$db_user,$db_pass,$db_name);
@@ -183,6 +183,7 @@
             $Contact = filter_input(INPUT_POST,"Contact", FILTER_SANITIZE_SPECIAL_CHARS);
             $Username = filter_input(INPUT_POST,"Username", FILTER_SANITIZE_SPECIAL_CHARS);
             $Password = filter_input(INPUT_POST,"Password", FILTER_SANITIZE_SPECIAL_CHARS);
+            $StatId= 1;
 
              // Handle the file upload
             if (isset($_FILES['Profilepic']) && $_FILES['Profilepic']['error'] == 0) {
@@ -192,7 +193,7 @@
                 $Profilepic = null; // Set to null if not uploaded
             }
             
-            if (empty($Lastname) || empty($Firstname) || empty($Middlename) || empty($Suffix) || empty($Position) || empty($Profilepic) || empty($Email) || empty($Contact) || empty($Username) || empty($Password)) {
+            if (empty($Lastname) || empty($Firstname) || empty($Middlename) || empty($Position) || empty($Profilepic) || empty($Email) || empty($Contact) || empty($Username) || empty($Password)) {
                 echo "<script type='text/javascript'>alert('EMPTY FIELDS');</script>";
             } else {
                 $hash = password_hash($Password, PASSWORD_DEFAULT);
@@ -210,14 +211,14 @@
                         $adminPositionId = mysqli_insert_id($conn);
 
                         // Insert into account
-                        $sql3 = "INSERT INTO account (ACC_Username, ACC_Password, ACC_DateCreated) VALUES ('$Username', '$Password', NOW())";
+                        $sql3 = "INSERT INTO account (ACC_AcountStatID,ACC_Username, ACC_Password, ACC_DateCreated) VALUES ('$StatId','$Username', '$Password', NOW())";
                         if (mysqli_query($conn, $sql3)) {
                             // Get the last inserted ID for account
                             $accountId = mysqli_insert_id($conn);
 
                             // Insert into admin_information with all foreign keys
                             $sql4 = "INSERT INTO admin_information (AI_AccountID, AI_AdminPositionID, AI_AdminNameID, AI_Email, AI_Contact, AI_ProfileImg) 
-                                    VALUES ('$accountId', '$adminNameId', '$adminPositionId', '$Email', '$Contact', '$Profilepic')";
+                                    VALUES ('$accountId','$adminNameId', '$adminPositionId', '$Email', '$Contact', '$Profilepic')";
                             mysqli_query($conn, $sql4);
 
                             echo "<script type='text/javascript'>alert('REGISTER SUCCESSFULLY');</script>";

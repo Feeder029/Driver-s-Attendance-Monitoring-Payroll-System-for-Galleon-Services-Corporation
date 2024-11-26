@@ -37,6 +37,7 @@
         	attendance_date_type t ON a.ADT_ID = t.ADT_ID
         JOIN
             hub_assigned h ON i.DI_HubAssignedID = h.HASS_ID
+        ORDER BY t.ATT_Date DESC
         
     ";
 

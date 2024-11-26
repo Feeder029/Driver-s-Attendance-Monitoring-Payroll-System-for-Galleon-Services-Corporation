@@ -61,13 +61,13 @@ require "GetAccount.php";
                                 <input id="dd-all" name="option" type="radio" checked="" />
                                 <label class="option" for="dd-all" data-txt="All"></label>
                             </div>
-                            <div title="dd-Admin">
-                                <input id="dd-Admin" name="option" type="radio" />
-                                <label class="option" for="dd-Admin" data-txt="Admin"></label>
+                            <div title="dd-admin">
+                                <input id="dd-admin" name="option" type="radio" />
+                                <label class="option" for="dd-admin" data-txt="Admin"></label>
                             </div>
-                            <div title="dd-Driver">
-                                <input id="dd-Driver" name="option" type="radio" />
-                                <label class="option" for="dd-Driver" data-txt="Driver"></label>
+                            <div title="dd-driver">
+                                <input id="dd-driver" name="option" type="radio" />
+                                <label class="option" for="dd-driver" data-txt="Driver"></label>
                             </div>
                         </div>
                 </div>

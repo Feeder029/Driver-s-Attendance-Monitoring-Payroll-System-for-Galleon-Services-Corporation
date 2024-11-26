@@ -275,10 +275,10 @@ html{
 .dropdown-category:has(.options input[type="radio"]#dd-all:checked) .selected::before {
     content: attr(data-default);
 }
-.dropdown-category:has(.options input[type="radio"]#dd-active:checked) .selected::before {
+.dropdown-category:has(.options input[type="radio"]#dd-admin:checked) .selected::before {
     content: attr(data-one);
 }
-.dropdown-category:has(.options input[type="radio"]#dd-pending:checked) .selected::before {
+.dropdown-category:has(.options input[type="radio"]#dd-driver:checked) .selected::before {
     content: attr(data-two);
 }
 
@@ -423,8 +423,9 @@ tr, td{
     z-index: 10; /* Ensures it stays above `.view-right` if needed */
 }
 
-.view-left .bx {
-    font-size: 150px;
+.view-left img {
+    height: 200px;
+    width: 200px;
     color: #D1D1E0; /* Light contrast color for icon */
     margin: 20px auto;
     display: block;

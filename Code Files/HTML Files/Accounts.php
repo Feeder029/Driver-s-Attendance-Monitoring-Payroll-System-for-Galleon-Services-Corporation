@@ -10,14 +10,80 @@
     <style>
         body{
             overflow: hidden; /* Disable scrolling on both */
-
         }
     </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    <script> 
+     $(document).ready(function(){
+       $("#search").keyup(function(){
+        var input = $(this).val();
+      
+            $.ajax({
+                url: "GetAccount.php", // Use a comma here
+                method: "POST", // Use a comma here
+                data: {input: input}, // Use a comma here
+
+                success: function(data){
+                    $("#searchresult").html(data);
+                }
+            });
+        
+    });
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.btn-option .input').forEach(button => {
+                button.addEventListener('change', (event) => {
+                    const status = event.target.value;
+                    fetchAccounts(status);
+                });
+            });
+        });
+
+        function fetchAccounts(status) {
+            fetch('GetAccount.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `status=${status}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('.table-accounts').innerHTML = data;
+            })
+            .catch(error => console.error('Error fetching accounts:', error));
+        }
+   
+   
+        document.addEventListener("DOMContentLoaded", () => {
+    const options = document.querySelectorAll('.options input[name="option"]');
+
+    options.forEach(option => {
+        option.addEventListener('change', () => {
+            const selectedOption = option.value;
+            handleOptionChange(selectedOption);
+        });
+    });
+});
+
+       function handleOptionChange(option) {
+        fetch('GetAccount.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `option=${option}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('.table-accounts').innerHTML = data;
+            })
+            .catch(error => console.error('Error fetching accounts:', error));
+       }
+ 
+   </script>
 </head>
 <body>
-<?php
-require "GetAccount.php";
-?>
+
+
     <div class="navbar">
         <nav>
 
@@ -57,95 +123,32 @@ require "GetAccount.php";
                           </svg>
                         </div>
                         <div class="options">
-                            <div title="dd-all">
-                                <input id="dd-all" name="option" type="radio" checked="" />
-                                <label class="option" for="dd-all" data-txt="All"></label>
-                            </div>
-                            <div title="dd-admin">
-                                <input id="dd-admin" name="option" type="radio" />
-                                <label class="option" for="dd-admin" data-txt="Admin"></label>
-                            </div>
-                            <div title="dd-driver">
-                                <input id="dd-driver" name="option" type="radio" />
-                                <label class="option" for="dd-driver" data-txt="Driver"></label>
-                            </div>
-                        </div>
+    <div title="dd-all">
+        <input id="dd-all" name="option" type="radio" value="all" checked />
+        <label class="option" for="dd-all" data-txt="All"></label>
+    </div>
+    <div title="dd-admin">
+        <input id="dd-admin" name="option" type="radio" value="admin" />
+        <label class="option" for="dd-admin" data-txt="Admin"></label>
+    </div>
+    <div title="dd-driver">
+        <input id="dd-driver" name="option" type="radio" value="driver" />
+        <label class="option" for="dd-driver" data-txt="Driver"></label>
+    </div>
+</div>
+
                 </div>
 
             </div>     
         </nav>
     </div>
  
-    <div class="table-container">
-        <table class="table-accounts">
+    <div class="table-container" id="searchresult">
         <?php
-                if ($result && $result->num_rows > 0) {
-                    // Fetch and display each row from the result set
-                    while ($row = $result->fetch_assoc()) {
-                        // Combine first name, middle name, and last name
-                        $fullname = trim($row['FirstName'] . ' ' . $row['MiddleName'] . ' ' . $row['LastName']);
-                        $dateCreated = date('M-d-y', strtotime($row['DateCreated'])); 
-                        $profileImageData = base64_encode($row['ProfileImage']);
-                        $profileImage = "data:image/jpeg;base64,$profileImageData";
-                        echo "
-                        <tr>
-                            <td>
-                                <div class='td-content'>
-                                    <div class='td-left'>
-                                        <img src='$profileImage' alt='Profile Image' class='profile-image'>
-                                        <div class='td-name'>
-                                            <h3 id='username' name='Username'>" . htmlspecialchars($row['Username']) . "</h3>
-                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($fullname) . "</h5>
-                                            <h5 id='position-name' name='Position'>(<span id='position'>Position</span>&nbsp;:&nbsp;<span id='type'>" . htmlspecialchars($row['Role']) . "</span>)</h5>
-                                        </div>
-                                    </div>
-                                    <div class='td-right'>
-                                        <h3 id='date'>Created on&nbsp;<span id='date-created'>" . htmlspecialchars($dateCreated) . "</span></h3>
-                                        <div class='td-btn'>";
-
-
-
-                                           if ($row['Status'] == 1) {
-                                            echo " <form action='AcceptDenyAcc.php' method='post' target='iframe-dashboard'>
-                                            <input type='hidden' name='ID' value=".htmlspecialchars($row['ID'])." >
-                                            <button id='accept-btn' name='action' value='Accept' onclick="."Accept()".">ACCEPT</button>
-                                            <button id='decline-btn' name='action' value='Deny' >DECLINE</button>";
-                                           } else {
-                                           echo "<button id='decline-btn' name='action' value='Inactive' > DEACTIVATE </button>";
-                                           };
-
-                                            // Conditional rendering based on UserType
-                                            if ($row['UserType'] == "Admin") {
-                                                echo "
-                                                <a href='AdminViewMore.php?id=" . htmlspecialchars($row['ID']) . "'>
-                                                    <button type='button' popovertarget='view-more-container' id='view-btn' data-id='" . htmlspecialchars($row['ID']) . "'>VIEW MORE</button>
-                                                </a>";
-                                            } else {
-                                                echo "
-                                                <a href='DriverViewMore.php?id=" . htmlspecialchars($row['ID']) . "'>
-                                                    <button type='button'  popovertarget='view-more-container' id='view-btn' data-id='" . htmlspecialchars($row['ID']) . "'>VIEW MORE</button>
-                                                </a>";
-                                            }
-                                            
-                        
-                        echo "</form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>";
-                    }
-                } else {
-                    echo "<tr><td>No data found</td></tr>";
-                }
-           
-            ?>
-        </table>
+        require "GetAccount.php";
+        START($conn);
+        ?>
     </div>
-   
-
-
-
 </body>
 </html>
 

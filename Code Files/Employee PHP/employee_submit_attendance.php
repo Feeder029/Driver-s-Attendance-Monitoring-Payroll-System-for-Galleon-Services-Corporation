@@ -89,30 +89,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Submit Attendance to the Database
 function SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $fileData) {
-// Set the timezone to Philippine Time
-date_default_timezone_set('Asia/Manila');
 
-$date = date('Y-m-d');
-$timesubmission = time(); // Get current Unix timestamp
-$formattedTime = date('H:i:s', $timesubmission); // Convert to 'HH:MM:SS'
     try {
         $conn->begin_transaction();
-
-        // Insert date
-        $dateID = "SELECT ADT_ID FROM attendance_date_type WHERE ATT_Date = ?";
-        $stmt3 = $conn->prepare($dateID);
-        // Bind parameters 
-        $stmt3->bind_param("s", $date);
-        $stmt3->execute();
-        // Get the result set from the statement 
-        $result = $stmt3->get_result();
-        $dateRow = $result->fetch_assoc(); // Fetch single row
-
-        if (!$dateRow) {
-            throw new Exception("No date ID found for today's date: $date");
-        }
-
-        $DateID_Today = $dateRow['ADT_ID']; // Extract the ID
 
         // Insert into delivery_information
         $sql1 = "INSERT INTO delivery_information 
@@ -130,11 +109,11 @@ $formattedTime = date('H:i:s', $timesubmission); // Convert to 'HH:MM:SS'
 
         // Insert into attendance
         $sql2 = "INSERT INTO attendance 
-                (`ATT_ID`, `ATT_DriverID`, `ATT_DeliveryID`, `ATT_SubmitTime`, `ADT_ID`,`ATT_Status`) 
-                VALUES (NULL, ?, ?, ?, ?, ?)";
+                (`ATT_ID`, `ATT_DriverID`, `ATT_DeliveryID`) 
+                VALUES (NULL, ?, ?)";
         $stmt2 = $conn->prepare($sql2);
-        $StatID = 1;
-        $stmt2->bind_param("iisii", $DriverID, $deliveryID, $formattedTime, $DateID_Today,$StatID); // Corrected binding
+
+        $stmt2->bind_param("ii", $DriverID, $deliveryID); // Corrected binding
         if (!$stmt2->execute()) {
             throw new Exception("Error inserting into attendance: " . $stmt2->error);
         }

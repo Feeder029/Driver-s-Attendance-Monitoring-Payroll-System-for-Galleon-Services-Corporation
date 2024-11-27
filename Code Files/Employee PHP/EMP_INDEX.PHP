@@ -32,7 +32,7 @@
         <div class="photo-name">
             <img src="data:image/png;base64,<?php echo $DRV["Profile"]; ?>" alt="Driver Photo" class="driver-photo">
             <div>
-                <h2 class="driver-name"> <?php echo "$FullName"; ?> </h2>
+                <h2 class="driver-name"> <?php  echo $DRV["FullName"]; ?> </h2>
                 <input type="file" name="profile" id="profile" style="display: none;" accept="image/*" onchange="document.getElementById('profileform').submit();">
                 <button type="button" class="edit-photo-btn" onclick="document.getElementById('profile').click();">Edit Photo</button>
                 <input type="hidden" name="id" value="profileform"> <!-- Add this hidden input -->

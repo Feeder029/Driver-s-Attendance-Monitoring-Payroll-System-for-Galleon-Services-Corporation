@@ -211,7 +211,7 @@
                         $adminPositionId = mysqli_insert_id($conn);
 
                         // Insert into account
-                        $sql3 = "INSERT INTO account (ACC_AcountStatID,ACC_Username, ACC_Password, ACC_DateCreated) VALUES ('$StatId','$Username', '$Password', NOW())";
+                        $sql3 = "INSERT INTO `account`(`ACC_Username`, `ACC_Password`) VALUES ('$Username','$Password')";
                         if (mysqli_query($conn, $sql3)) {
                             // Get the last inserted ID for account
                             $accountId = mysqli_insert_id($conn);

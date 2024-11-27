@@ -73,10 +73,9 @@ function getFileBinaryData($inputName, $name) {
 
 //Account Database
 function insertAccount($conn, $user, $pass) {
-    $sql = "INSERT INTO `account`(`ACC_AcountStatID`, `ACC_Username`, `ACC_Password`, `ACC_DateCreated`) VALUES (1,?,?,?)";
+    $sql = "INSERT INTO `account`(`ACC_Username`, `ACC_Password`) VALUES (?,?)";
     $stmt = $conn->prepare($sql);
-    $date = date('Y-m-d');
-    $stmt->bind_param("sss", $user, $pass,$date);
+    $stmt->bind_param("ss", $user, $pass);
     execute($stmt);    
     return $conn->insert_id;
 }

@@ -48,7 +48,8 @@ a.`DI_NBIClearanceImg`, a.`Gcash_No`, a.`GCash_Name`,
 b.`ACC_Username`, b.`ACC_Password`, a.`DI_ProfileImage`,
 d.`DA_HouseNo`, d.`DA_LotNo`, d.`DA_Street`, d.`DA_Barangay`,
 d.`DA_City`, d.`DA_Province`, d.`DA_ZipCode`, e.`DUT_UnitType`,
-g.`HASS_Name`, h.`GOV_PhilHealthNo`, h.`GOV_SSSNo`, h.`GOV_PagibigNo`
+g.`HASS_Name`, h.`GOV_PhilHealthNo`, h.`GOV_SSSNo`, h.`GOV_PagibigNo`,
+DRIVERNAMEDISPLAY (c.`DN_FName`,c.`DN_MName`,c.`DN_LName`, c.`DN_Suffix`) AS FullName
 FROM driver_information a
 JOIN account b on a.`DI_AccountID` = b.`ACC_ID`
 JOIN driver_name c on a.`DI_NameID` = c.`DN_ID`
@@ -69,6 +70,7 @@ while ($row = mysqli_fetch_assoc($DriverInfo)) {
  
     //Drivers Variable
     $DRV = [
+        "FullName" => $row['FullName'],
         "ID" => $row['DI_ID'],
         "FN" => $row['DN_FName'],
         "MN" => $row['DN_MName'],
@@ -101,13 +103,6 @@ while ($row = mysqli_fetch_assoc($DriverInfo)) {
         "Pol_Clear" => base64_encode($row['DI_PoliceClearanceImg']),
         "NBI_Clear" => base64_encode($row['DI_NBIClearanceImg'])
     ];
-
-    if($DRV["MN"] == ''){
-        $FullName = $DRV["FN"]." " .$DRV["LN"]." ".$DRV["SFX"];
-    } else {
-        $FullName = $DRV["FN"]." ".substr($DRV["MN"],0,1 ).". ".$DRV["LN"]." ".$DRV["SFX"];
-    }
-
 }
 
 //Mysql Code to Select every drivers vehicles

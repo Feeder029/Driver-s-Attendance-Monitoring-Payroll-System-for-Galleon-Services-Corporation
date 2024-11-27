@@ -77,33 +77,50 @@ require "employee_attsummary.php";
     <section id="monthly-stats" class="info-section">
         <h3>Monthly Stats</h3>
 
-        <!-- Expandable Card for November Stats -->
-        <div class="expandable-card">
-            <div class="card-header">
-                <span>1/11/24 - 30/11/24</span>
-                <button class="view-button" onclick="toggleCard(this)">View</button>
-            </div>
-            <div class="card-content">
-                <div class="stats-row">
-                    <div class="stat">
-                        <span class="stat-value">20</span>
-                        <label>Days with Trips</label>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-value">150</span>
-                        <label>Packages Carried</label>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-value">145</span>
-                        <label>Packages Delivered</label>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-value">5</span>
-                        <label>Packages Returned</label>
+        <?PHP
+        $Monthresult = $conn->query($MonthlyReport); 
+        if ($Monthresult && $Monthresult->num_rows > 0) {
+         while ($row = $Monthresult->fetch_assoc()) {
+            echo        
+            " <!-- Expandable Card for November Stats -->
+            <div class='expandable-card'>
+                <div class='card-header'>
+                    <span>".$row["MonthName"]." ".$row["Year"]."</span>
+                    <button class='view-button' onclick="."toggleCard(this)".">View</button>
+                </div>
+                <div class='card-content'>
+                    <div class='stats-row'>
+                        <div class='stat'>
+                            <span class='stat-value'>".$row["Trips"]."</span>
+                            <label>Days with Trips</label>
+                        </div>
+                        <div class='stat'>
+                            <span class='stat-value'>".$row["Carried"]."</span>
+                            <label>Packages Carried</label>
+                        </div>
+                        <div class='stat'>
+                            <span class='stat-value'>".$row["Delivered"]."</span>
+                            <label>Packages Delivered</label>
+                        </div>
+                        <div class='stat'>
+                            <span class='stat-value'>".$row["Returned"]."</span>
+                            <label>Packages Returned</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>";
+         }
+        } else {
+         echo"   
+            <div class='expandable-card'>
+                <div class='card-header'>
+                No attendance records have been submitted yet
+                </div>
+            </div>";
+        }
+        ?>
+
+
     </section>
 
     <!-- Third Section: Yearly Stats -->
@@ -111,32 +128,43 @@ require "employee_attsummary.php";
         <h3>Yearly Stats</h3>
 
         <!-- Expandable Card for Yearly Stats -->               
-        <div class="expandable-card">
-            <div class="card-header">
-                <span>Year 2024</span>
-                <button class="view-button" onclick="toggleCard(this)">View</button>
+        <?PHP 
+        $Yearlyresult = $conn->query($YearlyReport); 
+        if ($Yearlyresult && $Yearlyresult->num_rows > 0) {
+         while ($row = $Yearlyresult->fetch_assoc()) {
+            echo " <div class='expandable-card'>
+            <div class='card-header'>
+                <span>Year ".$row["Year"]."</span>
+                <button class='view-button' onclick="."toggleCard(this)".">View</button>
             </div>
-            <div class="card-content">
-                <div class="stats-row">
-                    <div class="stat">
-                        <span id="days-with-trips-year" class="stat-value">200</span>
+            <div class='card-content'>
+                <div class='stats-row'>
+                    <div class='stat'>
+                        <span id='days-with-trips-year' class='stat-value'>".$row["Trips"]."</span>
                         <label>Days with Trips</label>
                     </div>
-                    <div class="stat">
-                        <span id="packages-carried-year" class="stat-value">1800</span>
+                    <div class='stat'>
+                        <span id='packages-carried-year' class='stat-value'>".$row["Carried"]."</span>
                         <label>Packages Carried</label>
                     </div>
-                    <div class="stat">
-                        <span id="packages-delivered-year" class="stat-value">1750</span>
+                    <div class='stat'>
+                        <span id='packages-delivered-year' class='stat-value'>".$row["Delivered"]."</span>
                         <label>Packages Delivered</label>
                     </div>
-                    <div class="stat">
-                        <span id="packages-returned-year" class="stat-value">50</span>
+                    <div class='stat'>
+                        <span id='packages-returned-year' class='stat-value'>".$row["Returned"]."</span>
                         <label>Packages Returned</label>
                     </div>
                 </div>
             </div>
-        </div>
+         </div>";
+
+
+
+         }} 
+        ?>
+
+
     </section>
 
   </div>

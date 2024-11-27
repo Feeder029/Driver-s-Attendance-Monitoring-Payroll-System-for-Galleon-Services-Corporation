@@ -4,6 +4,49 @@ include("employee_profile.php");
 $DateStart = date('Y-m-d'); // Format: YYYY-MM-DD
 $DateEnd = date('Y-m-d'); // Format: YYYY-MM-DD
 
+$MonthlyReport = "SELECT
+    a.ATT_DriverID,
+    YEAR(c.ATT_Date) AS Year,
+    MONTH(c.ATT_Date) AS Month,
+    MONTHNAME(c.ATT_Date) AS MonthName,
+    COUNT(a.ATT_DriverID) AS Trips,
+    SUM(b.DEL_ParcelCarried) AS Carried,
+    SUM(b.DEL_ParcelDelivered) AS Delivered,
+    SUM(b.DEL_ParcelReturned) AS Returned
+    FROM
+    attendance a
+    JOIN
+    delivery_information b ON a.ATT_DeliveryID = b.DEL_ID
+     JOIN
+    attendance_date_type c ON a.ADT_ID = c.ADT_ID
+    WHERE
+    a.ATT_DriverID = $DriverID 
+    GROUP BY
+    a.ATT_DriverID, YEAR(c.ATT_Date), MONTH(c.ATT_Date)
+    ORDER BY
+    Year, Month DESC;";
+
+$YearlyReport = "SELECT
+    a.ATT_DriverID,
+    YEAR(c.ATT_Date) AS Year,
+    COUNT(a.ATT_DriverID) AS Trips,
+    SUM(b.DEL_ParcelCarried) AS Carried,
+    SUM(b.DEL_ParcelDelivered) AS Delivered,
+    SUM(b.DEL_ParcelReturned) AS Returned
+    FROM
+    attendance a
+    JOIN
+    delivery_information b ON a.ATT_DeliveryID = b.DEL_ID
+    JOIN
+    attendance_date_type c ON a.ADT_ID = c.ADT_ID
+    WHERE
+    a.ATT_DriverID = $DriverID 
+    GROUP BY
+    a.ATT_DriverID, YEAR(c.ATT_Date)
+    ORDER BY
+    Year DESC;";
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $StartDate = $_POST['DateFrom'];
     $EndDate = $_POST['DateTo'];
@@ -18,17 +61,17 @@ function DateSearchQuery($conn,$StartDate,$EndDate,$DriverID){
     SUM(b.DEL_ParcelCarried) AS TotalParcelsCarried,
     SUM(b.DEL_ParcelDelivered) AS TotalParcelsDelivered,
     SUM(b.DEL_ParcelReturned) AS TotalParcelsReturned
-FROM
+    FROM
     attendance a
-JOIN delivery_information b ON a.ATT_DeliveryID = b.DEL_ID
-JOIN attendance_date_type c ON a.`ADT_ID` = c.`ADT_ID`
-WHERE
+    JOIN delivery_information b ON a.ATT_DeliveryID = b.DEL_ID
+    JOIN attendance_date_type c ON a.`ADT_ID` = c.`ADT_ID`
+    WHERE
     a.ATT_DriverID = $DriverID 
     AND c.ATT_Date BETWEEN '$StartDate' AND '$EndDate'
-GROUP BY
+    GROUP BY
     a.ATT_DriverID";
 
-$AttSummary = mysqli_query($conn, $SummarySQL);
+ $AttSummary = mysqli_query($conn, $SummarySQL);
 
 if (!$AttSummary) {
     die("Query failed: " . mysqli_error($conn));

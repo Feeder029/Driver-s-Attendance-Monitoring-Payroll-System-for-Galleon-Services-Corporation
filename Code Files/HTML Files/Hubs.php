@@ -86,12 +86,6 @@
                                 <td>₱ " . htmlspecialchars($row['HUBR_Rate']) . "</td>
                                 <td>
                                     <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
-                                        <input type='hidden' name='hub_id' value='" . htmlspecialchars($row['HUBR_ID']) . "'>
-                                        <button type='submit' name='delete_hub'>Delete</button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <form action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "' method='POST'>
                                        <input type='hidden' name='hub_id' value='" . htmlspecialchars($row['HUBR_ID']) . "'>
                                         <button type='submit' name='edit_hub'>Edit</button>
                                     </form>

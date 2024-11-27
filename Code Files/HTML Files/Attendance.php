@@ -187,7 +187,7 @@
     <script src="../JS Files/Attendance.js?v=1.2"></script>
     <title>ATTENDANCE</title>
 </head>
-<body style="background-color: rgb(25, 0, 255);">
+<body>
     <div class="navbar">
         <nav>
             

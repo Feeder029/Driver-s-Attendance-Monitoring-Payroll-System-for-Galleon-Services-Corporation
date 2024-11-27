@@ -6,9 +6,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Attendance Summary</title>
   <link rel="stylesheet" href="../CSS Files/ATTENDANCE-SUMMARY.CSS"> <!-- Link to your CSS file -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script>
+    $(document).ready(function () {
+        const fetchFilteredData = () => {
+            const Start = $("#start-date").val();
+            const End = $("#end-date").val();
+
+            console.log("Start Date:", Start);
+            console.log("Start Date:", End);
+            console.log("Making AJAX Request...");
+
+            $.ajax({
+                url: "employee_attsummary.php",
+                method: "POST",
+                data: { DateFrom: Start, DateTo:End},
+                success: function (data) {
+                    console.log("AJAX Success:", data); 
+                    $("#Stats").html(data);
+                },
+                error: function (error) {
+                    console.error("AJAX Error:", error);
+                }
+            });
+        };
+
+        // Trigger AJAX on input change
+        $("#start-date").on("change blur", fetchFilteredData);
+        $("#end-date").on("change blur", fetchFilteredData);
+
+    });
+  </script>
 </head>
 <body>
 
+<?php
+require "employee_attsummary.php";
+?>
 
   <!-- Attendance Summary Form Section -->
   <div id="attendance-summary" class="form-sections">
@@ -22,33 +56,20 @@
         <div class="date-range">
             <div class="date-input">
                 <label for="start-date">Start Date:</label>
-                <input type="date" id="start-date" name="start-date" required>
+                <input type="date" id="start-date" name="start-date" value="<?php echo $DateStart?>" required>
             </div>
 
             <div class="date-input">
                 <label for="end-date">End Date:</label>
-                <input type="date" id="end-date" name="end-date" required>
+                <input type="date" id="end-date" name="end-date" value="<?php echo $DateEnd?>" required>
             </div>
         </div>
 
         <!-- Stats Row -->
-        <div class="stats-row">
-            <div class="stat">
-                <span id="days-with-trips" class="stat-value">15</span>
-                <label>Days with Trips</label>
-            </div>
-            <div class="stat">
-                <span id="packages-carried" class="stat-value">120</span>
-                <label>Packages Carried</label>
-            </div>
-            <div class="stat">
-                <span id="packages-delivered" class="stat-value">115</span>
-                <label>Packages Delivered</label>
-            </div>
-            <div class="stat">
-                <span id="packages-returned" class="stat-value">5</span>
-                <label>Packages Returned</label>
-            </div>
+        <div class="stats-row" id="Stats">
+       <?PHP
+         DateSearchQuery($conn,$DateStart,$DateEnd,$DriverID );
+        ?>
         </div>
     </section>
 

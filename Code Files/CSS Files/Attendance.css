@@ -384,18 +384,18 @@ tr, td{
 }
 
 
-#accept-btn{
+#accept-btn, #accept-btn-3{
   
     background-color: #3FA544;
     border-radius: 10px;
 }
 
-#decline-btn{
+#decline-btn, #decline-btn-3{
     background-color: #E53935;
     border-radius: 10px;
 }
 
-#view-btn{
+#view-btn, #view-btn-2, #view-btn-3,#view-btn-4,#view-btn-5{
     background-color: #967d38;
     border-radius: 10px;
 }

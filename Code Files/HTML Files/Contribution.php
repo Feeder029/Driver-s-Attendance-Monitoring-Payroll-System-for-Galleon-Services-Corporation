@@ -1,9 +1,45 @@
+<?php
+    // Database connection details
+    $db_server = "localhost";
+    $db_user = "root";
+    $db_pass = "";
+    $db_name = "gsc_attendanceandpayroll3.0";
+
+    // Create connection
+    $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name) or die("Connection failed: " . mysqli_connect_error());
+
+    //join query
+    $sql = "
+        SELECT
+            DATE_FORMAT(NOW(), '%Y-%m-%d') AS date,
+            d.DI_ID,
+            CONCAT(n.DN_FName, n.DN_MName, n.DN_LName, n.DN_Suffix) AS DRIVER_NAME,
+            p.PHI_ERPercent,
+            p.PHI_EEPercent
+        FROM
+            government_information g
+        JOIN
+            driver_information d ON g.GOV_ID = d.DI_GovInfoID
+        JOIN
+            driver_name n ON d.DI_NameID = n.DN_ID
+        JOIN
+            philhealth p ON g.GOV_PhilHealthNo = p.PHI_No
+        
+    ";
+
+   
+
+        $result = $conn->query($sql); 
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS Files/Contribution.css?v=1.3">
+    <script src="../JS Files/Contribution.js"></script>
     <title>CONTRIBUTION</title>
 </head>
 <body>
@@ -41,8 +77,8 @@
                     </div>
                     
                     <div class="btns">
-                        <button>Print</button>
-                        <button>Generate</button>
+                        <button onclick="printTable()">Print</button>
+                        <a href="Payroll.php"><button>Generate</button></a>
                     </div>
                 </div>
 
@@ -62,46 +98,23 @@
                 <th>EMPLOYER SHARE</th>
                 <th>TOTAL CONTRIBUTION</th>
             </tr>
-            <tr>
-                <td>2024-11-01</td>
-                <td>DR001</td>
-                <td>John Doe</td>
-                <td>500.00</td>
-                <td>500.00</td>
-                <td>1000.00</td>
-            </tr>
-            <tr>
-                <td>2024-11-02</td>
-                <td>DR002</td>
-                <td>Jane Smith</td>
-                <td>450.00</td>
-                <td>450.00</td>
-                <td>900.00</td>
-            </tr>
-            <tr>
-                <td>2024-11-03</td>
-                <td>DR003</td>
-                <td>Michael Brown</td>
-                <td>600.00</td>
-                <td>600.00</td>
-                <td>1200.00</td>
-            </tr>
-            <tr>
-                <td>2024-11-04</td>
-                <td>DR004</td>
-                <td>Emily Davis</td>
-                <td>550.00</td>
-                <td>550.00</td>
-                <td>1100.00</td>
-            </tr>
-            <tr>
-                <td>2024-11-05</td>
-                <td>DR005</td>
-                <td>Chris Wilson</td>
-                <td>480.00</td>
-                <td>480.00</td>
-                <td>960.00</td>
-            </tr>
+            <?php
+                if ($result && $result->num_rows > 0) {
+                    // Fetch and display each row from the result set
+                    while ($row = $result->fetch_assoc()) {               
+                        echo "
+                            <tr>
+                                <td>". htmlspecialchars($row['date']) . "</td>
+                                <td>". htmlspecialchars($row['DI_ID']) . "</td>
+                                <td>". htmlspecialchars($row['DRIVER_NAME']) . "</td>
+                                <td>". htmlspecialchars($row['PHI_ERPercent']) . "</td>
+                                <td>". htmlspecialchars($row['PHI_EEPercent']) . "</td>
+                                ?
+                            </tr>
+                            ";
+                    }
+                }
+                ?>
         </table>
     </div>
     

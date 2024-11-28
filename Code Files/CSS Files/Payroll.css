@@ -2,7 +2,7 @@
 
 
 body{
-    background-color:#7e83bf;
+    background-color: #464866;
     overflow-x: hidden;
 }
 
@@ -14,44 +14,70 @@ html{
     overflow: visible;
 }
 .navbar {
-    background-color: rgba(0, 5, 151, 0.316);
+    background-color: #25274D;
     backdrop-filter: blur(10px);
     padding: 1px;
     border-radius: 10px;
+    border: 2px solid #29648A;
     z-index: 1000;
 }
 
 
 
 .navbar h3{
-    color: black;
+    color: #F9F4EF;
     font-size: 40px;
     font-family: 'Poppins','sans-serif';
     padding-left: 30px;
     margin-top: 10px;
 }
 
-.table-container{
-
-    justify-items: center;
+.navbar label{
+    color: #F9F4EF;
+    font-size: 15px;
 }
 
-table{
-    margin-top: 10px;
+.table-container {
+    margin-top: 30px;
     text-align: center;
-    
-    border: 1px solid;
+    justify-items: center;
+    overflow-x: auto;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #F9F4EF;
 }
 
-th{
-    font-size: 20px;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+th, td {
+    text-align: center;
     padding: 15px;
-    border: 1px solid;
+    font-size: 16px;
 }
 
-td{
-    font: 20px;
-    border: 1px solid;
+th {
+    width: 80px;
+    background-color: #003135;
+    text-align: center;
+    color: #ffffff;
+    border-bottom: 2px solid #ddd;
+    text-transform: uppercase;
+}
+
+td {
+    font-size: 12px;
+    border-bottom: 1px solid #ddd;
+    background-color: #ffffff;
+}
+
+tr:hover {
+    background-color: rgba(0, 49, 53, 0.05);
 }
 
 .left{
@@ -70,9 +96,84 @@ td{
     width: 400px;
 }
 
-.pay{
-    padding-bottom: 10px;
-    flex-direction: row;
+
+.low-right input{
+    padding: 10px;
+    font-size: 14px;
+    background-color: #3E4E6C;
+    box-shadow: 0 0 0 1.5px #6C79A3, 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1);
+    color: #D1DAF2;
+    width: 160px; 
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 1px solid #6C79A3;
+}
+
+.low-right input::placeholder {
+    color: rgba(209, 218, 242, 0.7); /* Softer version of light text color */
+}
+
+.low-right input:hover {
+    box-shadow: 0 0 0 2.5px #5C6A8A, 0 0 15px rgba(92, 106, 138, 0.4); /* Brightened border and subtle glow */
+}
+
+.low-right input:focus {
+    box-shadow: 0 0 0 2.5px #5C6A8A; /* Focus outline with cool tone */
+}
+
+#allowance{
+    margin: 0 30px 0 -53px;
+}
+
+
+.pay {
+    display: flex;
+    flex-direction: row; 
+    justify-content: space-between; 
+    align-items: rel; 
+    position: relative; 
+    top: 15%; 
+    right: 55px; 
+    color: #D1DAF2;
+    background-color: #3E4E6C; 
+    border-radius: 15px;
+    padding: 8px 15px; 
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    transition: all 0.3s ease-in-out;
+}
+
+.pay label {
+    color: #D1DAF2;
+    font-size: 14px; 
+    margin-top: 7px;
+    margin-right: 5px; 
+}
+
+.pay input[type="date"] {
+    width: 100px; 
+    padding: 5px; 
+    margin: 0 3px; 
+    border: 1px solid #5C6A8A; 
+    border-radius: 8px; 
+    background-color: #2C3A5D; 
+    color: #D1DAF2; 
+    font-size: 14px; 
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.pay input[type="date"]:hover {
+    border-color: #4F6286; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
+}
+
+.pay input[type="date"]:focus {
+    border-color: #6B3F20; 
+    box-shadow: 0 0 5px rgba(107, 63, 32, 0.5); 
 }
 
 .payroll-btn button{

@@ -187,3 +187,150 @@ tr:hover {
     margin-top: 300px;
     margin-left: 10px;
 }
+
+.table-container, .payslip-container{
+    display: none;
+}
+
+.table-container {
+    display: block; 
+}
+
+.payslip-container{
+    display: flex;
+    margin-top: 30px;
+    overflow-x: auto;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #F9F4EF;
+    justify-content: space-between;
+    align-items: flex-start;
+
+}
+.payslip-slip {
+    padding: 5px;
+}
+
+
+.payslip-left{
+    flex: 2;
+    max-width: 65%;
+    margin: 0;
+}
+
+.payslip-right{
+    flex: 1;
+    background-color:#D1DAF2;
+    max-width: 33%;
+    position: relative;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 0 4px 8px rgba(4, 4, 4, 0.2);
+}
+
+.payslip-right h2{
+    text-align: center;
+}
+
+.payslip-right h3{
+    text-align: center;
+}
+
+.payslip-head{
+    margin-top: -20px;             
+    align-items: center;      
+}
+
+.payslip-head h3{
+    font-size: 15px;
+    margin: -10px 0 -15px 0;
+    
+}
+
+.payslip-earnings{
+    margin: -25px 0;
+}
+
+.earning-head h2{
+    margin-bottom: -25px;
+}
+
+.earning-category{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 50px;
+    margin-bottom: -30px;
+}
+
+.earning-right{
+    margin-top: 10px;
+}
+
+.earning-data{
+    margin-top: 5px;
+}
+
+.earning-data h4{
+    margin-top: -11px;
+}
+
+.earning-right .earning-data {
+    font-size: 15px;
+    gap: -25px;
+    width: 160px;
+}
+
+#earning-table{
+    margin-top: -30px;
+    text-align: none;
+    justify-items: none;
+    padding: 3px;
+    border-radius: 10px;
+    background-color: #F9F4EF;
+    margin-left: -20px;
+}
+
+#earning-table th, #earning-table td{
+    text-align: center;
+    padding: 5.5px 10px;
+    font-size: 15px;
+    background-color: #D1DAF2;
+    color: black;
+    border: 0;
+}
+
+
+#earning-table td{
+    font-size: 10px;
+}
+
+.right-payslip-btn{
+    flex-direction: row;
+    gap:20px;
+    position: absolute;
+    
+}
+
+.payslip-deductions{
+    padding-left: 10px;
+}
+
+.deductions-data h4{
+    margin-top: -15px;
+}
+
+.deductions-head h3{
+    margin-top: -20px;
+}
+
+.driver-data h4{
+    margin-left: 10px;
+    margin-top: -20px;
+}
+
+.earning-head h2, .deductions-head h2{
+    font-size: 20px;
+}

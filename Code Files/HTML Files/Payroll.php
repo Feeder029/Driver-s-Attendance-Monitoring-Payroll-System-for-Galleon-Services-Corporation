@@ -38,7 +38,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS Files/Payroll.css?v=1.3">
+    <link rel="stylesheet" href="../CSS Files/Payroll.css?v=1.5">
+    <script src="../JS Files/Payroll.js?v=1.3"></script>
     <title>PAYROLL</title>
 </head>
 <body>
@@ -138,10 +139,117 @@
         </table>
     </div>
 
+    <div class="payslip-container">
+        <div class="payslip-left">   
+            <div class="payslip-table">
+                <table>
+                    <tr>
+                        <th>DRIVER ID</th>
+                        <th>NAME</th>
+                        <th>GCASH NUMBER</th>
+                        <th>NET PAY</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="payslip-right">
+            <div class="payslip-slip">
+                <div class="payslip-head">
+                    <h2>GALLEON SERVICES <br> CORPORATION</h2>
+                    <h3>DATE - DATE</h3>
+                    <h2>--------------------------------------------------</h2>
+                </div>
+                <div class="payslip-earnings">  
+                    <div class="earning-head">
+                        <h2>EARNINGS</h2>
+                        <div class="earning-category">
+                            <div class="earning-left">
+
+                            <table id="earning-table">
+                                <tr>
+                                    <th>DAYS</th>
+                                    <th>AMOUNT</th>
+                                </tr>
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            </table>                                                        
+                            </div>
+                        
+                            <div class="earning-right">
+                                <div class="earning-data">
+                                    <h4>REGULAR DAY: </h4>
+                                    <h4>SPECIAL HOLIDAY: </h4>
+                                    <h4>REGULAR HOLIDAY: </h4>
+                                    <h4>ALLOWANCE: </h4>
+                                    <h4>TOTAL GROSS PAY: </h4>
+                                </div>                                                 
+                            </div>
+                        </div>
+                        <h3>--------------------------------------------------------------</h3>
+                    </div>
+
+                </div>
+
+                <div class="payslip-deductions">  
+                    <div class="deductions-head">
+                        <h2>DEDUCTIONS</h2>
+                        <div class="deductions-data">
+                            <h4>SSS: </h4>
+                            <h4>PHILHEALTH: </h4>
+                            <h4>PAGIBIG: </h4>
+                            <h4>TOTAL DEDUCTIONS: </h4>
+                            <h4>NET PAY: </h4>
+                        </div>  
+                        <h3>--------------------------------------------------------------</h3>
+                    </div>
+
+                </div>
+
+                <div class="payslip-driver">  
+                    <div class="driver-head">
+                        <div class="driver-data">
+                            <h4>NAME: </h4>
+                            <h4>DRIVER ID: </h4>
+                            <h4>HUB: </h4>
+                            <h4>UNIT TYPE: </h4>
+                        </div>  
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="right-payslip-btn">
+            <button>PRINT</button>
+            <button>SEND</button>
+        </div>
+    </div>
+
+
+
     <div class="payroll-btn">
     
         <button onclick="printTable()">Print Table</button>
-        <button>Create Payslip</button>
+        <button onclick="togglePayslip('payslip')">Create Payslip</button>
         <button>Delete</button>
         <button>Edit</button>
     

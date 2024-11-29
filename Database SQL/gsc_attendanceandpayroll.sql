@@ -303,7 +303,7 @@ CREATE TABLE `hub_assigned` (
 
 CREATE TABLE `hub_rate` (
   `HUBR_ID` int(10) NOT NULL,
-  `HUBR_HubAssignedID` int(10) NOT NULL,
+  `HUBR_HubID` int(10) NOT NULL,
   `HUBR_Rate` double(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

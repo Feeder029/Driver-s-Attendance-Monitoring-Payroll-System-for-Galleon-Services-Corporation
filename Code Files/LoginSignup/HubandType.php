@@ -5,13 +5,13 @@ require '../DatabaseConnection/Database.php';
 
 //Options for Hubs
 $hubcount = 0;
-$Hub_OptionCodes = "SELECT hub_ID,hub_Name FROM hub;";
+$Hub_OptionCodes = "SELECT HASS_ID,HASS_Name FROM hub_assigned;";
 $Hub_Option = mysqli_query($conn, $Hub_OptionCodes);            
 if (!$Hub_Option) {
     die("Query failed: " . mysqli_error($conn));
 } while ($row = mysqli_fetch_assoc($Hub_Option)) {
-    $Hub[$hubcount] = $row['hub_Name'];
-    $HubID[$hubcount] = $row['hub_ID'];
+    $Hub[$hubcount] = $row['HASS_Name'];
+    $HubID[$hubcount] = $row['HASS_ID'];
     $hubcount++;
 }
 

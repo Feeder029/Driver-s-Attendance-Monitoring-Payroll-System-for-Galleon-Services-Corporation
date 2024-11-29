@@ -11,24 +11,24 @@ $AdminInfo = "SELECT
         a.ACC_Username AS Username,
         a.ACC_Password AS Password,
         a.ACC_DateCreated AS DateCreated,
-        a.ACC_StatusID  AS Status,
+        a.ACC_AcountStatID AS Status,
         a.ACC_ID as ID,
-        n.TLN_FName AS FirstName,
-        n.TLN_MName AS MiddleName,
-        n.TLN_LName AS LastName,
-        n.TLN_Suffix AS Suffix,
-        r.TLP_Position AS Role,
-        i.TL_Contact AS Contact,
-        i.TL_Email AS Email,
-        i.TL_ProfileImg AS ProfileImage
+        n.AN_FName AS FirstName,
+        n.AN_MName AS MiddleName,
+        n.AN_LName AS LastName,
+        n.AN_Suffix AS Suffix,
+        r.ARL_Role AS Role,
+        i.AI_Contact AS Contact,
+        i.AI_Email AS Email,
+        i.AI_ProfileImg AS ProfileImage
     FROM
-        teamlead_information i
+        admin_information i
     JOIN
-        account a ON i.TL_AccountID = a.ACC_ID
+        account a ON i.AI_AccountID = a.ACC_ID
     JOIN
-        teamlead_name n ON i.TL_NameID = n.TLN_ID
+        admin_name n ON i.AI_AdminNameID = n.AN_ID
     JOIN
-        teamlead_position r ON i.TL_PositionID = r.TLP_ID
+        admin_role r ON i.AI_AdminPositionID = r.ARL_ID
     WHERE a.ACC_ID = ?"; // Use table alias for clarity
 
 $stmt = $conn->prepare($AdminInfo);

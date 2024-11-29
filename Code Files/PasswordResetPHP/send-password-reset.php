@@ -12,7 +12,7 @@ $sql = "UPDATE account  a
 JOIN driver_information b on a.`ACC_ID` = b.`DI_AccountID`
 SET a.`ACC_ResetTokenHash`= ?,
 a.`ACC_ResetExpire` = ?
-WHERE b.`DI_Email`= ? AND ACC_StatusID= 2;";
+WHERE b.`DI_Email`= ? AND ACC_AcountStatID = 2;";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("sss",  $token_hash, $expiry,$email);

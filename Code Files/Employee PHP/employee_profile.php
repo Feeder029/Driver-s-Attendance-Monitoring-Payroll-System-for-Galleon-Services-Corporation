@@ -29,13 +29,13 @@ if (!$UnitType_Option) {
 
 //Options for Hubs
 $hubcount = 0;
-$Hub_OptionCodes = "SELECT hub_ID,hub_Name FROM hub;";
+$Hub_OptionCodes = "SELECT HASS_ID,HASS_Name FROM hub_assigned;";
 $Hub_Option = mysqli_query($conn, $Hub_OptionCodes);            
 if (!$Hub_Option) {
     die("Query failed: " . mysqli_error($conn));
 } while ($row = mysqli_fetch_assoc($Hub_Option)) {
-    $Hub[$hubcount] = $row['hub_Name'];
-    $HubID[$hubcount] = $row['hub_ID'];
+    $Hub[$hubcount] = $row['HASS_Name'];
+    $HubID[$hubcount] = $row['HASS_ID'];
     $hubcount++;
 }
 
@@ -48,14 +48,14 @@ a.`DI_NBIClearanceImg`, a.`Gcash_No`, a.`GCash_Name`,
 b.`ACC_Username`, b.`ACC_Password`, a.`DI_ProfileImage`,
 d.`DA_HouseNo`, d.`DA_LotNo`, d.`DA_Street`, d.`DA_Barangay`,
 d.`DA_City`, d.`DA_Province`, d.`DA_ZipCode`, e.`DUT_UnitType`,
-g.`hub_Name`, h.`GOV_PhilHealthNo`, h.`GOV_SSSNo`, h.`GOV_PagibigNo`,
+g.`HASS_Name`, h.`GOV_PhilHealthNo`, h.`GOV_SSSNo`, h.`GOV_PagibigNo`,
 DRIVERNAMEDISPLAY (c.`DN_FName`,c.`DN_MName`,c.`DN_LName`, c.`DN_Suffix`) AS FullName
 FROM driver_information a
 JOIN account b on a.`DI_AccountID` = b.`ACC_ID`
 JOIN driver_name c on a.`DI_NameID` = c.`DN_ID`
 JOIN driver_address d on a.`DI_AddressID` = d.`DA_ID`
 JOIN driver_unit_type e on a.`DI_UnitTypeID` = e.`DUT_ID`
-JOIN hub g on a.`DI_HubAssignedID` = g.`hub_ID`
+JOIN hub_assigned g on a.`DI_HubAssignedID` = g.`HASS_ID`
 JOIN government_information h on a.`DI_GovInfoID` = h.`GOV_ID` 
 where DI_ID = $DriverID";
 
@@ -93,7 +93,7 @@ while ($row = mysqli_fetch_assoc($DriverInfo)) {
         "Province" => $row['DA_Province'],
         "Zip" => $row['DA_ZipCode'],
         "Unit" => $row['DUT_UnitType'],
-        "Hub" => $row['hub_Name'],
+        "Hub" => $row['HASS_Name'],
         "PhilNo" => $row['GOV_PhilHealthNo'],
         "SSSNo" => $row['GOV_SSSNo'],
         "PagNo" => $row['GOV_PagibigNo'],

@@ -102,10 +102,10 @@ function insertAddress($conn, $houseNo, $lotNo, $street, $barangay, $city, $prov
 function insertGovernment($conn, $phil, $sss, $pagibig) {
     $sssql = "INSERT INTO sss(SSS_No, SSSCR_ID, SSS_RSS_ER, SSS_RSS_EE, SSS_RSS_Total, SSS_EC_ER, SSS_TC_ER, SSS_TC_EE, SSS_TotalContribution) 
     VALUES (?,1,0.00,0.00,0.00,0.00,0.00,0.00,0.00);";
-    $pgbgsql = "INSERT INTO pagibig(PBIG_No, PBIG_ERPercent, PBIG_EEPercent) 
-    VALUES (?,0.00,0.00)";
-    $phlsql = "INSERT INTO philhealth(PHI_No, PHI_ERPercent, PHI_EEPercent) 
-    VALUES (?,0.00,0.00)";
+    $pgbgsql = "INSERT INTO pagibig(PBIG_No, PBIG_Start, PBIG_End, PBIG_ERPercent, PBIG_EEPercent) 
+    VALUES (?,0.00,0.00,0.00,0.00)";
+    $phlsql = "INSERT INTO philhealth(PHI_No, PHI_ERPercent, PHI_EEPercent, PHI_ER, PHI_EE, PHI_Total) 
+    VALUES (?,0.00,0.00,0.00,0.00,0.00)";
     $sssstmt = $conn->prepare($sssql);
     $sssstmt->bind_param("s", $sss);
     $sssstmt->execute();

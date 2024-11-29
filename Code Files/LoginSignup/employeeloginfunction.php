@@ -4,7 +4,7 @@ session_start();
 require '../DatabaseConnection/Database.php';
 
 $AccDetails = "SELECT a.`ACC_Username`, a.`ACC_Password`, b.`ACCS_Status`, c.`DI_ID` FROM account a
-JOIN account_status b ON a.ACC_StatusID = b.ACCS_ID
+JOIN account_status b ON a.ACC_AcountStatID = b.ACCS_ID
 JOIN driver_information c ON a.ACC_ID = c.DI_AccountID;";
 
 

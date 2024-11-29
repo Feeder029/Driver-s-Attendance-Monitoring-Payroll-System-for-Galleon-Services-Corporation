@@ -4,7 +4,7 @@
     $db_server = "localhost";
     $db_user = "root";
     $db_pass = "";
-    $db_name = "gsc_attendanceandpayroll4.0";
+    $db_name = "gsc_attendanceandpayroll3.0";
 
     // Create connection
     $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name) or die("Connection failed: " . mysqli_connect_error());
@@ -56,22 +56,22 @@ function START($conn) {
 function GETTABLE($conn,$Search,$Status,$Type) {
     //join query
     $sql = "
-  SELECT *
+    SELECT *
     FROM (
         SELECT
             b.ACC_Username AS Username,
             b.ACC_Password AS Password,
             b.ACC_DateCreated AS DateCreated,
-            b.ACC_StatusID AS Status,
+            b.ACC_AcountStatID AS Status,
             b.ACC_ID as ID,
-            n.TLN_FName AS FirstName,
-            n.TLN_MName AS MiddleName,
-            n.TLN_LName AS LastName,
-            n.TLN_Suffix AS Suffix,
-            r.TLP_Position AS Role,
+            n.AN_FName AS FirstName,
+            n.AN_MName AS MiddleName,
+            n.AN_LName AS LastName,
+            n.AN_Suffix AS Suffix,
+            r.ARL_Role AS Role,
             NULL AS Age,
-            i.TL_Contact AS Contact,
-            i.TL_Email AS Email,
+            i.AI_Contact AS Contact,
+            i.AI_Email AS Email,
             NULL AS Gender,
             NULL AS DOB,
             NULL AS LicenseImg,
@@ -80,7 +80,7 @@ function GETTABLE($conn,$Search,$Status,$Type) {
             NULL AS NBIClearanceImg,
             NULL AS GCashNo,
             NULL AS GCashName,
-            i.TL_ProfileImg AS ProfileImage,
+            i.AI_ProfileImg AS ProfileImage,
             NULL AS HouseNo,
             NULL AS LotNo,
             NULL AS Street,
@@ -95,19 +95,19 @@ function GETTABLE($conn,$Search,$Status,$Type) {
             NULL AS PagibigNo,
             'Admin' AS UserType
         FROM
-            teamlead_information i
+            admin_information i
         JOIN
-            account b ON i.TL_AccountID = b.ACC_ID
+            account b ON i.AI_AccountID = b.ACC_ID
         JOIN
-            teamlead_name n ON i.TL_NameID = n.TLN_ID
+            admin_name n ON i.AI_AdminNameID = n.AN_ID
         JOIN
-            teamlead_position r ON i.TL_PositionID = r.TLP_ID
+            admin_role r ON i.AI_AdminPositionID = r.ARL_ID
         UNION
         SELECT
             b.ACC_Username AS Username,
             b.ACC_Password AS Password,
             b.ACC_DateCreated AS DateCreated,
-            b.ACC_StatusID AS Status,
+            b.ACC_AcountStatID AS Status,
             b.ACC_ID as ID,
             c.DN_FName AS FirstName,
             c.DN_MName AS MiddleName,
@@ -134,7 +134,7 @@ function GETTABLE($conn,$Search,$Status,$Type) {
             d.DA_Province AS Province,
             d.DA_ZipCode AS ZipCode,
             e.DUT_UnitType AS UnitType,
-            g.Hub_Name AS HubAssigned,
+            g.HASS_Name AS HubAssigned,
             h.GOV_PhilHealthNo AS PhilHealthNo,
             h.GOV_SSSNo AS SSSNo,
             h.GOV_PagibigNo AS PagibigNo,
@@ -150,7 +150,7 @@ function GETTABLE($conn,$Search,$Status,$Type) {
         JOIN
             driver_unit_type e ON a.DI_UnitTypeID = e.DUT_ID
         JOIN
-            hub g ON a.DI_HubAssignedID = g.Hub_ID
+            hub_assigned g ON a.DI_HubAssignedID = g.HASS_ID
         JOIN
             government_information h ON a.DI_GovInfoID = h.GOV_ID
     ) AS subquery

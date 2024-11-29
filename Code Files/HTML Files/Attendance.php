@@ -3,7 +3,7 @@
     $db_server = "localhost";
     $db_user = "root";
     $db_pass = "";
-    $db_name = "gsc_attendanceandpayroll4.0";
+    $db_name = "gsc_attendanceandpayroll3.0";
 
     // Create connection
     $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name) or die("Connection failed: " . mysqli_connect_error());
@@ -23,7 +23,7 @@
             d.DEL_RemittanceReciept,
             t.ATT_Date,
             a.ATT_ID,
-            h.hub_Name
+            h.HASS_Name
 
         FROM
             attendance a
@@ -36,7 +36,7 @@
         JOIN
         	attendance_date_type t ON a.ADT_ID = t.ADT_ID
         JOIN
-            hub h ON i.DI_HubAssignedID = h.hub_ID
+            hub_assigned h ON i.DI_HubAssignedID = h.HASS_ID
         ORDER BY t.ATT_Date DESC
         
     ";
@@ -56,8 +56,8 @@
                 d.DEL_RemittanceReciept,
                 t.ATT_Date,
                 a.ATT_ID,
-                a.ATT_StatusID,
-                h.hub_Name
+                a.ATT_Status,
+                h.HASS_Name
             FROM
                 attendance a
             JOIN
@@ -69,8 +69,8 @@
             JOIN
                 attendance_date_type t ON a.ADT_ID = t.ADT_ID
             JOIN
-                hub h ON i.DI_HubAssignedID = h.hub_ID
-            WHERE a.ATT_StatusID = 2
+                hub_assigned h ON i.DI_HubAssignedID = h.HASS_ID
+            WHERE a.ATT_Status = 2
             ";
         //pending
         $sql3 = "
@@ -87,7 +87,7 @@
                 d.DEL_RemittanceReciept,
                 a.ATT_ID,
                 t.ATT_Date,
-                h.hub_Name
+                h.HASS_Name
     
             FROM
                 attendance a
@@ -100,8 +100,8 @@
             JOIN
                 attendance_date_type t ON a.ADT_ID = t.ADT_ID
             JOIN
-                hub h ON i.DI_HubAssignedID = h.hub_ID
-            WHERE ATT_StatusID = 1
+                hub_assigned h ON i.DI_HubAssignedID = h.HASS_ID
+            WHERE ATT_STATUS = 1
             
         ";
         //accepted
@@ -119,7 +119,7 @@
                 d.DEL_RemittanceReciept,
                 t.ATT_Date,
                 a.ATT_ID,
-                h.hub_Name
+                h.HASS_Name
 
             FROM
                 attendance a
@@ -132,8 +132,8 @@
             JOIN
                 attendance_date_type t ON a.ADT_ID = t.ADT_ID
             JOIN
-                hub h ON i.DI_HubAssignedID = h.hub_ID
-            WHERE ATT_StatusID = 2
+                hub_assigned h ON i.DI_HubAssignedID = h.HASS_ID
+            WHERE ATT_STATUS = 2
             
         ";
         //denied
@@ -151,7 +151,7 @@
                 d.DEL_RemittanceReciept,
                 t.ATT_Date,
                 a.ATT_ID,
-                h.hub_Name
+                h.HASS_Name
 
             FROM
                 attendance a
@@ -164,8 +164,8 @@
             JOIN
                 attendance_date_type t ON a.ADT_ID = t.ADT_ID
             JOIN
-                hub h ON i.DI_HubAssignedID = h.hub_ID
-            WHERE ATT_StatusID = 3
+                hub_assigned h ON i.DI_HubAssignedID = h.HASS_ID
+            WHERE ATT_STATUS = 3
             
         ";
 
@@ -275,7 +275,7 @@
                                         <img src='$profileImage' alt='Profile Image' class='profile-image'>
                                         <div class='td-name'>
                                             <h3 id='username' name='Username'>" . htmlspecialchars($fullname) . "</h3>
-                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['hub_Name']) . "</h5>
+                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['HASS_Name']) . "</h5>
                                             <h5 id='position-name' name='Position'> | <span id='position'>Parcel Carried: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelCarried']) . "</span> | </h5>
                                             <h5 id='position-name' name='Position'>  <span id='position'>Parcel Delivered: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelDelivered']) . "</span> | </h5>
                                             <h5 id='position-name' name='Position'>  <span id='position'>Parcel Returned: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelReturned']) . "</span>  </h5>
@@ -327,7 +327,7 @@
                                         <img src='$profileImage' alt='Profile Image' class='profile-image'>
                                         <div class='td-name'>
                                             <h3 id='username' name='Username'>" . htmlspecialchars($fullname) . "</h3>
-                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['hub_Name']) . "</h5>
+                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['HASS_Name']) . "</h5>
                                             <h5 id='position-name' name='Position'> | <span id='position'>Parcel Carried: </span><span id='type'>" . htmlspecialchars($row['Carried_Sum']) . "</span> | </h5>
                                             <h5 id='position-name' name='Position'>  <span id='position'>Parcel Delivered: </span><span id='type'>" . htmlspecialchars($row['Delivered_Sum']) . "</span> | </h5>
                                             <h5 id='position-name' name='Position'>  <span id='position'>Parcel Returned: </span><span id='type'>" . htmlspecialchars($row['Returned_Sum']) . "</span>&nbsp;  </h5>
@@ -376,7 +376,7 @@
                                         <img src='$profileImage' alt='Profile Image' class='profile-image'>
                                         <div class='td-name'>
                                             <h3 id='username' name='Username'>" . htmlspecialchars($fullname) . "</h3>
-                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['hub_Name']) . "</h5>
+                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['HASS_Name']) . "</h5>
                                             <h5 id='position-name' name='Position'> | <span id='position'>Parcel Carried: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelCarried']) . "</span> | </h5>
                                             <h5 id='position-name' name='Position'>  <span id='position'>Parcel Delivered: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelDelivered']) . "</span> | </h5>
                                             <h5 id='position-name' name='Position'>  <span id='position'>Parcel Returned: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelReturned']) . "</span>  </h5>
@@ -409,7 +409,7 @@
                         $att_id = intval($_POST['ATT_ID']); // Sanitize input
                 
                         // Prepare and execute the SQL update
-                        $stmt = $conn->prepare("UPDATE attendance SET ATT_StatusID = ? WHERE ATT_ID = ?");
+                        $stmt = $conn->prepare("UPDATE attendance SET ATT_Status = ? WHERE ATT_ID = ?");
                         $status = 2;
                         $stmt->bind_param("ii", $status, $att_id);
                 
@@ -425,7 +425,7 @@
                         $att_id = intval($_POST['ATT_ID']); // Sanitize input
                 
                         // Prepare and execute the SQL update
-                        $stmt = $conn->prepare("UPDATE attendance SET ATT_StatusID = ? WHERE ATT_ID = ?");
+                        $stmt = $conn->prepare("UPDATE attendance SET ATT_Status = ? WHERE ATT_ID = ?");
                         $status = 3;
                         $stmt->bind_param("ii", $status, $att_id);
                 
@@ -468,7 +468,7 @@
                                         <img src='$profileImage' alt='Profile Image' class='profile-image'>
                                         <div class='td-name'>
                                             <h3 id='username' name='Username'>" . htmlspecialchars($fullname) . "</h3>
-                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['hub_Name']) . "</h5>
+                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['HASS_Name']) . "</h5>
                                             <h5 id='position-name' name='Position'> | <span id='position'>Parcel Carried: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelCarried']) . "</span> | </h5>
                                             <h5 id='position-name' name='Position'>  <span id='position'>Parcel Delivered: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelDelivered']) . "</span> | </h5>
                                             <h5 id='position-name' name='Position'>  <span id='position'>Parcel Returned: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelReturned']) . "</span>&nbsp;  </h5>
@@ -518,7 +518,7 @@
                                         <img src='$profileImage' alt='Profile Image' class='profile-image'>
                                         <div class='td-name'>
                                             <h3 id='username' name='Username'>" . htmlspecialchars($fullname) . "</h3>
-                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['hub_Name']) . "</h5>
+                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['HASS_Name']) . "</h5>
                                             <h5 id='position-name' name='Position'> | <span id='position'>Parcel Carried: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelCarried']) . "</span> | </h5>
                                             <h5 id='position-name' name='Position'>  <span id='position'>Parcel Delivered: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelDelivered']) . "</span> | </h5>
                                             <h5 id='position-name' name='Position'>  <span id='position'>Parcel Returned: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelReturned']) . "</span>&nbsp;  </h5>

@@ -3,7 +3,7 @@
     $db_server = "127.0.0.1";
     $db_user = "root";
     $db_pass = "";
-    $db_name = "gsc_attendanceandpayroll4.0";
+    $db_name = "gsc_attendanceandpayroll3.0";
     $conn = "";
 
     // Create connection
@@ -23,9 +23,9 @@
         FROM
             hub_rate r
         JOIN
-            hub d ON r.HUBR_HubID = d.hub_D
+            hub_assigned d ON r.HUBR_HubAssignedID = d.HASS_ID
         JOIN
-            hub_address a ON d.hub_AddressID = a.HADD_ID
+            hub_address a ON d.HASS_AddressID = a.HADD_ID
             
     ";
 

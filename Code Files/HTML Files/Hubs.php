@@ -3,7 +3,7 @@
     $db_server = "127.0.0.1";
     $db_user = "root";
     $db_pass = "";
-    $db_name = "gsc_attendanceandpayroll4.0";
+    $db_name = "gsc_attendanceandpayroll3.0";
     $conn = "";
 
     // Create connection
@@ -14,7 +14,7 @@
     $sql = "
         SELECT
             r.HUBR_ID,
-            d.hub_Name,
+            d.HASS_Name,
             a.HADD_Barangay,
             a.HADD_City,
             a.HADD_Province, 
@@ -23,9 +23,9 @@
         FROM
             hub_rate r
         JOIN
-            hub d ON r.HUBR_HubID = d.hub_ID
+            hub_assigned d ON r.HUBR_HubAssignedID = d.HASS_ID
         JOIN
-            hub_address a ON d.hub_AddressID = a.HADD_ID
+            hub_address a ON d.HASS_AddressID = a.HADD_ID
             
     ";
     $result = $conn->query($sql);
@@ -81,7 +81,7 @@
                         echo "                          
                             <tr>
                                 <td>" . htmlspecialchars($row['HUBR_ID']) . "</td>
-                                <td>" . htmlspecialchars($row['hub_Name']) . "</td>
+                                <td>" . htmlspecialchars($row['HASS_Name']) . "</td>
                                 <td>" . htmlspecialchars($address) . "</td>
                                 <td>₱ " . htmlspecialchars($row['HUBR_Rate']) . "</td>
                                 <td>
@@ -141,15 +141,15 @@
             $hub_id = $_POST['hub_id'];
             
             // Get the data for the hub_id from the database
-            $sql = "SELECT r.HUBR_ID, d.hub_Name, a.HADD_Barangay, a.HADD_City, a.HADD_Province, a.HADD_ZipCode, r.HUBR_Rate
+            $sql = "SELECT r.HUBR_ID, d.HASS_Name, a.HADD_Barangay, a.HADD_City, a.HADD_Province, a.HADD_ZipCode, r.HUBR_Rate
                     FROM hub_rate r
-                    JOIN hub d ON r.HUBR_HubID = d.hub_ID
-                    JOIN hub_address a ON d.hub_AddressID = a.HADD_ID
+                    JOIN hub_assigned d ON r.HUBR_HubAssignedID = d.HASS_ID
+                    JOIN hub_address a ON d.HASS_AddressID = a.HADD_ID
                     WHERE r.HUBR_ID = ?";
             if ($stmt = mysqli_prepare($conn, $sql)) {
                 mysqli_stmt_bind_param($stmt, 'i', $hub_id);
                 mysqli_stmt_execute($stmt);
-                mysqli_stmt_bind_result($stmt, $HUBR_ID, $hub_Name, $HADD_Barangay, $HADD_City, $HADD_Province, $HADD_ZipCode, $HUBR_Rate);
+                mysqli_stmt_bind_result($stmt, $HUBR_ID, $HASS_Name, $HADD_Barangay, $HADD_City, $HADD_Province, $HADD_ZipCode, $HUBR_Rate);
                 mysqli_stmt_fetch($stmt);
                 mysqli_stmt_close($stmt);
             }
@@ -157,7 +157,7 @@
         ?>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <input type="hidden" name="hub_id" value="<?php echo htmlspecialchars($hub_id); ?>">
-            <input type="text" name="name" value="<?php echo htmlspecialchars($hub_me); ?>" placeholder="Hub Name">
+            <input type="text" name="name" value="<?php echo htmlspecialchars($HASS_Name); ?>" placeholder="Hub Name">
             <input type="text" name="barangay" value="<?php echo htmlspecialchars($HADD_Barangay); ?>" placeholder="Hub Barangay">
             <input type="text" name="city" value="<?php echo htmlspecialchars($HADD_City); ?>" placeholder="Hub City">
             <input type="text" name="province" value="<?php echo htmlspecialchars($HADD_Province); ?>" placeholder="Hub Province">
@@ -187,9 +187,9 @@
                 $rate = filter_input(INPUT_POST, 'rate', FILTER_SANITIZE_SPECIAL_CHARS);
         
                 $sql = "UPDATE hub_rate r
-                        JOIN hub d ON r.HUBR_HubID = d.hub_
-                        JOIN hub_address a ON d.hub_essID = a.HADD_ID
-                        SET d.hub_Name = ?, a.HADD_Barangay = ?, a.HADD_City = ?, a.HADD_Province = ?, a.HADD_ZipCode = ?, r.HUBR_Rate = ?
+                        JOIN hub_assigned d ON r.HUBR_HubAssignedID = d.HASS_ID
+                        JOIN hub_address a ON d.HASS_AddressID = a.HADD_ID
+                        SET d.HASS_Name = ?, a.HADD_Barangay = ?, a.HADD_City = ?, a.HADD_Province = ?, a.HADD_ZipCode = ?, r.HUBR_Rate = ?
                         WHERE r.HUBR_ID = ?";
                 if ($stmt = mysqli_prepare($conn, $sql)) {
                     mysqli_stmt_bind_param($stmt, 'ssssssi', $name, $barangay, $city, $province, $zipcode, $rate, $hub_id);
@@ -218,11 +218,11 @@
                     if (mysqli_query($conn, $sql1)) {
                         $hubaddressId = mysqli_insert_id($conn);
         
-                        $sql2 = "INSERT INTO hub (hub_AddressID, hub_Name) VALUES ('$hubaddressId', '$name')";
+                        $sql2 = "INSERT INTO hub_assigned (HASS_AddressID, HASS_Name) VALUES ('$hubaddressId', '$name')";
                         if (mysqli_query($conn, $sql2)) {
                             $nameId = mysqli_insert_id($conn);
         
-                            $sql3 = "INSERT INTO hub_rate (HUBR_HubID, HUBR_Rate) VALUES ('$nameId', '$rate')";
+                            $sql3 = "INSERT INTO hub_rate (HUBR_HubAssignedID, HUBR_Rate) VALUES ('$nameId', '$rate')";
                             mysqli_query($conn, $sql3);
         
                             echo "<script type='text/javascript'>alert('ADD HUB SUCCESSFULLY');</script>";
@@ -240,38 +240,38 @@
         if (isset($_POST['delete_hub']) && isset($_POST['hub_id'])) {
                 $hub_id = $_POST['hub_id'];
 
-                // First, get the hub_ID and HADD_ID that are related to the HUBR_ID from hub_rate
-                $get_hub_info_sql = "SELECT HUBR_HubID FROM hub_rate WHERE HUBR_ID = ?";
+                // First, get the HASS_ID and HADD_ID that are related to the HUBR_ID from hub_rate
+                $get_hub_info_sql = "SELECT HUBR_HubAssignedID FROM hub_rate WHERE HUBR_ID = ?";
                 if ($stmt = mysqli_prepare($conn, $get_hub_info_sql)) {
                     mysqli_stmt_bind_param($stmt, 'i', $hub_id);
                     mysqli_stmt_execute($stmt);
-                    mysqli_stmt_bind_result($stmt, $hub_id);
+                    mysqli_stmt_bind_result($stmt, $hub_assigned_id);
                     mysqli_stmt_fetch($stmt);
                     mysqli_stmt_close($stmt);
 
-                    // If we have the HUBR_HubID then proceed
-                    if ($hub_id) {
-                        // Get the associated hub_AddressID for deletion from hub
-                        $get_address_id_sql = "SELECT hub_AddressID FROM hub WHERE hub_ID = ?";
+                    // If we have the HUBR_HubAssignedID then proceed
+                    if ($hub_assigned_id) {
+                        // Get the associated HASS_AddressID for deletion from hub_assigned
+                        $get_address_id_sql = "SELECT HASS_AddressID FROM hub_assigned WHERE HASS_ID = ?";
                         if ($stmt = mysqli_prepare($conn, $get_address_id_sql)) {
-                            mysqli_stmt_bind_param($stmt, 'i', $hub_id);
+                            mysqli_stmt_bind_param($stmt, 'i', $hub_assigned_id);
                             mysqli_stmt_execute($stmt);
                             mysqli_stmt_bind_result($stmt, $address_id);
                             mysqli_stmt_fetch($stmt);
                             mysqli_stmt_close($stmt);
 
                             // Delete from hub_rate
-                            $sql1 = "DELETE FROM hub_rate WHERE HUBR_HubID = ?";
+                            $sql1 = "DELETE FROM hub_rate WHERE HUBR_HubAssignedID = ?";
                             if ($stmt = mysqli_prepare($conn, $sql1)) {
-                                mysqli_stmt_bind_param($stmt, 'i', $hub_id);
+                                mysqli_stmt_bind_param($stmt, 'i', $hub_assigned_id);
                                 mysqli_stmt_execute($stmt);
                                 mysqli_stmt_close($stmt);
                             }
 
-                            // Delete from hub
-                            $sql2 = "DELETE FROM hub WHERE hub_ID = ?";
+                            // Delete from hub_assigned
+                            $sql2 = "DELETE FROM hub_assigned WHERE HASS_ID = ?";
                             if ($stmt = mysqli_prepare($conn, $sql2)) {
-                                mysqli_stmt_bind_param($stmt, 'i', $hub_id);
+                                mysqli_stmt_bind_param($stmt, 'i', $hub_assigned_id);
                                 mysqli_stmt_execute($stmt);
                                 mysqli_stmt_close($stmt);
                             }

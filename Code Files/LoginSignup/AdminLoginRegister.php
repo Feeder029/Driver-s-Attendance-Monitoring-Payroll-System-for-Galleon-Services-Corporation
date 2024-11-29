@@ -165,7 +165,7 @@
     $db_server = "localhost";
     $db_user = "root";
     $db_pass = "";
-    $db_name = "gsc_attendanceandpayroll3.0";
+    $db_name = "gsc_attendanceandpayroll4.0";
     $conn = "";
 
     $conn = mysqli_connect($db_server,$db_user,$db_pass,$db_name);
@@ -193,19 +193,19 @@
                 $Profilepic = null; // Set to null if not uploaded
             }
             
-            if (empty($Lastname) || empty($Firstname) || empty($Middlename) || empty($Position) || empty($Profilepic) || empty($Email) || empty($Contact) || empty($Username) || empty($Password)) {
+            if (empty($Lastname) || empty($Firstname) || empty($Lastname) || empty($Position) || empty($Profilepic) || empty($Email) || empty($Contact) || empty($Username) || empty($Password)) {
                 echo "<script type='text/javascript'>alert('EMPTY FIELDS');</script>";
             } else {
                 $hash = password_hash($Password, PASSWORD_DEFAULT);
     
                 // Insert into admin_name
-                $sql1 = "INSERT INTO admin_name (AN_FName, AN_MName, AN_LName, AN_Suffix) VALUES ('$Firstname', '$Middlename', '$Lastname', '$Suffix')";
+                $sql1 = "INSERT INTO teamlead_name (TLN_FName, TLN_MName, TLN_LName, TLN_Suffix) VALUES ('$Firstname', '$Middlename', '$Lastname', '$Suffix')";
                 if (mysqli_query($conn, $sql1)) {
                     // Get the last inserted ID for admin_name
                     $adminNameId = mysqli_insert_id($conn);
 
                     // Insert into admin_role
-                    $sql2 = "INSERT INTO admin_role (ARL_Role) VALUES ('$Position')";
+                    $sql2 = "INSERT INTO teamlead_position (TLP_Position) VALUES ('$Position')";
                     if (mysqli_query($conn, $sql2)) {
                         // Get the last inserted ID for admin_role
                         $adminPositionId = mysqli_insert_id($conn);
@@ -217,7 +217,7 @@
                             $accountId = mysqli_insert_id($conn);
 
                             // Insert into admin_information with all foreign keys
-                            $sql4 = "INSERT INTO admin_information (AI_AccountID, AI_AdminPositionID, AI_AdminNameID, AI_Email, AI_Contact, AI_ProfileImg) 
+                            $sql4 = "INSERT INTO teamlead_information (`TL_AccountID`, `TL_PositionID`, `TL_NameID`, `TL_Contact`, `TL_Email`, `TL_ProfileImg`) 
                                     VALUES ('$accountId','$adminNameId', '$adminPositionId', '$Email', '$Contact', '$Profilepic')";
                             mysqli_query($conn, $sql4);
 

@@ -3,7 +3,7 @@
     $db_server = "localhost";
     $db_user = "root";
     $db_pass = "";
-    $db_name = "gsc_attendanceandpayroll3.0";
+    $db_name = "gsc_attendanceandpayroll4.0";
 
     // Create connection
     $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name) or die("Connection failed: " . mysqli_connect_error());
@@ -22,7 +22,7 @@
             d.DEL_ParcelReturned,
             d.DEL_RemittanceReciept,
             t.ATT_Date,
-            h.HASS_Name
+            h.hub_Name
 
         FROM
             attendance a
@@ -35,7 +35,7 @@
         JOIN
         	attendance_date_type t ON a.ADT_ID = t.ADT_ID
         JOIN
-            hub_assigned h ON i.DI_HubAssignedID = h.HASS_ID
+            hub h ON i.DI_HubAssignedID = h.hub_ID
     ";
 
     $sql2="
@@ -43,7 +43,7 @@
             SUM(d.DEL_ParcelCarried) AS TotalCarried,
             SUM(d.DEL_ParcelDelivered) AS TotalDelivered,
             SUM(d.DEL_ParcelReturned) AS TotalReturned,
-            h.HASS_Name
+            h.hub_Name
         FROM
             attendance a
         JOIN
@@ -51,7 +51,7 @@
         JOIN
             driver_information i ON a.ATT_DriverID = i.DI_ID
         JOIN
-            hub_assigned h ON i.DI_HubAssignedID = h.HASS_ID
+            hub h ON i.DI_HubAssignedID = h.hub_ID
     ";
 
 
@@ -140,7 +140,7 @@
                                             <img src='$profileImage' alt='Profile Image' class='profile-image'>
                                             <div class='td-name'>
                                                 <h3 id='username' name='Username'>" . htmlspecialchars($fullname) . "</h3>
-                                                <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['HASS_Name']) . "</h5>
+                                                <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['hub_Name']) . "</h5>
                                                 <h5 id='position-name' name='Position'> | <span id='position'>Parcel Carried: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelCarried']) . "</span> | </h5>
                                                 <h5 id='position-name' name='Position'>  <span id='position'>Parcel Delivered: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelDelivered']) . "</span> | </h5>
                                                 <h5 id='position-name' name='Position'>  <span id='position'>Parcel Returned: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelReturned']) . "</span>  </h5>
@@ -188,7 +188,7 @@
                     echo"
                         <div class='hub-container'>
                             <div class='hub-left'>
-                                <h1>" . htmlspecialchars($row2['HASS_Name']) . "</h1>
+                                <h1>" . htmlspecialchars($row2['hub_Name']) . "</h1>
                                 <div class='parcel-count'>
                                     <div class='parcel'id='parcel-carried'>
                                         <h1>" . htmlspecialchars($row2['TotalCarried']) . "</h1>

@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 function Accept($conn, $AccID) {
 
-    $sql = "UPDATE account SET ACC_AcountStatID = 2 WHERE ACC_ID = ?";
+    $sql = "UPDATE account SET ACC_StatusID = 2 WHERE ACC_ID = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $AccID);
     if (!$stmt->execute()) {
@@ -41,7 +41,7 @@ function Accept($conn, $AccID) {
 }
 
 function Deny($conn, $AccID) {
-    $sql = "UPDATE account SET ACC_AcountStatID = 3 WHERE ACC_ID = ?";
+    $sql = "UPDATE account SET ACC_StatusID = 3 WHERE ACC_ID = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $AccID);
     if (!$stmt->execute()) {

@@ -14,7 +14,7 @@
     $sql = "
         SELECT
             r.HUBR_ID,
-            d.hub_Name,
+            d.HASS_Name,
             a.HADD_Barangay,
             a.HADD_City,
             a.HADD_Province, 
@@ -28,7 +28,29 @@
             hub_address a ON d.hub_AddressID = a.HADD_ID
             
     ";
+
+    $sql2 = "
+        SELECT
+            d.DI_ID,
+            CONCAT(n.DN_FName, ' ', n.DN_MName, ' ', n.DN_LName, ' ', n.DN_Suffix) AS DRIVER_NAME,
+            d.GCash_No,
+            p.PAY_TotalAmount
+        FROM
+            driver_information d
+        JOIN
+            driver_name n ON d.DI_NameID = n.DN_ID
+        LEFT JOIN
+            payroll p ON d.DI_ID = p.PAY_DriverID
+        JOIN
+            account a ON d.DI_AccountID = a.ACC_ID
+        JOIN
+            account_status s ON a.ACC_AcountStatID = s.ACCS_ID
+        WHERE
+            s.ACCS_Status = 'Active';
+    ";
+
     $result = $conn->query($sql);
+    $result2 = $conn->query($sql2);
     
    
 ?>
@@ -38,7 +60,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS Files/Payroll.css?v=1.5">
+    <link rel="stylesheet" href="../CSS Files/Payroll.css?v=1.7">
     <script src="../JS Files/Payroll.js?v=1.3"></script>
     <title>PAYROLL</title>
 </head>
@@ -149,6 +171,21 @@
                         <th>GCASH NUMBER</th>
                         <th>NET PAY</th>
                     </tr>
+                    <?php
+                        if ($result2 && $result->num_rows > 0) {
+                            // Fetch and display each row from the result set
+                            while ($row = $result2->fetch_assoc()) {               
+                                echo "
+                                    <tr>
+                                    <td>". htmlspecialchars($row['DI_ID']) . "</td>
+                                    <td>". htmlspecialchars($row['DRIVER_NAME']) . "</td>
+                                    <td>". htmlspecialchars($row['GCash_No']) . "</td>
+                                    <td>". htmlspecialchars($row['PAY_TotalAmount']) . "</td>
+                            </tr>
+                                ";
+                            }
+                        }
+                    ?>
                 </table>
             </div>
         </div>
@@ -158,8 +195,22 @@
                 <div class="payslip-head">
                     <h2>GALLEON SERVICES <br> CORPORATION</h2>
                     <h3>DATE - DATE</h3>
-                    <h2>--------------------------------------------------</h2>
+                    <h3 id="divider">--------------------------------------------------</h3>
                 </div>
+
+                <div class="payslip-driver">  
+                    <div class="driver-head">
+                        <div class="driver-data">
+                            <h4>NAME: </h4>
+                            <h4>DRIVER ID: </h4>
+                            <h4>HUB: </h4>
+                            <h4>UNIT TYPE: </h4>
+                        </div>
+                       
+                    </div>
+                    <h3 id="divider">--------------------------------------------------</h3>
+                </div>
+
                 <div class="payslip-earnings">  
                     <div class="earning-head">
                         <h2>EARNINGS</h2>
@@ -204,7 +255,7 @@
                                 </div>                                                 
                             </div>
                         </div>
-                        <h3>--------------------------------------------------------------</h3>
+                        <h3 id="divider">--------------------------------------------------------------</h3>
                     </div>
 
                 </div>
@@ -219,22 +270,12 @@
                             <h4>TOTAL DEDUCTIONS: </h4>
                             <h4>NET PAY: </h4>
                         </div>  
-                        <h3>--------------------------------------------------------------</h3>
+                        
                     </div>
 
                 </div>
 
-                <div class="payslip-driver">  
-                    <div class="driver-head">
-                        <div class="driver-data">
-                            <h4>NAME: </h4>
-                            <h4>DRIVER ID: </h4>
-                            <h4>HUB: </h4>
-                            <h4>UNIT TYPE: </h4>
-                        </div>  
-                    </div>
-
-                </div>
+                
             </div>
 
         </div>
@@ -250,9 +291,6 @@
     
         <button onclick="printTable()">Print Table</button>
         <button onclick="togglePayslip('payslip')">Create Payslip</button>
-        <button>Delete</button>
-        <button>Edit</button>
-    
     </div>
 </body>
 </html>

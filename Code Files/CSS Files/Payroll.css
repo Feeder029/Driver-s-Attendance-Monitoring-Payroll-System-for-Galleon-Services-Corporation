@@ -244,7 +244,7 @@ tr:hover {
 
 .payslip-head h3{
     font-size: 15px;
-    margin: -10px 0 -15px 0;
+    margin: -5px 0 -15px 0;
     
 }
 
@@ -322,15 +322,19 @@ tr:hover {
     margin-top: -15px;
 }
 
-.deductions-head h3{
-    margin-top: -20px;
-}
-
 .driver-data h4{
     margin-left: 10px;
     margin-top: -20px;
 }
 
+.payslip-driver h3{
+    margin-top: -25px !important;
+}
+
 .earning-head h2, .deductions-head h2{
     font-size: 20px;
+}
+
+#divider{
+    margin: 15px 0 25px 0;
 }

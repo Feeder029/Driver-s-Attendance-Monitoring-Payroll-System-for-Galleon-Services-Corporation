@@ -15,7 +15,7 @@
 
     <!-- Date Range Selection -->
     <div class="date-range">
-      <span>31/10/4 - 15/11/24</span>
+      <span>01/12/2024 - 31/12/2024</span>
       <button class="details-button" onclick="toggleDetails()">Details ▼</button>
     </div>
 
@@ -23,9 +23,9 @@
     <div class="details" id="details-content">
       <!-- Driver Info at the Top -->
       <div class="driver-info">
-        <p><strong>Name:</strong> Betlog ni Lucas</p>
+        <p><strong>Name:</strong> John Doe </p>
         <p><strong>ID NO.:</strong> 1001</p>
-        <p><strong>Hub:</strong> SJDM Hub</p>
+        <p><strong>Hub:</strong> Low QC Hub</p>
       </div>
 
       <!-- Earnings and Deductions Summary -->

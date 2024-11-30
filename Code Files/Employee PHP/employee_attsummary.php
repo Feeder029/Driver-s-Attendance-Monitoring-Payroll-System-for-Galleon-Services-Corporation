@@ -1,6 +1,8 @@
 <?php
 
 include("employee_profile.php");
+date_default_timezone_set('Asia/Manila');
+
 $DateStart = date('Y-m-d'); // Format: YYYY-MM-DD
 $DateEnd = date('Y-m-d'); // Format: YYYY-MM-DD
 

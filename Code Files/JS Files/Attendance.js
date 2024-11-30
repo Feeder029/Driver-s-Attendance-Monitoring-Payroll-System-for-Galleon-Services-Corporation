@@ -138,7 +138,8 @@ function toggleTable(option) {
         tableContainer3.style.display = 'none';
         tableContainer4.style.display = 'none';
         tableContainer5.style.display = 'none';
-    } else if (option === 'pending') {
+    } 
+    else if (option === 'pending') {
         tableContainer1.style.display = 'none';
         tableContainer2.style.display = 'none';
         tableContainer3.style.display = 'block';

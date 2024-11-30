@@ -12,6 +12,10 @@ if (isset($_SESSION['DVID'])) {
 
 require '../DatabaseConnection/Database.php';
 
+// Set the timezone to Philippines
+date_default_timezone_set('Asia/Manila');
+
+// Get today's date in the format 'Y-m-d'
 $datetoday = date('Y-m-d');
 
 $sql = "SELECT 
@@ -40,9 +44,11 @@ $result = $stmt->get_result();
 // Check if there are results 
 if ($result->num_rows == 1) { // Fetch all results as an associative array 
 $resultsArray = $result->fetch_all(MYSQLI_ASSOC);
+ECHO "Execute";
 
 // You can now loop through the results or process them as needed
 foreach ($resultsArray as $row) {
+    ECHO "FGBFVC";
     $Attendance = [
         "PC"=> $row["DEL_ParcelCarried"],
         "PR"=> $row["DEL_ParcelReturned"],

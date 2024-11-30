@@ -8,6 +8,7 @@ td.fc-day {
 
 background:#FFF !important;
 font-family: 'Roboto', sans-serif;
+border: 2px solid #B39EE3;
 
 }
 td.fc-today {
@@ -19,7 +20,7 @@ td.fc-today {
 
 .fc-first th{
 	font-family: 'Roboto', sans-serif;
-    background:#9675ce !important;
+    background:#25274D !important;
 	color:#FFF;
 	font-size:14px !important;
 	font-weight:500 !important;
@@ -27,7 +28,7 @@ td.fc-today {
 	}
 .fc-event-inner {
 	font-family: 'Roboto', sans-serif;
-    background: #03a9f3!important;
+    background: #2226ff!important;
     color: #FFF!important;
     font-size: 12px!important;
     font-weight: 500!important;
@@ -97,11 +98,11 @@ html .fc,
 }
 	span.fc-button {
     font-family: 'Roboto', sans-serif;
-    border-color: #9675ce;
-	color: #9675ce;
+    border-color: #101022;
+	color: #3b206a;
 }
 .fc-state-down, .fc-state-active {
-    background-color: #9675ce !important;
+    background-color: #25274D !important;
 	color: #FFF !important;
 }
 .fc .fc-header-space {
@@ -167,9 +168,12 @@ html .fc,
 .fc-widget-header{
     border-bottom: 1px solid #EEE; 
 }	
+
+/*
 .fc-state-highlight { /* <td> today cell */ /* TODO: add .fc-today to <th> */
 	/* background: #fcf8e3; */
-}
+
+*/
 
 .fc-state-highlight > div > div.fc-day-number{
     background-color: #ff3b30;
@@ -244,8 +248,8 @@ html .fc,
 	float: left;
 	margin-top: -50%;
 	
-	*margin-top: 0;
-	*top: -50%;
+	/*margin-top: 0;
+	*top: -50%;*/
 	}
 
 
@@ -434,10 +438,10 @@ table.fc-border-separate {
 	border-right-width: 1px;
 	}
 	
-
+/*
 .fc-border-separate tr.fc-last td {
 	
-}
+}*/
 .fc-border-separate .fc-week .fc-first{
     border-left: 0;
 }
@@ -591,7 +595,7 @@ table.fc-border-separate {
 	}
 	
 .fc-agenda-slots tr.fc-minor th.ui-widget-header {
-	*border-top-style: solid; /* doesn't work with background in IE6/7 */
+	border-top-style: solid; /* doesn't work with background in IE6/7 */
 	}
 	
 
@@ -728,5 +732,62 @@ table.fc-header{
 .fc-event .ui-resizable-handle {
 	display: none !important;
 	}
+
+body {
+		background-color: #464866 !important;
+		overflow-x: hidden;  
+		/*
+		background-image: url('BG5.jpg');
+		background-size: cover;  
+		background-position: center;  
+		background-attachment: fixed; 
+	   */
+	}
+	
+html{
+		overflow-x: hidden;
+	}
+
+	html, body {
+		margin-top: 0 !important;
+		padding-top: 0 !important;
+	}
+	
+	
+.navbar, html{
+		overflow: visible;
+	}
+
+	.navbar {
+		background-color: #25274D;
+		backdrop-filter: blur(10px);
+		padding: 1px;
+		border-radius: 10px;
+		border: 2px solid #29648A;
+		z-index: 1000;
+		margin: 10px;
+		display: flex; /* Use flexbox for proper alignment */
+		align-items: center; /* Align children vertically */
+		justify-content: flex-start; /* Align children horizontally to the left */
+		height: 80px; /* Adjusted height */
+	}
+	
+	
+	.navbar h3 {
+		color: #F9F4EF;
+		font-size: 40px;
+		font-family: 'Poppins', 'sans-serif';
+		margin: 10px 30px 10px 20px; /* Adjust spacing as needed */
+		flex-shrink: 0; /* Prevent it from shrinking */
+	}
+	
+	.navbar-input {
+		margin-left: auto; /* Push the input section to the right */
+		display: flex;
+		align-items: center; /* Ensure vertical alignment matches the h3 */
+	}
+
+
+	
 	
 	

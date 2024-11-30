@@ -1,11 +1,28 @@
 function togglePayslip(tabOption){
     const payrollTab = document.querySelector('.table-container');
     const payslipTab = document.querySelector('.payslip-container');
+    const createPayslipBtn = document.getElementById('createPayslipBtn');
+    const sendBtn = document.getElementById('sendBtn');
+    const allowanceBtn = document.getElementById('allowance');
+    const cancelBtn = document.getElementById('cancelBtn');
 
     if(tabOption === 'payslip'){
+        createPayslipBtn.style.display = 'none';
+        allowanceBtn.style.display = 'none'
+        sendBtn.style.display = 'inline-block';
+        cancelBtn.style.display = 'inline-block';
+
         payrollTab.style.display = 'none';
         payslipTab.style.display = 'flex';
     } else if (tabOption === 'payroll'){
+        payrollTab.style.display = 'block';
+        payslipTab.style.display = 'none';
+    } else if(tabOption === 'cancel'){
+        createPayslipBtn.style.display = 'inline-block';
+        allowanceBtn.style.display = 'inline-block'
+        sendBtn.style.display = 'none';
+        cancelBtn.style.display = 'none';
+
         payrollTab.style.display = 'block';
         payslipTab.style.display = 'none';
     }

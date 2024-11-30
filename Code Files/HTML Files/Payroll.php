@@ -118,7 +118,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS Files/Payroll.css?v=1.7">
-    <script src="../JS Files/Payroll.js?v=1.3"></script>
+    <script src="../JS Files/Payroll.js?v=1.4"></script>
     <title>PAYROLL</title>
 </head>
 <body>
@@ -127,8 +127,9 @@
             <h3>PAYROLL</h3>
             <div class="left">  
                 <div class="payroll-btn">
-                    <button onclick="togglePayslip('payslip')">Create Payslip</button>
-                    <button onclick="printTable()">Print Table</button>
+                    <button id="createPayslipBtn"  onclick="togglePayslip('payslip')">Create Payslip</button>
+                    <button id="sendBtn" style="display: none;">Send</button>
+                    <button onclick="printTable()">Print Table</button>                
                     
                 </div>              
             </div>
@@ -141,7 +142,8 @@
                 </div>
                 
                 <div class="low-right">
-                    <input type="text" id="allowance" placeholder="ALLOWANCE">                
+                    <input type="text" id="allowance" placeholder="ALLOWANCE">
+                                  
                     <select>
                         <option value="" disabled selected>Hub</option>
                         <option value="hub1">Lower</option>
@@ -149,6 +151,7 @@
                         <option value="hub3">East</option>
                         <option value="hub3">West</option>
                     </select>
+                    <input type="button" value="CANCEL" id="cancelBtn" style="display: none;" onclick="togglePayslip('cancel')">  
                 </div>
             </div>
 
@@ -314,10 +317,6 @@
                 
             </div>
 
-        </div>
-        <div class="right-payslip-btn">
-            <button>PRINT</button>
-            <button>SEND</button>
         </div>
     </div>
 

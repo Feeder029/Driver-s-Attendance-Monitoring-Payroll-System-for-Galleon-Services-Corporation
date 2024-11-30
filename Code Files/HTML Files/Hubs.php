@@ -38,8 +38,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS Files/Hubs.css?v=1.3">
-    <script src="../JS Files/Hubs.js?v=1.1"></script>
+    <link rel="stylesheet" href="../CSS Files/Hubs.css?v=1.4">
+    <script src="../JS Files/Hubs.js?v=1.2"></script>
         <!--JQuery-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>HUBS</title>
@@ -155,14 +155,28 @@
             }
         }
         ?>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+
+        <form  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <input type="hidden" name="hub_id" value="<?php echo htmlspecialchars($hub_id); ?>">
-            <input type="text" name="name" value="<?php echo htmlspecialchars($hub_me); ?>" placeholder="Hub Name">
-            <input type="text" name="barangay" value="<?php echo htmlspecialchars($HADD_Barangay); ?>" placeholder="Hub Barangay">
-            <input type="text" name="city" value="<?php echo htmlspecialchars($HADD_City); ?>" placeholder="Hub City">
-            <input type="text" name="province" value="<?php echo htmlspecialchars($HADD_Province); ?>" placeholder="Hub Province">
-            <input type="text" name="zipcode" value="<?php echo htmlspecialchars($HADD_ZipCode); ?>" placeholder="Hub ZipCode">
-            <input type="text" name="rate" value="<?php echo htmlspecialchars($HUBR_Rate); ?>" placeholder="Hub Rate">
+        
+            <label for="hub-name">Hub Name:</label>
+            <input type="text" id="hub-name" name="name" value="<?php echo htmlspecialchars($hub_Name); ?>"placeholder="Hub Name">
+        
+            <label for="hub-barangay">Hub Barangay:</label>
+            <input type="text" id="hub-barangay" name="barangay" value="<?php echo htmlspecialchars($HADD_Barangay); ?>" placeholder="Hub Barangay">
+        
+            <label for="hub-city">Hub City:</label>
+            <input type="text" id="hub-city" name="city" value="<?php echo htmlspecialchars($HADD_City); ?>" placeholder="Hub City">
+        
+            <label for="hub-province">Hub Province:</label>
+            <input type="text" id="hub-province" name="province" value="<?php echo htmlspecialchars($HADD_Province); ?>" placeholder="Hub Province">
+        
+            <label for="hub-zipcode">Hub ZipCode:</label>
+            <input type="text" id="hub-zipcode" name="zipcode" value="<?php echo htmlspecialchars($HADD_ZipCode); ?>" placeholder="Hub ZipCode">
+        
+            <label for="hub-rate">Hub Rate:</label>
+            <input type="text" id="hub-rate" name="rate" value="<?php echo htmlspecialchars($HUBR_Rate); ?>" placeholder="Hub Rate">
+        
             <button type="submit" name="update_hub">Update</button>
             <button type="submit" name="close_popover">Close</button>
         </form>
@@ -187,10 +201,11 @@
                 $rate = filter_input(INPUT_POST, 'rate', FILTER_SANITIZE_SPECIAL_CHARS);
         
                 $sql = "UPDATE hub_rate r
-                        JOIN hub d ON r.HUBR_HubID = d.hub_
-                        JOIN hub_address a ON d.hub_essID = a.HADD_ID
-                        SET d.hub_Name = ?, a.HADD_Barangay = ?, a.HADD_City = ?, a.HADD_Province = ?, a.HADD_ZipCode = ?, r.HUBR_Rate = ?
-                        WHERE r.HUBR_ID = ?";
+               JOIN hub d ON r.HUBR_HubID = d.Hub_ID
+               JOIN hub_address a ON d.hub_AddressID = a.HADD_ID
+               SET d.hub_Name = ?, a.HADD_Barangay = ?, a.HADD_City = ?, a.HADD_Province = ?, a.HADD_ZipCode = ?, r.HUBR_Rate = ?
+               WHERE r.HUBR_ID = ?";
+            
                 if ($stmt = mysqli_prepare($conn, $sql)) {
                     mysqli_stmt_bind_param($stmt, 'ssssssi', $name, $barangay, $city, $province, $zipcode, $rate, $hub_id);
                     if (mysqli_stmt_execute($stmt)) {

@@ -64,19 +64,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS Files/Delivery.css?v=1.3">
-    <script src="../JS Files/Delivery.js?v=1.2"></script>
+    <link rel="stylesheet" href="../CSS Files/Delivery.css?v=1.4">
+    <script src="../JS Files/Delivery.js?v=1.5"></script>
     <title>DELIVERY</title>
 </head>
-<body style="background-color: rgb(217, 255, 0);">
 <div class="navbar">
         <nav>
             
             <h3>Delivery</h3>
 
             <div class="navbar-input">
-               
-
                 <div class="pay">
                     <label for="deliveryperiod">DELIVERY PERIOD: </label>
                     <input type="date" name="deliveryperiod1" id="deliveryperiod1">
@@ -86,35 +83,29 @@
 
                 <div class="search-bar">
                     <i class='bx bx-search'></i>
-                    <input type="search" name="search" id="search" placeholder="Search" > 
-                    
+                    <input type="search" name="search" id="search" placeholder="Search">
+
                     <div class="dropdown-category">
-                        <div class="selected" data-default="Driver" data-one="Hub" data-two="Date">
+                        <div class="selected" data-default="Driver" data-one="Hub">
                           <svg height="1em" viewBox="0 0 512 512" class="arrow">
-                            <path
-                              d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
-                            ></path>
+                            <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path>
                           </svg>
                         </div>
                         <div class="options">
                             <div title="dd-driver">
-                                <input id="dd-driver" name="option" type="radio" checked="" />
+                                <input id="dd-driver" name="option" type="radio" checked="">
                                 <label class="option" for="dd-driver" data-txt="Driver"></label>
                             </div>
                             <div title="dd-hub">
-                                <input id="dd-hub" name="option" type="radio" />
+                                <input id="dd-hub" name="option" type="radio">
                                 <label class="option" for="dd-hub" data-txt="Hub"></label>
                             </div>
-                            <div title="dd-date">
-                                <input id="dd-date" name="option" type="radio" />
-                                <label class="option" for="dd-date" data-txt="Date"></label>
-                            </div>
                         </div>
+                    </div>
                 </div>
-
-                
-
-                </div>     
+            </div>
+        </nav>
+    </div>
         </nav>
     </div>
 
@@ -204,6 +195,18 @@
                                     </div>
                                 </div>
                             </div>
+                                        <div class='hub-right'>
+                            <!-- Added chart content -->
+                           <h2 class='chart-heading'>Hub Status</h2>
+                           <div class='programming-stats'>
+                           <div class='chart-container'>
+                           <canvas class='my-chart'></canvas>
+                          </div>
+                          <div class='details'>
+                         <ul></ul>
+                         </div>
+                         </div>
+                         </div>
                         </div>
                     ";
                 }
@@ -218,4 +221,59 @@
 
     
 </body>
+
+<script>
+            document.addEventListener("DOMContentLoaded", () => {
+            // Get the data from the parcel sections
+            const parcelCarried = parseInt(document.querySelector("#parcel-carried h1").textContent, 10);
+            const parcelDelivered = parseInt(document.querySelector("#parcel-delivered h1").textContent, 10);
+            const parcelReturned = parseInt(document.querySelector("#parcel-returned h1").textContent, 10);
+
+            // Prepare chart data
+            const chartData = {
+                labels: ["Parcel Carried", "Parcel Delivered", "Parcel Returned"],
+                data: [parcelCarried, parcelDelivered, parcelReturned],
+            };
+
+            // Get the chart canvas
+            const myChart = document.querySelector(".my-chart");
+            const ul = document.querySelector(".programming-stats .details ul");
+
+            // Create and render the chart
+            new Chart(myChart, {
+                type: "doughnut",
+                data: {
+                labels: chartData.labels,
+                datasets: [
+                    {
+                    label: "Status: ",
+                    data: chartData.data,
+                    },
+                ],
+                },
+                options: {
+                borderWidth: 10,
+                borderRadius: 2,
+                hoverBorderWidth: 0,
+                plugins: {
+                    legend: {
+                    display: false,
+                    },
+                },
+                },
+            });
+
+            // Populate the details list
+            const populateUl = () => {
+                chartData.labels.forEach((label, i) => {
+                let li = document.createElement("li");
+                li.innerHTML = `${label}: <span class='percentage'>${chartData.data[i]}</span>`;
+                ul.appendChild(li);
+                });
+            };
+
+            populateUl();
+            });
+
+    </script>
 </html>

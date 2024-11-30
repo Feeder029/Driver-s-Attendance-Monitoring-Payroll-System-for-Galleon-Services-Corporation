@@ -34,11 +34,15 @@
  */
 $(function () {
     // Populate provinces dropdown on page load
-    const provinceDropdown = $('#province');
+    const provinceDropdown = $('#updateprovince');
     const provinceUrl = '../Dropdown-Json/ph-json/province.json';
-    const selectedProvince = $('#province-text').val();
+    const selectedProvince = $('#updateprovince-text').val();
+
+    console.log("Selected Province on load:", selectedProvince);
 
     $.getJSON(provinceUrl, function (data) {
+        console.log("Provinces JSON loaded:", data);
+
         provinceDropdown.empty();
         provinceDropdown.append('<option disabled>Select a Province</option>');
         $.each(data, function (_, entry) {
@@ -50,7 +54,12 @@ $(function () {
         });
 
         // If there's a selected province, trigger change to load its cities
-        if (selectedProvince) provinceDropdown.trigger('change');
+        if (selectedProvince) {
+            console.log("Triggering change for selected province:", selectedProvince);
+            provinceDropdown.trigger('change');
+        }
+    }).fail(function () {
+        console.error("Error loading provinces JSON.");
     });
 
     // Province change handler
@@ -58,16 +67,22 @@ $(function () {
         const provinceCode = $(this).val();
         const provinceText = $(this).find('option:selected').text();
 
+        console.log("Province selected:", provinceText, "Code:", provinceCode);
+
         // Update hidden input for province
-        $('#province-text').val(provinceText);
+        $('#updateprovince-text').val(provinceText);
 
         // Reset and populate cities
-        const cityDropdown = $('#city');
+        const cityDropdown = $('#updatecity');
         const cityUrl = '../Dropdown-Json/ph-json/city.json';
-        const selectedCity = $('#city-text').val();
+        const selectedCity = $('#updatecity-text').val();
+
+        console.log("Selected City:", selectedCity);
 
         cityDropdown.empty().append('<option disabled>Loading cities...</option>');
         $.getJSON(cityUrl, function (data) {
+            console.log("Cities JSON loaded:", data);
+
             const filteredCities = data.filter((city) => city.province_code === provinceCode);
             cityDropdown.empty().append('<option disabled>Select a City/Municipality</option>');
             $.each(filteredCities, function (_, city) {
@@ -79,28 +94,37 @@ $(function () {
             });
 
             // If there's a selected city, trigger change to load its barangays
-            if (selectedCity) cityDropdown.trigger('change');
+            if (selectedCity) {
+                console.log("Triggering change for selected city:", selectedCity);
+                cityDropdown.trigger('change');
+            }
+        }).fail(function () {
+            console.error("Error loading cities JSON.");
         });
 
         // Reset barangays
-        $('#barangay').empty().append('<option disabled>Select a Barangay</option>');
+        $('#updatebarangay').empty().append('<option disabled>Select a Barangay</option>');
     });
 
     // City change handler
-    $('#city').on('change', function () {
+    $('#updatecity').on('change', function () {
         const cityCode = $(this).val();
         const cityText = $(this).find('option:selected').text();
 
+        console.log("City selected:", cityText, "Code:", cityCode);
+
         // Update hidden input for city
-        $('#city-text').val(cityText);
+        $('#updatecity-text').val(cityText);
 
         // Reset and populate barangays
-        const barangayDropdown = $('#barangay');
+        const barangayDropdown = $('#updatebarangay');
         const barangayUrl = '../Dropdown-Json/ph-json/barangay.json';
-        const selectedBarangay = $('#barangay-text').val();
+        const selectedBarangay = $('#updatebarangay-text').val();
 
         barangayDropdown.empty().append('<option disabled>Loading barangays...</option>');
         $.getJSON(barangayUrl, function (data) {
+            console.log("Barangays JSON loaded:", data);
+
             const filteredBarangays = data.filter((brgy) => brgy.city_code === cityCode);
             barangayDropdown.empty().append('<option disabled>Select a Barangay</option>');
             $.each(filteredBarangays, function (_, brgy) {
@@ -110,16 +134,18 @@ $(function () {
                     }>${brgy.brgy_name}</option>`
                 );
             });
+        }).fail(function () {
+            console.error("Error loading barangays JSON.");
         });
     });
 
     // Barangay change handler
-    $('#barangay').on('change', function () {
+    $('#updatebarangay').on('change', function () {
         const barangayText = $(this).find('option:selected').text();
 
+        console.log("Barangay selected:", barangayText);
+
         // Update hidden input for barangay
-        $('#barangay-text').val(barangayText);
+        $('#updatebarangay-text').val(barangayText);
     });
 });
-
-

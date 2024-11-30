@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Submit Attendance</title>
-  <link rel="stylesheet" href="../CSS Files/SUBMIT-ATTENDANCE.CSS"> <!-- Link to your CSS file -->
+  <link rel="stylesheet" href="../CSS Files/SUBMIT-ATTENDANCE.CSS?v=1.1"> <!-- Link to your CSS file -->
 </head>
 <body>
   
@@ -25,11 +25,11 @@
       <div id="parcel-info-section">
         <h3>Parcel Information</h3>
         <label for="parcel-carried">Parcel Carried:</label>
-        <input type="text" id="parcel-carried" name="parcel-carried" <?php echo $disableInput ? 'disabled value="' . $Attendance["PC"] . '"' : ''; ?> required>
+        <input type="number" id="parcel-carried" name="parcel-carried" <?php echo $disableInput ? 'disabled value="' . $Attendance["PC"] . '"' : ''; ?> required>
         <label for="parcel-delivered">Parcel Delivered:</label>
-        <input type="text" id="parcel-delivered" name="parcel-delivered" <?php echo $disableInput ? 'disabled value="' . $Attendance["PD"] . '"' : ''; ?> required>
+        <input type="number" id="parcel-delivered" name="parcel-delivered" <?php echo $disableInput ? 'disabled value="' . $Attendance["PD"] . '"' : ''; ?> required>
         <label for="parcel-returned">Parcel Returned:</label>
-        <input type="text" id="parcel-returned" name="parcel-returned" <?php echo $disableInput ? 'disabled value="' . $Attendance["PR"] . '"' : ''; ?> required>
+        <input type="number" id="parcel-returned" name="parcel-returned" <?php echo $disableInput ? 'disabled value="' . $Attendance["PR"] . '"' : ''; ?> required>
       </div>
 
       <div id="remittance-image-section">

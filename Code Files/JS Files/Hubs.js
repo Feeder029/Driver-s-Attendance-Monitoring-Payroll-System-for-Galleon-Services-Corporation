@@ -115,3 +115,41 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 });
 
+
+document.addEventListener("DOMContentLoaded", () => {
+    const popoverContainer = document.querySelector(".popover-container");
+
+    window.editRow = function (button) {
+        // Get the row of the clicked button
+        const row = button.closest("tr");
+
+        // Get the data from the row
+        const hubId = row.cells[0].textContent.trim();
+        const hubName = row.cells[1].textContent.trim();
+        const hubAddress = row.cells[2].textContent.trim();
+        const [barangay, city, province, zipcode] = hubAddress.split(",").map(item => item.trim());
+        const rate = row.cells[3].textContent.trim();
+
+        // Populate the form fields in the popover-container
+        popoverContainer.querySelector('input[name="hub_id"]').value = hubId;
+        popoverContainer.querySelector('input[name="name"]').value = hubName;
+        popoverContainer.querySelector('input[name="barangay"]').value = barangay;
+        popoverContainer.querySelector('input[name="city"]').value = city;
+        popoverContainer.querySelector('input[name="province"]').value = province;
+        popoverContainer.querySelector('input[name="zipcode"]').value = zipcode;
+        popoverContainer.querySelector('input[name="rate"]').value = rate;
+
+        // Display the popover-container
+        popoverContainer.style.display = "block";
+    };
+
+    // Close popover functionality
+    const closeButton = popoverContainer.querySelector('button[name="close_popover"]');
+    closeButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        popoverContainer.style.display = "none";
+    });
+});
+
+
+

@@ -2,7 +2,7 @@
 
 
 body{
-    background-color:#7e83bf;
+    background-color:#464866;
     overflow-x: hidden;
 }
 
@@ -14,20 +14,22 @@ html{
     overflow: visible;
 }
 .navbar {
-    background-color: rgba(0, 5, 151, 0.316);
+    background-color: #25274D;
     backdrop-filter: blur(10px);
-    padding: 1px;
+    padding: 1px 0 20px 0;
     border-radius: 10px;
+    border: 2px solid #29648A;
     z-index: 1000;
+    
 }
 
-.navbar-input{
+.navbar-input {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end; /* Aligns items to the right */
 }
 
 .navbar h3{
-    color: black;
+    color: #F9F4EF;
     font-size: 40px;
     font-family: 'Poppins','sans-serif';
     padding-left: 30px;
@@ -43,9 +45,8 @@ html{
 
 .search-bar{
     padding: 5px;
-    right: -68%;
     border-radius: 15px;
-    margin: -75px 50px 30px 0;
+    margin: -125px 50px -90px 0;
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -53,52 +54,46 @@ html{
     line-height: 28px;
     z-index: 100;
     padding-top: 10px;
+    width: 20%;
 }
 
-.search-bar input{
+    
+
+.search-bar input {
     flex-grow: 1;
-    font-size: 19px;
-    width: 100%;
-    height: 100%;
-    padding-left: 2rem;
-    padding-right: 5.5rem;
-    box-shadow: 0 0 0 1.5px #2b2c37, 0 0 25px -17px #000;
+    font-size: 18px;
+    width: 80%;
+    height: 40px;
+    padding-left: 1.5rem;
+    padding-right: 4rem;
+    box-shadow: 0 0 0 1.5px #5C6A8A, 0 0 10px rgba(0, 0, 0, 0.1); 
     border: 0;
     border-radius: 12px;
-    background-color:#7e83bf;
+    background-color: #3E4E6C; 
     outline: none;
-    color: black;
+    color: #D1DAF2; 
     transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1);
     cursor: text;
     margin-right: 5px;
-   
 }
 
-.search-bar input::placeholder{
-    color: black;
+.search-bar input::placeholder {
+    color: rgba(209, 218, 242, 0.7); 
 }
 
-.search-bar input:hover{
-    box-shadow: 0 0 0 2.5px #2f303d, 0px 0px 25px -15px #000;
+.search-bar input:hover {
+    box-shadow: 0 0 0 2.5px #5C6A8A, 0 0 15px rgba(92, 106, 138, 0.4); 
 }
-
-/* .search-bar input:active{
-    transform: scale(0.95);
-}
-
-.search-bar .bx-search:active{
-    transform: scale(0.95);
-} */
 
 .search-bar input:focus {
-    box-shadow: 0 0 0 2.5px #2f303d;
-  }
+    box-shadow: 0 0 0 2.5px #5C6A8A; 
+}
 
-.search-bar .bx-search{
+.search-bar .bx-search {
     position: absolute;
     left: .5rem;
     font-size: 1.5rem;
-    color: #ffffff;
+    color: #D1DAF2; 
     pointer-events: none;
     z-index: 1;
 }
@@ -115,7 +110,7 @@ html{
     transition: 300ms;
     color: white;
     overflow: hidden;
-    margin: 0 0 -127px -85px;
+    margin: -38px 0 -127px -85px;
     z-index: 100;
 }
 
@@ -210,6 +205,7 @@ html{
 }
 
 
+
 .table-container{
     margin-top: 20px;
     max-height: 6in;
@@ -226,11 +222,12 @@ html{
 }
 
 tr, td{
-    background-color: #383f85;
+    background-color: #30344A; 
     color:white;
     padding: 30px 10px;
     margin-bottom: 10px;
     border-radius: 15px;
+    border: 2px solid #5A5F7D;
     z-index: 10;
 }
 
@@ -294,12 +291,12 @@ tr, td{
 
 .td-btn button{
     display: inline-block;
-    padding: 7px; 
+    padding: 10px; 
     border: none;
     cursor: pointer;
     font-weight: bold;
     color: whitesmoke;
-    margin-right: -10px;
+    margin-right: -15px;
 }
 .td-btn button:hover {
     background-color: red;
@@ -309,14 +306,54 @@ tr, td{
 
 #view-btn{
     background-color: #967d38;
+    border-radius: 10px;
 }
 
-.pay{
+.pay {
     display: flex;
-    position: absolute;
-    left: 60%;
-    top: 15%;
+    flex-direction: row; 
+    justify-content: space-between; 
+    align-items: center; 
+    position: fixed; 
+    top: 15%; 
+    right: 55px; 
+    color: #D1DAF2;
+    background-color: #3E4E6C; 
+    border-radius: 15px;
+    padding: 8px 15px; 
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    transition: all 0.3s ease-in-out;
+}
 
+.pay label {
+    color: #D1DAF2;
+    font-size: 14px; 
+    margin-right: 5px; 
+}
+
+.pay input[type="date"] {
+    width: 100px; 
+    padding: 5px; 
+    margin: 0 3px; 
+    border: 1px solid #5C6A8A; 
+    border-radius: 8px; 
+    background-color: #2C3A5D; 
+    color: #D1DAF2; 
+    font-size: 14px; 
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.pay input[type="date"]:hover {
+    border-color: #4F6286; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
+}
+
+.pay input[type="date"]:focus {
+    border-color: #6B3F20; 
+    box-shadow: 0 0 5px rgba(107, 63, 32, 0.5); 
 }
 
 .modal {
@@ -358,18 +395,41 @@ tr, td{
 }
 
 
-.hub-container{
+.hub-container {
+    display: flex; /* Aligns the children side by side */
+    justify-content: space-between; /* Ensures there is space between .hub-left and .hub-right */
+    align-items: flex-start; /* Aligns items at the start */
     margin-top: 20px;
     max-height: 8in;
     overflow-y: auto;
-    position:static;
+    position: static;
     z-index: 1;
-    border: 2px solid;
+    background-color: #30344A; 
+    border: 2px solid #5A5F7D;
+    border-radius: 10px;
     padding: 20px;
+}
+
+.hub-left, .hub-right {
+    flex: 1; /* Ensures each section takes up equal space */
+    margin-right: 20px; /* Adds space between the sections */
+}
+
+.hub-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center-aligns contents of the right section */
 }
 
 .hub-left h1{
     font-size: 50px;
+    color: white;
+    margin-top: auto;
+}
+
+.hub-right h2{
+    color: white;
+    margin-top: auto;
 }
 
 
@@ -378,11 +438,92 @@ tr, td{
     flex-direction: row;
     gap: 20px;
     text-align: center;
+    margin-left: 100px;
+    border-radius: 20px;
     
+}
+
+.parcel-count h1{
+    font-size: 50px;
+    margin: 20px 0 20px 0;
 }
 
 
 .parcel{
-    border: 1px solid;
+    border: 3.5px solid;
     padding: 30px;
+    background-color: #3E4E6C; 
+    height: 180px;
+    width: 220px;
+    border-radius: 20px;
 }
+
+.parcel:hover {
+    transform: scale(1.05);
+}
+
+#HubSection{
+    color: white;
+    border-radius: 20px;
+}
+
+
+.chart-heading {
+    font-family: "Rubik", sans-serif;
+    color: #023047;
+    text-transform: uppercase;
+    font-size: 24px;
+    text-align: center;
+  }
+  
+  .chart-container {
+    width: 250px; /* Increase the width */
+    height: 250px; /* Add height */
+    background-color: #ffffff; /* Set desired background color */
+    padding: 16px; /* Optional padding for spacing */
+    border-radius: 10px; /* Optional for rounded corners */
+}
+
+.my-chart {
+    background-color: #ffffff; /* Set desired background color for the canvas */
+    width: 100%; /* Make sure it stretches to the container's full width */
+    height: 100%; /* Make sure it stretches to the container's full height */
+}
+
+  
+  .programming-stats {
+    font-family: "Rubik", sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 0 auto;
+    width: fit-content;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    padding: 8px 32px;
+    color: #023047;
+    transition: all 400ms ease;
+    background-color: #ffffff;
+  }
+  
+  .programming-stats:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 16px -7px rgba(0, 0, 0, 0.3);
+  }
+  
+  .programming-stats .details ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .programming-stats .details ul li {
+    font-size: 18px;
+    margin: 12px 0;
+    text-transform: uppercase;
+  }
+  
+  .programming-stats .details .percentage {
+    font-weight: 700;
+    color: #e63946;
+  }
+  

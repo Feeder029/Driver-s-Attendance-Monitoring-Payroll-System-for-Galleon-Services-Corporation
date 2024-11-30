@@ -125,10 +125,12 @@
     <div class="navbar">
         <nav>
             <h3>PAYROLL</h3>
-            <div class="left">
-               
-
-                
+            <div class="left">  
+                <div class="payroll-btn">
+                    <button onclick="togglePayslip('payslip')">Create Payslip</button>
+                    <button onclick="printTable()">Print Table</button>
+                    
+                </div>              
             </div>
             <div class="right">
                 <div class="pay">
@@ -140,7 +142,13 @@
                 
                 <div class="low-right">
                     <input type="text" id="allowance" placeholder="ALLOWANCE">                
-                    <input type="text" id="hub" placeholder="HUB">
+                    <select>
+                        <option value="" disabled selected>Hub</option>
+                        <option value="hub1">Lower</option>
+                        <option value="hub2">Upper</option>
+                        <option value="hub3">East</option>
+                        <option value="hub3">West</option>
+                    </select>
                 </div>
             </div>
 
@@ -313,12 +321,5 @@
         </div>
     </div>
 
-
-
-    <div class="payroll-btn">
-    
-        <button onclick="printTable()">Print Table</button>
-        <button onclick="togglePayslip('payslip')">Create Payslip</button>
-    </div>
 </body>
 </html>

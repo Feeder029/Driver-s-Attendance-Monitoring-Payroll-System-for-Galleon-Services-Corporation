@@ -20,6 +20,7 @@ html{
     border-radius: 10px;
     border: 2px solid #29648A;
     z-index: 1000;
+    height: 150px;
 }
 
 
@@ -82,8 +83,9 @@ tr:hover {
 
 .left{
     position: fixed;
-    top: 70%;
+    top: 60%;
     left: 2%;
+    width: 350px;
 }
 
 .right{
@@ -176,16 +178,39 @@ tr:hover {
     box-shadow: 0 0 5px rgba(107, 63, 32, 0.5); 
 }
 
+.payroll-btn{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
 .payroll-btn button{
-    background-color: rgba(0, 5, 151, 0.316);
-    gap: 10px;
-    font-size: 30px;
-    position:relative;
-    border-radius: 10px;
-    float: right;
-    padding: 15px;
-    margin-top: 300px;
-    margin-left: 10px;
+    width: 130px; /* Smaller width */
+    height: 45px; /* Smaller height */
+    background-color: #3E4E6C; /* Muted slate blue for a complementary feel */
+    border: 2px solid #6C79A3; /* Slightly thicker border for emphasis */
+    border-radius: 10px; /* Rounded corners */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 
+        background-color 0.4s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        color 0.3s ease;
+    font-size: 16px; /* Smaller font size for better proportion */
+    font-weight: bold;
+    color: #FFFFFF; /* Bright white for text contrast */
+    padding: 8px; /* Reduced padding for a more compact button */
+}
+
+.payroll-btn button:hover{
+    background-color: #7079A8; /* A slightly brighter slate blue on hover */
+    box-shadow: 0 4px 12px rgba(112, 121, 168, 0.2); /* Reduced shadow effect */
+    transform: translateY(-2px) scale(1.05); /* Subtle hover animation */
+    color: #F5F5F5; /* Softer white for hover contrast */
 }
 
 .table-container, .payslip-container{
@@ -337,4 +362,21 @@ tr:hover {
 
 #divider{
     margin: 15px 0 25px 0;
+}
+
+.low-right select {
+    padding: 10px;
+    font-size: 14px;
+    background-color: #3E4E6C;
+    color: #D1DAF2;
+    width: 200px; 
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 2px solid #6C79A3;
+    margin-left: -20px;
+}
+
+.low-right ::placeholder{
+    color: #D1DAF2;
 }

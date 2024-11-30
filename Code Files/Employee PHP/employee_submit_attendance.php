@@ -116,13 +116,119 @@ function SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $fi
         $stmt2->bind_param("ii", $DriverID, $deliveryID); // Corrected binding
         if (!$stmt2->execute()) {
             throw new Exception("Error inserting into attendance: " . $stmt2->error);
-        }
+        }   
+        $ID = $conn->insert_id;
 
         $conn->commit();
         echo "Attendance submitted successfully.";
     } catch (Exception $e) {
         $conn->rollback();
         echo "Transaction error: " . $e->getMessage();
+    }
+
+    $SelectDatas = "SELECT
+    a.`ATT_ID`, 
+    a.`ATT_DriverID`, 
+    a.`ATT_DeliveryID`, 
+    a.`ATT_SubmitTime`, 
+    b.`ADT_ID`, 
+    b.`ATT_Date`, 
+    DATE_FORMAT(b.`ATT_Date`, '%m %Y') AS MonthYear,
+    c.`AS_Status`, 
+    b.`DT_ID` AS DayID, 
+    d.`Day_Type`,
+    DATE_FORMAT(DATE(b.`ATT_Date`), '%Y-%m-01') AS StartOfMonth,
+    LAST_DAY(b.`ATT_Date`) AS EndOfMonth
+    FROM 
+    attendance a
+    JOIN
+    attendance_date_type b ON a.`ADT_ID` = b.`ADT_ID`
+    JOIN
+    attendance_status c ON a.`ATT_StatusID` = c.`AS_ID`
+    JOIN
+    day_type d ON b.`DT_ID` = d.`DT_ID`
+    WHERE a.`ATT_ID` = $ID;";
+
+    $result = $conn->query($SelectDatas);   
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()){
+            $START = $row['StartOfMonth'];
+            $END = $row['EndOfMonth'];
+
+
+            $Summary = "SELECT `ASUM_ID`, `ASUM_DriverID`, `ASUM_DateStart`, `ASUM_DateEnd` 
+            FROM `attendance_summary` 
+            WHERE ASUM_DriverID=$DriverID 
+            AND ASUM_DateStart= '$START'";
+            
+            $resultSummary = $conn->query($Summary);   
+            if ($resultSummary && $resultSummary->num_rows > 0) {
+                $updateSTMT = "";
+                echo "STOP";
+                switch ($row['DayID']){
+                    case 1:
+                    $updateSTMT = "UPDATE `attendance_summary` 
+                    SET `ASUM_RegularDay`=`ASUM_RegularDay`+1,`ASUM_OverallAttendance`=`ASUM_OverallAttendance`+1
+                    WHERE `ASUM_DriverID`=? AND ASUM_DateStart= ?"; 
+                    $Updatestmt = $conn->prepare($updateSTMT);
+                    $Updatestmt->bind_param("is",$DriverID,$row['StartOfMonth']);      
+                    if (!$Updatestmt->execute()) {
+                        throw new Exception("Error inserting into attendance: " . $stmt2->error);
+                    }      
+                    break;
+                    case 2:
+                    $updateSTMT = "UPDATE `attendance_summary` 
+                    SET `ASUM_RegularHoliday`=`ASUM_RegularHoliday`+1,`ASUM_OverallAttendance`=`ASUM_OverallAttendance`+1
+                    WHERE `ASUM_DriverID`=? AND ASUM_DateStart= ?";
+                    $Updatestmt = $conn->prepare($updateSTMT);
+                    $Updatestmt->bind_param("is",$DriverID,$row['StartOfMonth']);      
+                    if (!$Updatestmt->execute()) {
+                        throw new Exception("Error inserting into attendance: " . $stmt2->error);
+                    }  
+                    break;
+                    case 3:
+                    $updateSTMT = "UPDATE `attendance_summary`  
+                    SET `ASUM_SpecialHoliday`=`ASUM_SpecialHoliday`+1,`ASUM_OverallAttendance`=`ASUM_OverallAttendance`+1
+                    WHERE `ASUM_DriverID`=? AND ASUM_DateStart= ?";  
+                    $Updatestmt = $conn->prepare($updateSTMT);
+                    $Updatestmt->bind_param("is",$DriverID,$row['StartOfMonth']);      
+                    if (!$Updatestmt->execute()) {
+                        throw new Exception("Error inserting into attendance: " . $stmt2->error);
+                    }                   
+                    break;
+                };
+            } else {
+                echo "GOOD";
+                $Regular = 0;
+                $Special = 0;
+                $RegularHol = 0;
+    
+                $row['DayID'];
+    
+                switch ($row['DayID']){
+                    case 1:
+                    $Regular = 1;                  
+                    break;
+                    case 2:
+                    $RegularHol = 1;
+                    break;
+                    case 3:
+                    $Special = 1;                   
+                    break;
+                };
+    
+                $Total = 1;
+    
+                $SummarySQL = "INSERT INTO `attendance_summary`
+                (`ASUM_DriverID`, `ASUM_RegularDay`, `ASUM_SpecialHoliday`, `ASUM_RegularHoliday`, `ASUM_OverallAttendance`, `ASUM_DateStart`, `ASUM_DateEnd`) 
+                VALUES (?,?,?,?,?,?,?)";
+                $Summarystmt = $conn->prepare($SummarySQL);
+                $Summarystmt->bind_param("iiiiiss",$DriverID,$Regular,$Special,$RegularHol,$Total,$row['StartOfMonth'],$row['EndOfMonth']); 
+                if (!$Summarystmt->execute()) {
+                    throw new Exception("Error inserting into attendance: " . $stmt2->error);
+                } 
+            }
+        }
     }
 }
 ?>

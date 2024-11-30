@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($user == $DRVACC[$i]["Username"] && $pass == $DRVACC[$i]["Password"]) {
             if ($DRVACC[$i]["Status"] == "Active") {
                 $_SESSION['DVID'] = $DRVACC[$i]["ID"];
-                header("Location: ../Employee PHP/EMP_INDEX.PHP");
+                header(header: "Location: ../Employee PHP/EMP_INDEX.PHP");
                 exit();
             } elseif ($DRVACC[$i]["Status"] == "Inactive") {
                 header("Location: ../LoginSignup/employeelogin.php?error=inactive");

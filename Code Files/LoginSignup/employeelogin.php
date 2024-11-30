@@ -361,7 +361,7 @@ require "HubandType.php";
         </form>
 
     <!-- JS -->
-    <script src="employee.js?v=1.5"></script>
+    <script src="employee.js?v=1.6"></script>
     <script src="../Dropdown-Json/ph-address-selector.js?v=1.1"></script>
 
 </body>

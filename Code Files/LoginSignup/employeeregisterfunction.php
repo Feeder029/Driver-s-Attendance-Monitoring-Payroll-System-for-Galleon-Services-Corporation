@@ -39,6 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->rollback();
         exit("Transaction error: " . $e->getMessage());
     }
+
+    header("Location: ../LoginSignup/employeelogin.php");
 }
 
 // Initialize Data to the $Result and Returning it to the $Data

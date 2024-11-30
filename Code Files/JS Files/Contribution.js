@@ -96,3 +96,25 @@ window.printTable = function (title = "Table Data") {
         }
     };
 };
+
+function toggleTable(tabOption){
+    const philhealthTab = document.querySelector('.philhealth-table');
+    const pagibigTab = document.querySelector('.pagibig-table');
+    const sssTab = document.querySelector('.sss-table');
+
+    philhealthTab.style.display = 'none';
+    pagibigTab.style.display = 'none';
+    sssTab.style.display = 'none';
+
+    if (tabOption === 'philhealth') {
+        philhealthTab.style.display = 'block';
+    } else if (tabOption === 'pagibig') {
+        pagibigTab.style.display = 'block';
+    } else if (tabOption === 'sss') {
+        sssTab.style.display = 'block';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    togggleTable('philhealth');
+});

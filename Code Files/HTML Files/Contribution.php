@@ -9,13 +9,17 @@
     $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name) or die("Connection failed: " . mysqli_connect_error());
 
     //join query
+
+    //philhealth
     $sql = "
         SELECT
             DATE_FORMAT(NOW(), '%Y-%m-%d') AS date,
             d.DI_ID,
             CONCAT(n.DN_FName, n.DN_MName, n.DN_LName, n.DN_Suffix) AS DRIVER_NAME,
             p.PHI_ERPercent,
-            p.PHI_EEPercent
+            p.PHI_EEPercent,
+            p.PHI_ERPercent + p.PHI_EEPercent AS PHIL_TOT_PER,
+			c.CON_TOTPhilhealthContribution
         FROM
             government_information g
         JOIN
@@ -24,12 +28,34 @@
             driver_name n ON d.DI_NameID = n.DN_ID
         JOIN
             philhealth p ON g.GOV_PhilHealthNo = p.PHI_No
+        LEFT JOIN	
+        	contribution c ON g.GOV_ID = c.CON_GovInfoID
         
     ";
 
-   
+    //pagibig
+    $sql2 = "
+        SELECT
+                DATE_FORMAT(NOW(), '%Y-%m-%d') AS date,
+                d.DI_ID,
+                CONCAT(n.DN_FName, n.DN_MName, n.DN_LName, n.DN_Suffix) AS DRIVER_NAME,
+                p.PBIG_ERPercent,
+                p.PBIG_EEPercent,
+                p.PBIG_ERPercent + p.PBIG_EEPercent AS PBIG_TOT_PER,
+                c.CON_TOTPagibigContribution
+            FROM
+                government_information g
+            JOIN
+                driver_information d ON g.GOV_ID = d.DI_GovInfoID
+            JOIN
+                driver_name n ON d.DI_NameID = n.DN_ID
+            JOIN
+                pagibig p ON g.GOV_PagibigNo = p.PBIG_No
+            LEFT JOIN	
+                contribution c ON g.GOV_ID = c.CON_GovInfoID";
 
         $result = $conn->query($sql); 
+        $result2 = $conn->query($sql2);
     
 ?>
 
@@ -38,8 +64,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS Files/Contribution.css?v=1.3">
-    <script src="../JS Files/Contribution.js"></script>
+    <link rel="stylesheet" href="../CSS Files/Contribution.css?v=1.5">
+    <script src="../JS Files/Contribution.js?v=1.1"></script>
     <title>CONTRIBUTION</title>
 </head>
 <body>
@@ -50,16 +76,16 @@
 
             <div class="navbar-input">
                 <div class="category-btn">
-                    <button onclick="selectCategory('btn-all')" class="btn">
-                        <span>PhilHealth</span>
-                    </button>
-                    <button onclick="selectCategory('btn-active')" class="btn">
-                        <span>Pag-IBIG</span>
-                    </button>
-                    <button onclick="selectCategory('btn-pending')" class="btn">
-                        <span>SSS</span>
-                    </button>
+                    <input type="radio" id="philhealth" name="category" value="philhealth" onclick="toggleTable('philhealth')" />
+                    <label for="philhealth">PhilHealth</label>
+
+                    <input type="radio" id="pagibig" name="category" value="pagibig" onclick="toggleTable('pagibig')" />
+                    <label for="pagibig">Pag-IBIG</label>
+
+                    <input type="radio" id="sss" name="category" value="sss" onclick="toggleTable('sss')" />
+                    <label for="sss">SSS</label>
                 </div>
+
                 
                 <div class="container">
                     <div class="text-box">
@@ -89,33 +115,98 @@
 
 
     <div class="table-container">
-        <table>
-            <tr>
-                <th>DATE</th>
-                <th>DRIVER ID</th>
-                <th>DRIVER NAME</th>
-                <th>EMPLOYEE SHARE</th>
-                <th>EMPLOYER SHARE</th>
-                <th>TOTAL CONTRIBUTION</th>
-            </tr>
-            <?php
-                if ($result && $result->num_rows > 0) {
-                    // Fetch and display each row from the result set
-                    while ($row = $result->fetch_assoc()) {               
-                        echo "
-                            <tr>
-                                <td>". htmlspecialchars($row['date']) . "</td>
-                                <td>". htmlspecialchars($row['DI_ID']) . "</td>
-                                <td>". htmlspecialchars($row['DRIVER_NAME']) . "</td>
-                                <td>". htmlspecialchars($row['PHI_ERPercent']) . "</td>
-                                <td>". htmlspecialchars($row['PHI_EEPercent']) . "</td>
-                                ?
-                            </tr>
-                            ";
+        <div class="philhealth-table">
+
+            <table>
+                <tr>
+                    <th>DATE</th>
+                    <th>DRIVER ID</th>
+                    <th>DRIVER NAME</th>
+                    <th>EMPLOYEE SHARE</th>
+                    <th>EMPLOYER SHARE</th>
+                    <th>TOTAL CONTRIBUTION</th>
+                </tr>
+                <?php
+                    if ($result && $result->num_rows > 0) {
+                        // Fetch and display each row from the result set
+                        while ($row = $result->fetch_assoc()) {               
+                            echo "
+                                <tr>
+                                    <td>". htmlspecialchars($row['date']) . "</td>
+                                    <td>". htmlspecialchars($row['DI_ID']) . "</td>
+                                    <td>". htmlspecialchars($row['DRIVER_NAME']) . "</td>
+                                    <td>". htmlspecialchars($row['PHI_ERPercent']) . "</td>
+                                    <td>". htmlspecialchars($row['PHI_EEPercent']) . "</td>
+                                    <td>". htmlspecialchars($row['CON_TOTPhilhealthContribution']) . "</td>
+                                </tr>
+                                ";
+                        }
                     }
-                }
-                ?>
-        </table>
+                    ?>
+            </table>                  
+        </div>
+
+        <div class="pagibig-table">
+
+            <table>
+                <tr>
+                    <th>DATE</th>
+                    <th>DRIVER ID</th>
+                    <th>DRIVER NAME</th>
+                    <th>EMPLOYEE SHARE</th>
+                    <th>EMPLOYER SHARE</th>
+                    <th>TOTAL CONTRIBUTION</th>
+                </tr>
+                <?php
+                    if ($result2 && $result2->num_rows > 0) {
+                        // Fetch and display each row from the result set
+                        while ($row = $result2->fetch_assoc()) {               
+                            echo "
+                                <tr>
+                                    <td>". htmlspecialchars($row['date']) . "</td>
+                                    <td>". htmlspecialchars($row['DI_ID']) . "</td>
+                                    <td>". htmlspecialchars($row['DRIVER_NAME']) . "</td>
+                                    <td>". htmlspecialchars($row['PBIG_ERPercent']) . "</td>
+                                    <td>". htmlspecialchars($row['PBIG_EEPercent']) . "</td>
+                                    <td>". htmlspecialchars($row['CON_TOTPagibigContribution']) . "</td>
+                                </tr>
+                                ";
+                        }
+                    }
+                    ?>
+            </table>                  
+        </div>
+
+        <div class="sss-table">
+
+            <table>
+                <tr>
+                    <th>DATE</th>
+                    <th>DRIVER ID</th>
+                    <th>DRIVER NAME</th>
+                    <th>EMPLOYEE SHARE</th>
+                    <th>EMPLOYER SHARE</th>
+                    <th>TOTAL CONTRIBUTION</th>
+                </tr>
+                <?php
+                    if ($result && $result->num_rows > 0) {
+                        // Fetch and display each row from the result set
+                        while ($row = $result->fetch_assoc()) {               
+                            echo "
+                                <tr>
+                                    <td>". htmlspecialchars($row['date']) . "</td>
+                                    <td>". htmlspecialchars($row['DI_ID']) . "</td>
+                                    <td>". htmlspecialchars($row['DRIVER_NAME']) . "</td>
+                                    <td>". htmlspecialchars($row['PHI_ERPercent']) . "</td>
+                                    <td>". htmlspecialchars($row['PHI_EEPercent']) . "</td>
+                                    <td>". htmlspecialchars($row['CON_TOTPhilhealthContribution']) . "</td>
+                                </tr>
+                                ";
+                        }
+                    }
+                    ?>
+            </table>                  
+        </div>
     </div>
     
 </body>

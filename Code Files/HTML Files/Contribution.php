@@ -54,8 +54,67 @@
             LEFT JOIN	
                 contribution c ON g.GOV_ID = c.CON_GovInfoID";
 
+        //sss
+        $sql3 = "
+        SELECT
+            DATE_FORMAT(NOW(), '%Y-%m-%d') AS date,
+            di.DI_ID,
+            CONCAT(dn.DN_FName, dn.DN_MName, dn.DN_LName, dn.DN_Suffix) AS DRIVER_NAME,
+            scr.SSSCR_EEPer,
+            scr.SSSCR_ERPer,
+            scr.SSSCR_EEPer + scr.SSSCR_ERPer AS SSS_TotPer,
+            con.CON_SSSContribution
+        FROM
+            government_information gi
+        JOIN
+            driver_information di ON gi.GOV_ID = di.DI_GovInfoID
+        JOIN
+            driver_name dn ON di.DI_NameID = dn.DN_ID
+        LEFT JOIN
+            contribution con ON gi.GOV_ID = con.CON_GovInfoID
+        JOIN
+            sss sss ON gi.GOV_SSSNo = sss.SSS_No
+        JOIN
+            sss_contribution_rate scr ON sss.SSSCR_ID = scr.SSSCR_ID";
+
         $result = $conn->query($sql); 
         $result2 = $conn->query($sql2);
+        $result3 = $conn->query($sql3);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['apply'])) {
+            // Get the percentage value from the input
+            $percentage = $_POST['percentage'];
+        
+            // Validate and sanitize the input
+            if (!is_numeric($percentage) || $percentage < 0 || $percentage > 100) {
+                echo "Invalid percentage value. Please enter a number between 0 and 100.";
+            } else {
+                // Update the database (example: updating the `PHI_ERPercent` in the `philhealth` table)
+                $update_sql = "
+                    UPDATE philhealth
+                    SET PHI_EEPercent = ?, PHI_ERPercent = ?
+                ";
+        
+                $stmt = $conn->prepare($update_sql);
+                if ($stmt) {
+                    // Bind the percentage as a double to both columns
+                    $stmt->bind_param("dd", $percentage, $percentage);
+        
+                    if ($stmt->execute()) {
+                        echo "Percentage updated successfully!";
+                        echo "<script>window.location.href = window.location.href;</script>";
+                        exit;
+                    } else {
+                        echo "Error updating percentage: " . $stmt->error;
+                    }
+        
+                    $stmt->close();
+                } else {
+                    echo "Error preparing the query: " . $conn->error;
+                }
+            }
+        }
+        
     
 ?>
 
@@ -97,8 +156,12 @@
                             <option value="hub3">West</option>
                         </select>
                     <div class="percentage">
-                            <input type="text" placeholder="Percentage">
-                            <button>Apply</button>
+                        <form method="POST">
+                            <input type="text" placeholder="Percentage" name="percentage" required id="philhealth-percentage">
+                            <!-- <input type="text" placeholder="Percentage" name="percentage" required id="pagibig-percentage" style="display: none;">
+                            <input type="text" placeholder="Percentage" name="percentage" required id="sss-percentage" style="display: none;"> -->
+                            <button type="submit" name="apply">Apply</button>
+                        </form>
                     </div>
                     </div>
                     
@@ -189,17 +252,17 @@
                     <th>TOTAL CONTRIBUTION</th>
                 </tr>
                 <?php
-                    if ($result && $result->num_rows > 0) {
+                    if ($result3 && $result3->num_rows > 0) {
                         // Fetch and display each row from the result set
-                        while ($row = $result->fetch_assoc()) {               
+                        while ($row = $result3->fetch_assoc()) {               
                             echo "
                                 <tr>
                                     <td>". htmlspecialchars($row['date']) . "</td>
                                     <td>". htmlspecialchars($row['DI_ID']) . "</td>
                                     <td>". htmlspecialchars($row['DRIVER_NAME']) . "</td>
-                                    <td>". htmlspecialchars($row['PHI_ERPercent']) . "</td>
-                                    <td>". htmlspecialchars($row['PHI_EEPercent']) . "</td>
-                                    <td>". htmlspecialchars($row['CON_TOTPhilhealthContribution']) . "</td>
+                                    <td>". htmlspecialchars($row['SSSCR_ERPer']) . "</td>
+                                    <td>". htmlspecialchars($row['SSSCR_EEPer']) . "</td>
+                                    <td>". htmlspecialchars($row['CON_SSSContribution']) . "</td>
                                 </tr>
                                 ";
                         }

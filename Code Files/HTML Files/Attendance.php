@@ -43,34 +43,39 @@
 
     //summary
     $sql2="
-        SELECT
-                i.DI_ProfileImage,
-                n.DN_FName,
-                n.DN_MName,
-                n.DN_LName,
-                n.DN_Suffix,
-                d.DEL_ID,
-                SUM(d.DEL_ParcelCarried) AS Carried_Sum,
-                SUM(d.DEL_ParcelDelivered) AS Delivered_Sum,
-                SUM(d.DEL_ParcelReturned) AS Returned_Sum,
-                d.DEL_RemittanceReciept,
-                t.ATT_Date,
-                a.ATT_ID,
-                a.ATT_StatusID,
-                h.hub_Name
-            FROM
-                attendance a
-            JOIN
-                delivery_information d ON a.ATT_DeliveryID = d.DEL_ID
-            JOIN
-                driver_information i ON a.ATT_DriverID = i.DI_ID
-            JOIN
-                driver_name n ON i.DI_NameID = n.DN_ID
-            JOIN
-                attendance_date_type t ON a.ADT_ID = t.ADT_ID
-            JOIN
-                hub h ON i.DI_HubAssignedID = h.hub_ID
-            WHERE a.ATT_StatusID = 2
+ SELECT
+    i.DI_ProfileImage,
+    n.DN_FName,
+    n.DN_MName,
+    n.DN_LName,
+    n.DN_Suffix,
+    d.DEL_ID,
+    COUNT(a.ATT_DriverID) AS Trips,
+    SUM(d.DEL_ParcelCarried) AS Carried_Sum,
+    SUM(d.DEL_ParcelDelivered) AS Delivered_Sum,
+    SUM(d.DEL_ParcelReturned) AS Returned_Sum,
+    d.DEL_RemittanceReciept,
+    MAX(t.ATT_Date) AS Latest_Date,
+    a.ATT_ID,
+    a.ATT_StatusID,
+    h.hub_Name
+FROM
+    attendance a
+JOIN
+    delivery_information d ON a.ATT_DeliveryID = d.DEL_ID
+JOIN
+    driver_information i ON a.ATT_DriverID = i.DI_ID
+JOIN
+    driver_name n ON i.DI_NameID = n.DN_ID
+JOIN
+    attendance_date_type t ON a.ADT_ID = t.ADT_ID
+JOIN
+    hub h ON i.DI_HubAssignedID = h.hub_ID
+WHERE a.ATT_StatusID = 2
+GROUP BY
+    a.ATT_DriverID
+ORDER BY
+COUNT(a.ATT_DriverID) DESC, SUM(d.DEL_ParcelCarried) DESC
             ";
         //pending
         $sql3 = "
@@ -314,7 +319,6 @@
                     while ($row = $result2->fetch_assoc()) {
                         // Combine first name, middle name, and last name
                         $fullname = trim($row['DN_FName'] . ' ' . $row['DN_MName'] . ' ' . $row['DN_LName']);
-                        $dateCreated = date('M-d-y', strtotime($row['ATT_Date'])); 
                         $profileImageData = base64_encode($row['DI_ProfileImage']);
                         $profileImage = "data:image/jpeg;base64,$profileImageData";
                         $remittanceImageData2 = base64_encode($row['DEL_RemittanceReciept']);
@@ -328,7 +332,8 @@
                                         <div class='td-name'>
                                             <h3 id='username' name='Username'>" . htmlspecialchars($fullname) . "</h3>
                                             <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['hub_Name']) . "</h5>
-                                            <h5 id='position-name' name='Position'> | <span id='position'>Parcel Carried: </span><span id='type'>" . htmlspecialchars($row['Carried_Sum']) . "</span> | </h5>
+                                            <h5 id='position-name' name='Position'> | <span id='position'>No. of Trips: </span><span id='type'>" . htmlspecialchars($row['Trips']) . "</span> | </h5>
+                                            <h5 id='position-name' name='Position'> <span id='position'>Parcel Carried: </span><span id='type'>" . htmlspecialchars($row['Carried_Sum']) . "</span> | </h5>
                                             <h5 id='position-name' name='Position'>  <span id='position'>Parcel Delivered: </span><span id='type'>" . htmlspecialchars($row['Delivered_Sum']) . "</span> | </h5>
                                             <h5 id='position-name' name='Position'>  <span id='position'>Parcel Returned: </span><span id='type'>" . htmlspecialchars($row['Returned_Sum']) . "</span>&nbsp;  </h5>
                                         </div>

@@ -52,6 +52,10 @@
             driver_information i ON a.ATT_DriverID = i.DI_ID
         JOIN
             hub h ON i.DI_HubAssignedID = h.hub_ID
+       group by
+       hub_ID
+       order by
+       SUM(d.DEL_ParcelCarried)
     ";
 
 
@@ -228,57 +232,64 @@
 </body>
 
 <script>
-            document.addEventListener("DOMContentLoaded", () => {
-            // Get the data from the parcel sections
-            const parcelCarried = parseInt(document.querySelector("#parcel-carried h1").textContent, 10);
-            const parcelDelivered = parseInt(document.querySelector("#parcel-delivered h1").textContent, 10);
-            const parcelReturned = parseInt(document.querySelector("#parcel-returned h1").textContent, 10);
+ document.addEventListener("DOMContentLoaded", () => {
+    // Function to render the chart for each hub section
+    const renderChart = (hubContainer) => {
+        const parcelCarried = parseInt(hubContainer.querySelector("#parcel-carried h1").textContent, 10);
+        const parcelDelivered = parseInt(hubContainer.querySelector("#parcel-delivered h1").textContent, 10);
+        const parcelReturned = parseInt(hubContainer.querySelector("#parcel-returned h1").textContent, 10);
 
-            // Prepare chart data
-            const chartData = {
-                labels: ["Parcel Carried", "Parcel Delivered", "Parcel Returned"],
-                data: [parcelCarried, parcelDelivered, parcelReturned],
-            };
+        const chartData = {
+            labels: ["Parcel Carried", "Parcel Delivered", "Parcel Returned"],
+            data: [parcelCarried, parcelDelivered, parcelReturned],
+        };
 
-            // Get the chart canvas
-            const myChart = document.querySelector(".my-chart");
-            const ul = document.querySelector(".programming-stats .details ul");
+        // Get the chart canvas in this specific hub section
+        const myChart = hubContainer.querySelector(".my-chart");
+        const ul = hubContainer.querySelector(".programming-stats .details ul");
 
-            // Create and render the chart
-            new Chart(myChart, {
-                type: "doughnut",
-                data: {
+        // Create and render the chart
+        new Chart(myChart, {
+            type: "doughnut",
+            data: {
                 labels: chartData.labels,
                 datasets: [
                     {
-                    label: "Status: ",
-                    data: chartData.data,
+                        label: "Status: ",
+                        data: chartData.data,
                     },
                 ],
-                },
-                options: {
+            },
+            options: {
                 borderWidth: 10,
                 borderRadius: 2,
                 hoverBorderWidth: 0,
                 plugins: {
                     legend: {
-                    display: false,
+                        display: false,
                     },
                 },
-                },
-            });
+            },
+        });
 
-            // Populate the details list
-            const populateUl = () => {
-                chartData.labels.forEach((label, i) => {
+        // Populate the details list
+        const populateUl = () => {
+            chartData.labels.forEach((label, i) => {
                 let li = document.createElement("li");
                 li.innerHTML = `${label}: <span class='percentage'>${chartData.data[i]}</span>`;
                 ul.appendChild(li);
-                });
-            };
-
-            populateUl();
             });
+        };
+
+        populateUl();
+    };
+
+    // Call renderChart for the first hub section
+    const hubSections = document.querySelectorAll('.hub-container');
+    hubSections.forEach(hub => {
+        renderChart(hub);  // Initialize chart for each hub section
+    });
+});
 
     </script>
 </html>

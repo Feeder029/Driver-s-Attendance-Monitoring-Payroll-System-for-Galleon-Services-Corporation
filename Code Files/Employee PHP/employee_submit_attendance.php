@@ -19,16 +19,16 @@ date_default_timezone_set('Asia/Manila');
 $datetoday = date('Y-m-d');
 
 $sql = "SELECT 
-
 b.`DEL_ParcelCarried`,
 b.`DEL_ParcelDelivered`,
 b.`DEL_ParcelReturned`,
 b.`DEL_RemittanceReciept`,
-c.`ATT_Date`
+c.`ATT_Date`,
+a.ATT_StatusID
 FROM attendance a
 JOIN delivery_information b ON a.ATT_DeliveryID = b.DEL_ID
 JOIN attendance_date_type c ON a.ADT_ID = c.ADT_ID
-WHERE c.`ATT_Date` = ? AND a.`ATT_DriverID` = ?;"; 
+WHERE c.`ATT_Date` = ? AND a.`ATT_DriverID` = ? ;"; 
 
 $stmt = $conn->prepare($sql);
 
@@ -44,20 +44,39 @@ $result = $stmt->get_result();
 // Check if there are results 
 if ($result->num_rows == 1) { // Fetch all results as an associative array 
 $resultsArray = $result->fetch_all(MYSQLI_ASSOC);
-ECHO "Execute";
 
 // You can now loop through the results or process them as needed
 foreach ($resultsArray as $row) {
-    ECHO "FGBFVC";
     $Attendance = [
         "PC"=> $row["DEL_ParcelCarried"],
         "PR"=> $row["DEL_ParcelReturned"],
         "PD"=> $row["DEL_ParcelDelivered"],
-        "RR" => base64_encode($row['DEL_RemittanceReciept'])
+        "RR" => base64_encode($row['DEL_RemittanceReciept']),
+        "Stat" => $row["ATT_StatusID"]
     ];
+
 }
-$disableInput = true;
-} else { $disableInput = false; }
+
+if ($Attendance['Stat']==2){
+    $disableInput = true;
+    $deniedInput  = false; 
+
+    $Message = "Your Attendance Submission has been approved and recorded to the system!";
+} elseif($Attendance['Stat']==1){
+    $disableInput = true;
+    $deniedInput  = false; 
+
+    $Message = "Your Attendance is currently in pending and being check if its accurate, Please contact the Admins if there are any errors or changes needed in your todays submission.";
+} else{
+    $disableInput = false;
+    $Message = "Your Attendance Submission has been denied, please try again and fix the issues!";
+    $deniedInput  = true; 
+}
+} else { 
+    $disableInput = false; 
+    $deniedInput  = false; 
+}
+
 
 // Close the statement 
 $stmt->close();

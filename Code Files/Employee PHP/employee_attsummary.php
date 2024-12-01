@@ -22,7 +22,8 @@ $MonthlyReport = "SELECT
      JOIN
     attendance_date_type c ON a.ADT_ID = c.ADT_ID
     WHERE
-    a.ATT_DriverID = $DriverID 
+    a.ATT_DriverID = $DriverID  and
+    a.ATT_StatusID = 2
     GROUP BY
     a.ATT_DriverID, YEAR(c.ATT_Date), MONTH(c.ATT_Date)
     ORDER BY
@@ -42,7 +43,8 @@ $YearlyReport = "SELECT
     JOIN
     attendance_date_type c ON a.ADT_ID = c.ADT_ID
     WHERE
-    a.ATT_DriverID = $DriverID 
+    a.ATT_DriverID = $DriverID AND
+     a.ATT_StatusID = 2
     GROUP BY
     a.ATT_DriverID, YEAR(c.ATT_Date)
     ORDER BY
@@ -68,7 +70,8 @@ function DateSearchQuery($conn,$StartDate,$EndDate,$DriverID){
     JOIN delivery_information b ON a.ATT_DeliveryID = b.DEL_ID
     JOIN attendance_date_type c ON a.`ADT_ID` = c.`ADT_ID`
     WHERE
-    a.ATT_DriverID = $DriverID 
+    a.ATT_DriverID = $DriverID  AND
+    a.ATT_StatusID = 2
     AND c.ATT_Date BETWEEN '$StartDate' AND '$EndDate'
     GROUP BY
     a.ATT_DriverID";

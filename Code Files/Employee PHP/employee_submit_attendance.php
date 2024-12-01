@@ -42,7 +42,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 // Check if there are results 
-if ($result->num_rows == 1) { // Fetch all results as an associative array 
+if ($result->num_rows > 0) { // Fetch all results as an associative array 
 $resultsArray = $result->fetch_all(MYSQLI_ASSOC);
 
 // You can now loop through the results or process them as needed
@@ -151,6 +151,8 @@ function SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $fi
         echo "Transaction error: " . $e->getMessage();
     }
 
+    echo $ID;
+
     $SelectDatas = "SELECT
     a.`ATT_ID`, 
     a.`ATT_DriverID`, 
@@ -159,8 +161,8 @@ function SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $fi
     b.`ADT_ID`, 
     b.`ATT_Date`, 
     DATE_FORMAT(b.`ATT_Date`, '%m %Y') AS MonthYear,
-    c.`AS_Status`, 
-    b.`DT_ID` AS DayID, 
+    c.`AS_Status`,
+    b.`DT_IT` AS DayID,
     d.`Day_Type`,
     DATE_FORMAT(DATE(b.`ATT_Date`), '%Y-%m-01') AS StartOfMonth,
     LAST_DAY(b.`ATT_Date`) AS EndOfMonth
@@ -171,12 +173,17 @@ function SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $fi
     JOIN
     attendance_status c ON a.`ATT_StatusID` = c.`AS_ID`
     JOIN
-    day_type d ON b.`DT_ID` = d.`DT_ID`
+    day_type d ON b.`DT_IT` = d.`DT_ID`
     WHERE a.`ATT_ID` = $ID;";
+    
 
-    $result = $conn->query($SelectDatas);   
+    $result = $conn->query($SelectDatas); 
+    echo "SUCCESS"  ;
     if ($result && $result->num_rows > 0) {
+        
+        echo "SUCCESS2"  ;
         while ($row = $result->fetch_assoc()){
+            echo "SUCCESS3"  ;
             $START = $row['StartOfMonth'];
             $END = $row['EndOfMonth'];
 
@@ -189,7 +196,7 @@ function SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $fi
             $resultSummary = $conn->query($Summary);   
             if ($resultSummary && $resultSummary->num_rows > 0) {
                 $updateSTMT = "";
-                echo "STOP";
+            
                 switch ($row['DayID']){
                     case 1:
                     $updateSTMT = "UPDATE `attendance_summary` 
@@ -202,6 +209,7 @@ function SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $fi
                     }      
                     break;
                     case 2:
+
                     $updateSTMT = "UPDATE `attendance_summary` 
                     SET `ASUM_RegularHoliday`=`ASUM_RegularHoliday`+1,`ASUM_OverallAttendance`=`ASUM_OverallAttendance`+1
                     WHERE `ASUM_DriverID`=? AND ASUM_DateStart= ?";
@@ -212,6 +220,7 @@ function SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $fi
                     }  
                     break;
                     case 3:
+
                     $updateSTMT = "UPDATE `attendance_summary`  
                     SET `ASUM_SpecialHoliday`=`ASUM_SpecialHoliday`+1,`ASUM_OverallAttendance`=`ASUM_OverallAttendance`+1
                     WHERE `ASUM_DriverID`=? AND ASUM_DateStart= ?";  
@@ -221,6 +230,10 @@ function SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $fi
                         throw new Exception("Error inserting into attendance: " . $stmt2->error);
                     }                   
                     break;
+                    default:
+                    echo "break";
+                    break;
+      
                 };
             } else {
                 echo "GOOD";
@@ -254,6 +267,8 @@ function SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $fi
                 } 
             }
         }
+    } else {
+        echo "FAILURE"  ;
     }
 }
 ?>

@@ -104,6 +104,7 @@ function toggleTable(tabOption){
     const philPercentBtn = document.getElementById('phihealth-percentage');
     const sssPercentBtn = document.getElementById('sss-percentage');
     const pbigPercentBtn = document.getElementById('pagibig-percentage');
+    const activeTabInput = document.getElementById('active-tab');
  
 
     philhealthTab.style.display = 'none';
@@ -111,21 +112,21 @@ function toggleTable(tabOption){
     sssTab.style.display = 'none';
 
     if (tabOption === 'philhealth') {
-
+        activeTabInput.value = 'philhealth';
         philhealthTab.style.display = 'block';
         philPercentBtn.style.display = 'block';
         sssPercentBtn.style.display = 'none';
         pbigPercentBtn.style.display = 'none';
         
     } else if (tabOption === 'pagibig') {
- 
+        activeTabInput.value = 'pagibig';
         pagibigTab.style.display = 'block';
         philPercentBtn.style.display = 'none';
         sssPercentBtn.style.display = 'none';
         pbigPercentBtn.style.display = 'block';
        
     } else if (tabOption === 'sss') {
-
+        activeTabInput.value = 'sss';
         sssTab.style.display = 'block';
         philPercentBtn.style.display = 'none';
         sssPercentBtn.style.display = 'block';

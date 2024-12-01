@@ -83,17 +83,26 @@
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['apply'])) {
             // Get the percentage value from the input
+            $activeTab = $_POST['active_tab'];
             $percentage = $_POST['percentage'];
         
             // Validate and sanitize the input
             if (!is_numeric($percentage) || $percentage < 0 || $percentage > 100) {
                 echo "Invalid percentage value. Please enter a number between 0 and 100.";
             } else {
-                // Update the database (example: updating the `PHI_ERPercent` in the `philhealth` table)
-                $update_sql = "
-                    UPDATE philhealth
-                    SET PHI_EEPercent = ?, PHI_ERPercent = ?
-                ";
+                // Update the database (example: updating the PHI_ERPercent in the philhealth table)
+                $update_sql = "";
+                switch ($activeTab) {
+                    case "philhealth":
+                        $update_sql = 'UPDATE philhealth SET PHI_EEPercent = ?, PHI_ERPercent = ?';
+                        break;
+                    case "pagibig":
+                        $update_sql = 'UPDATE pagibig SET PBIG_EEPercent = ?, PBIG_ERPercent = ?';
+                        break;
+                    case "sss":
+                        $update_sql = 'UPDATE sss_contribution_rate SET SSSCR_EEPer = ?, SSSCR_ERPer = ?';
+                        break;
+                }
         
                 $stmt = $conn->prepare($update_sql);
                 if ($stmt) {
@@ -157,6 +166,7 @@
                         </select>
                     <div class="percentage">
                         <form method="POST">
+                            <input type="hidden" name="active_tab" id="active-tab" value="philhealth">
                             <input type="text" placeholder="Percentage" name="percentage" required id="philhealth-percentage">
                             <!-- <input type="text" placeholder="Percentage" name="percentage" required id="pagibig-percentage" style="display: none;">
                             <input type="text" placeholder="Percentage" name="percentage" required id="sss-percentage" style="display: none;"> -->

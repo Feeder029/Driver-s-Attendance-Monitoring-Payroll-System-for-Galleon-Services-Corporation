@@ -211,6 +211,40 @@
             LEFT JOIN
                 sss_contribution_rate scr ON sss.SSSCR_ID = scr.SSSCR_ID";
 
+        $sql6="
+        UPDATE contribution AS c
+            JOIN payroll pay ON c.CON_ID = pay.PAY_ContributionID
+            JOIN basic_pay b ON pay.PAY_BasicPayID = b.BP_ID
+            JOIN hub_rate r ON b.BP_HubRateID = r.HUBR_ID
+            RIGHT JOIN allowance a ON b.BP_AllowanceID = a.ALW_ID
+            RIGHT JOIN attendance_summary s ON b.BP_AttendanceSumID = s.ASUM_ID
+            LEFT JOIN hub h ON r.HUBR_HubID = h.Hub_ID
+            RIGHT JOIN driver_information d ON h.Hub_ID = d.DI_HubAssignedID
+            RIGHT JOIN driver_name n ON d.DI_NameID = n.DN_ID
+            RIGHT JOIN government_information gi ON d.DI_GovInfoID = gi.GOV_ID
+            RIGHT JOIN philhealth p ON gi.GOV_PhilHealthNo = p.PHI_No
+            RIGHT JOIN pagibig pb ON gi.GOV_PagibigNo = pb.PBIG_No
+            RIGHT JOIN sss sss ON gi.GOV_SSSNo = sss.SSS_No
+            LEFT JOIN sss_contribution_rate scr ON sss.SSSCR_ID = scr.SSSCR_ID
+            SET 
+                c.CON_ID = @CON_ID,
+                c.CON_GovInfoID = @GovInfoID,
+                c.CON_EEPhilHealthContribution = ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_EEPercent / 100),
+                c.CON_ERPhilHealthContribution = ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_ERPercent / 100),
+                c.CON_TOTPhilhealthContribution = (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_EEPercent / 100)) + 
+                                                (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_ERPercent / 100)),
+                c.CON_EEPagibigContribution = ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_EEPercent / 100),
+                c.CON_ERPagibigContribution = ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_ERPercent / 100),
+                c.CON_TOTPagibigContribution = (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_EEPercent / 100)) + 
+                                            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_ERPercent / 100)),
+                c.CON_EESSSContribution = ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_EEPer / 100),
+                c.CON_ERSSSContribution = ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_ERPer / 100),
+                c.CON_SSSContribution = (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_EEPer / 100)) + 
+                                        (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_ERPer / 100)),
+                c.CON_TotalAmount = c.CON_TOTPhilHealthContribution + c.CON_TOTPagibigContribution + c.CON_SSSContribution
+            WHERE c.CON_GovInfoID = @GovInfoID;
+            ";
+
         $result = $conn->query($sql);
         $result2 = $conn->query($sql2);
         $result3 = $conn->query($sql3); 
@@ -228,6 +262,7 @@
             } else {
                 // Update the database (example: updating the PHI_ERPercent in the philhealth table)
                 $update_sql = "";
+                $update_sql2 = $sql6;
                 switch ($activeTab) {
                     case "philhealth":
                         $update_sql = 'UPDATE philhealth SET PHI_EEPercent = ?, PHI_ERPercent = ?';
@@ -247,7 +282,13 @@
         
                     if ($stmt->execute()) {
                         echo "Percentage updated successfully!";
-                        echo "<script>window.location.href = window.location.href;</script>";
+                        if ($conn->query($update_sql2)) {
+                            echo "Contribution table updated successfully!";
+                            echo "<script>window.location.href = window.location.href;</script>";
+                        } else {
+                            echo "Error updating contribution table: " . $conn->error;
+                        }
+                        
                         exit;
                     } else {
                         echo "Error updating percentage: " . $stmt->error;

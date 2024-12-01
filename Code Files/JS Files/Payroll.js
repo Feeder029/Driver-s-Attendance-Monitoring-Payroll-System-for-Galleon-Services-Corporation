@@ -130,3 +130,45 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
     };
+
+
+    function updatePayslipData(id, name, gcash, netPay, unitType, regDay, spechDay, reghDay, totRegAmount, totSpechAmount, totReghAmount, allowance, grossPay, sss, philhealth, pagibig, totReduction, hub) {
+        // Update payslip driver information
+        document.querySelector('.payslip-driver .driver-data h4:nth-child(1)').innerText = "NAME: " + name;
+        document.querySelector('.payslip-driver .driver-data h4:nth-child(2)').innerText = "DRIVER ID: " + id;
+        document.querySelector('.payslip-driver .driver-data h4:nth-child(3)').innerText = "HUB: " + hub;
+        document.querySelector('.payslip-driver .driver-data h4:nth-child(4)').innerText = "UNIT TYPE: " + unitType;
+ 
+    
+        // Update the earnings and deductions with dynamic values
+        document.querySelector('.earning-left #earning-table').innerHTML = `
+            <tr>
+                <th>DAYS</th>
+                <th>AMOUNT</th>
+            </tr>
+            <tr>
+                <td>${regDay}</td>
+                <td>₱ ${totRegAmount}</td>
+            </tr>
+            <tr>
+                <td>${spechDay}</td>
+                <td>₱ ${totSpechAmount}</td>
+            </tr>
+            <tr>
+                <td>${reghDay}</td>
+                <td>₱ ${totReghAmount}</td>
+            </tr>
+        `;
+
+        document.querySelector('.earning-right .earning-data h4:nth-child(4)').innerText = "ALLOWANCE: ₱ " + allowance;
+        document.querySelector('.earning-right .earning-data h4:nth-child(5)').innerText = "TOTAL GROSS PAY: ₱ " + grossPay;
+        
+        // Deductions placeholder
+        document.querySelector('.deductions-data h4:nth-child(1)').innerText = "SSS: ₱ " + sss;
+        document.querySelector('.deductions-data h4:nth-child(2)').innerText = "PHILHEALTH: ₱ " + philhealth;
+        document.querySelector('.deductions-data h4:nth-child(3)').innerText = "PAGIBIG: ₱ " + pagibig;
+        document.querySelector('.deductions-data h4:nth-child(4)').innerText = "TOTAL DEDUCTIONS: ₱ " + totReduction;
+        document.querySelector('.payslip-deductions .deductions-data h4:nth-child(5)').innerText = "NET PAY: ₱ " + netPay;
+    }
+    
+    

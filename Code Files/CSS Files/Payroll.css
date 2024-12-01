@@ -381,3 +381,7 @@ tr:hover {
     color: #D1DAF2;
 }
 
+.payslip-table tr:hover{
+    color:coral;
+    cursor: pointer;
+}

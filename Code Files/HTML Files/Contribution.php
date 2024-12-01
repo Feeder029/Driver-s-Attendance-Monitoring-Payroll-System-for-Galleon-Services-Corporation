@@ -10,76 +10,212 @@
 
     //join query
 
-    //philhealth
+    //INSERT 
     $sql = "
+        INSERT INTO contribution
+            (CON_GovInfoID, CON_EEPhilHealthContribution, CON_ERPhilhealthContribution, CON_TOTPhilHealthContribution, CON_EEPagibigContribution, CON_ERPagibigContribution, CON_TOTPagibigContribution, CON_EESSSContribution, CON_ERSSSContribution, CON_SSSContribution, CON_TotalAmount)
         SELECT
-            DATE_FORMAT(NOW(), '%Y-%m-%d') AS date,
-            d.DI_ID,
-            CONCAT(n.DN_FName, n.DN_MName, n.DN_LName, n.DN_Suffix) AS DRIVER_NAME,
-            p.PHI_ERPercent,
-            p.PHI_EEPercent,
-            p.PHI_ERPercent + p.PHI_EEPercent AS PHIL_TOT_PER,
-			c.CON_TOTPhilhealthContribution
+            gi.GOV_ID AS GI_GovInfoID,
+            ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_EEPercent / 100) AS PHIL_TOTAL_EMPLOYEE,
+            ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_ERPercent / 100) AS PHIL_TOTAL_EMPLOYER,
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_EEPercent / 100)) + 
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_ERPercent / 100)) AS PHIL_TOTAL_CONTRIBUTION,
+            ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_EEPercent / 100) AS PBIG_TOTAL_EMPLOYEE,
+            ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_ERPercent / 100) AS PBIG_TOTAL_EMPLOYER,
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_EEPercent / 100)) + 
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_ERPercent / 100)) AS PBIG_TOTAL_CONTRIBUTION,
+            ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_EEPer / 100) AS SSS_TOTAL_EMPLOYEE,
+            ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_ERPer / 100) AS SSS_TOTAL_EMPLOYER,
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_EEPer / 100)) + 
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_ERPer / 100)) AS SSS_TOTAL_CONTRIBUTION,
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_EEPercent / 100)) + 
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_ERPercent / 100)) +
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_EEPercent / 100)) + 
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_ERPercent / 100)) +
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_EEPer / 100)) + 
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_ERPer / 100)) AS TOTAL_CONTRIBUTION
         FROM
-            government_information g
+            basic_pay b
         JOIN
-            driver_information d ON g.GOV_ID = d.DI_GovInfoID
-        JOIN
+            hub_rate r ON b.BP_HubRateID = r.HUBR_ID
+        RIGHT JOIN
+            allowance a ON b.BP_AllowanceID = a.ALW_ID
+        RIGHT JOIN
+            attendance_summary s ON b.BP_AttendanceSumID = s.ASUM_ID
+        LEFT JOIN
+            hub h ON r.HUBR_HubID = h.Hub_ID
+        RIGHT JOIN
+            driver_information d ON h.Hub_ID = d.DI_HubAssignedID
+        RIGHT JOIN
             driver_name n ON d.DI_NameID = n.DN_ID
-        JOIN
-            philhealth p ON g.GOV_PhilHealthNo = p.PHI_No
-        LEFT JOIN	
-        	contribution c ON g.GOV_ID = c.CON_GovInfoID
-        
-    ";
+        RIGHT JOIN
+            government_information gi ON d.DI_GovInfoID = gi.GOV_ID
+        RIGHT JOIN
+            philhealth p ON gi.GOV_PhilHealthNo = p.PHI_No
+        RIGHT JOIN
+            pagibig pb ON gi.GOV_PagibigNo = pb.PBIG_No
+        RIGHT JOIN
+            sss sss ON gi.GOV_SSSNo = sss.SSS_No
+        LEFT JOIN
+            sss_contribution_rate scr ON sss.SSSCR_ID = scr.SSSCR_ID
+        WHERE
+            NOT EXISTS (
+                SELECT 1
+                FROM contribution c
+                WHERE c.CON_GovInfoID = gi.GOV_ID
+            )";
 
-    //pagibig
+    //view philhealth
     $sql2 = "
         SELECT
-                DATE_FORMAT(NOW(), '%Y-%m-%d') AS date,
-                d.DI_ID,
-                CONCAT(n.DN_FName, n.DN_MName, n.DN_LName, n.DN_Suffix) AS DRIVER_NAME,
-                p.PBIG_ERPercent,
-                p.PBIG_EEPercent,
-                p.PBIG_ERPercent + p.PBIG_EEPercent AS PBIG_TOT_PER,
-                c.CON_TOTPagibigContribution
-            FROM
-                government_information g
-            JOIN
-                driver_information d ON g.GOV_ID = d.DI_GovInfoID
-            JOIN
-                driver_name n ON d.DI_NameID = n.DN_ID
-            JOIN
-                pagibig p ON g.GOV_PagibigNo = p.PBIG_No
-            LEFT JOIN	
-                contribution c ON g.GOV_ID = c.CON_GovInfoID";
-
-        //sss
-        $sql3 = "
-        SELECT
-            DATE_FORMAT(NOW(), '%Y-%m-%d') AS date,
-            di.DI_ID,
-            CONCAT(dn.DN_FName, dn.DN_MName, dn.DN_LName, dn.DN_Suffix) AS DRIVER_NAME,
-            scr.SSSCR_EEPer,
-            scr.SSSCR_ERPer,
-            scr.SSSCR_EEPer + scr.SSSCR_ERPer AS SSS_TotPer,
-            con.CON_SSSContribution
+            NOW() AS date,
+            d.DI_ID AS DRIVER_ID,
+            CONCAT(n.DN_FName, ' ', n.DN_MName, ' ', n.DN_LName, ' ', n.DN_Suffix) AS DRIVER_NAME, 
+            ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) AS TOTAL_PAY,  -- For display
+            gi.GOV_ID AS GI_GovInfoID, 
+            ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_EEPercent / 100) AS PHIL_TOTAL_EMPLOYEE,
+            ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_ERPercent / 100) AS PHIL_TOTAL_EMPLOYER,
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_EEPercent / 100)) + 
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_ERPercent / 100)) AS PHIL_TOTAL_CONTRIBUTION,
+            ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_EEPercent / 100) AS PBIG_TOTAL_EMPLOYEE,
+            ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_ERPercent / 100) AS PBIG_TOTAL_EMPLOYER,
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_EEPercent / 100)) + 
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_ERPercent / 100)) AS PBIG_TOTAL_CONTRIBUTION,
+                ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_EEPer / 100) AS SSS_TOTAL_EMPLOYEE,
+            ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_ERPer / 100) AS SSS_TOTAL_EMPLOYER,
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_EEPer / 100)) + 
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_ERPer / 100)) AS SSS_TOTAL_CONTRIBUTION,
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_EEPercent / 100)) + 
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_ERPercent / 100)) +
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_EEPercent / 100)) + 
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_ERPercent / 100)) +
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_EEPer / 100)) + 
+            (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_ERPer / 100)) AS TOTAL_CONTRIBUTION
         FROM
-            government_information gi
+            basic_pay b
         JOIN
-            driver_information di ON gi.GOV_ID = di.DI_GovInfoID
-        JOIN
-            driver_name dn ON di.DI_NameID = dn.DN_ID
+            hub_rate r ON b.BP_HubRateID = r.HUBR_ID
+        RIGHT JOIN
+            allowance a ON b.BP_AllowanceID = a.ALW_ID
+        RIGHT JOIN
+            attendance_summary s ON b.BP_AttendanceSumID = s.ASUM_ID
         LEFT JOIN
-            contribution con ON gi.GOV_ID = con.CON_GovInfoID
-        JOIN
+            hub h ON r.HUBR_HubID = h.Hub_ID
+        RIGHT JOIN
+            driver_information d ON h.Hub_ID = d.DI_HubAssignedID
+        RIGHT JOIN
+            driver_name n ON d.DI_NameID = n.DN_ID
+        RIGHT JOIN
+            government_information gi ON d.DI_GovInfoID = gi.GOV_ID
+        RIGHT JOIN
+            philhealth p ON gi.GOV_PhilHealthNo = p.PHI_No
+        RIGHT JOIN
+            pagibig pb ON gi.GOV_PagibigNo = pb.PBIG_No
+        RIGHT JOIN
             sss sss ON gi.GOV_SSSNo = sss.SSS_No
-        JOIN
+        LEFT JOIN
             sss_contribution_rate scr ON sss.SSSCR_ID = scr.SSSCR_ID";
 
-        $result = $conn->query($sql); 
+    //view pagibig
+    $sql3="
+        SELECT
+                NOW() AS date,
+                d.DI_ID AS DRIVER_ID,
+                CONCAT(n.DN_FName, ' ', n.DN_MName, ' ', n.DN_LName, ' ', n.DN_Suffix) AS DRIVER_NAME, 
+                ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) AS TOTAL_PAY,  -- For display
+                gi.GOV_ID AS GI_GovInfoID, 
+                ROUND(((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_EEPercent / 100), 3) AS PHIL_TOTAL_EMPLOYEE,
+                ROUND(((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_ERPercent / 100), 3) AS PHIL_TOTAL_EMPLOYER,
+                ROUND((((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_EEPercent / 100)) + 
+                (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (p.PHI_ERPercent / 100)), 3) AS PHIL_TOTAL_CONTRIBUTION
+            FROM
+                basic_pay b
+            JOIN
+                hub_rate r ON b.BP_HubRateID = r.HUBR_ID
+            RIGHT JOIN
+                allowance a ON b.BP_AllowanceID = a.ALW_ID
+            RIGHT JOIN
+                attendance_summary s ON b.BP_AttendanceSumID = s.ASUM_ID
+            LEFT JOIN
+                hub h ON r.HUBR_HubID = h.Hub_ID
+            RIGHT JOIN
+                driver_information d ON h.Hub_ID = d.DI_HubAssignedID
+            RIGHT JOIN
+                driver_name n ON d.DI_NameID = n.DN_ID
+            RIGHT JOIN
+                government_information gi ON d.DI_GovInfoID = gi.GOV_ID
+            RIGHT JOIN
+                philhealth p ON gi.GOV_PhilHealthNo = p.PHI_No";
+
+        //view sss
+        $sql4="
+            SELECT
+                NOW() AS date,
+                d.DI_ID AS DRIVER_ID,
+                CONCAT(n.DN_FName, ' ', n.DN_MName, ' ', n.DN_LName, ' ', n.DN_Suffix) AS DRIVER_NAME, 
+                ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) AS TOTAL_PAY,  -- For display
+                gi.GOV_ID AS GI_GovInfoID, 
+                ROUND(((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_EEPercent / 100), 3) AS PBIG_TOTAL_EMPLOYEE,
+                ROUND(((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_ERPercent / 100), 3)AS PBIG_TOTAL_EMPLOYER,
+                ROUND((((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_EEPercent / 100)) + 
+                (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (pb.PBIG_ERPercent / 100)), 3) AS PBIG_TOTAL_CONTRIBUTION
+            FROM
+                basic_pay b
+            JOIN
+                hub_rate r ON b.BP_HubRateID = r.HUBR_ID
+            RIGHT JOIN
+                allowance a ON b.BP_AllowanceID = a.ALW_ID
+            RIGHT JOIN
+                attendance_summary s ON b.BP_AttendanceSumID = s.ASUM_ID
+            LEFT JOIN
+                hub h ON r.HUBR_HubID = h.Hub_ID
+            RIGHT JOIN
+                driver_information d ON h.Hub_ID = d.DI_HubAssignedID
+            RIGHT JOIN
+                driver_name n ON d.DI_NameID = n.DN_ID
+            RIGHT JOIN
+                government_information gi ON d.DI_GovInfoID = gi.GOV_ID
+            RIGHT JOIN
+                pagibig pb ON gi.GOV_PagibigNo = pb.PBIG_No";
+
+        //view sss
+        $sql5="
+            SELECT
+                NOW() AS date,
+                d.DI_ID AS DRIVER_ID,
+                CONCAT(n.DN_FName, ' ', n.DN_MName, ' ', n.DN_LName, ' ', n.DN_Suffix) AS DRIVER_NAME, 
+                ((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) AS TOTAL_PAY,  -- For display
+                gi.GOV_ID AS GI_GovInfoID, 
+                ROUND(((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_EEPer / 100), 3) AS SSS_TOTAL_EMPLOYEE,
+                ROUND(((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_ERPer / 100), 3) AS SSS_TOTAL_EMPLOYER,
+                ROUND((((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_EEPer / 100)) + 
+                (((r.HUBR_Rate * s.ASUM_OverallAttendance) + a.ALW_Amount) * (scr.SSSCR_ERPer / 100)), 3) AS SSS_TOTAL_CONTRIBUTION
+            FROM
+                basic_pay b
+            JOIN
+                hub_rate r ON b.BP_HubRateID = r.HUBR_ID
+            RIGHT JOIN
+                allowance a ON b.BP_AllowanceID = a.ALW_ID
+            RIGHT JOIN
+                attendance_summary s ON b.BP_AttendanceSumID = s.ASUM_ID
+            LEFT JOIN
+                hub h ON r.HUBR_HubID = h.Hub_ID
+            RIGHT JOIN
+                driver_information d ON h.Hub_ID = d.DI_HubAssignedID
+            RIGHT JOIN
+                driver_name n ON d.DI_NameID = n.DN_ID
+            RIGHT JOIN
+                government_information gi ON d.DI_GovInfoID = gi.GOV_ID
+            RIGHT JOIN
+                sss sss ON gi.GOV_SSSNo = sss.SSS_No
+            LEFT JOIN
+                sss_contribution_rate scr ON sss.SSSCR_ID = scr.SSSCR_ID";
+
+        $result = $conn->query($sql);
         $result2 = $conn->query($sql2);
-        $result3 = $conn->query($sql3);
+        $result3 = $conn->query($sql3); 
+        $result4 = $conn->query($sql4); 
+        $result5 = $conn->query($sql5); 
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['apply'])) {
             // Get the percentage value from the input
@@ -200,17 +336,17 @@
                     <th>TOTAL CONTRIBUTION</th>
                 </tr>
                 <?php
-                    if ($result && $result->num_rows > 0) {
+                    if ($result3 && $result3->num_rows > 0) {
                         // Fetch and display each row from the result set
-                        while ($row = $result->fetch_assoc()) {               
+                        while ($row = $result3->fetch_assoc()) {               
                             echo "
                                 <tr>
                                     <td>". htmlspecialchars($row['date']) . "</td>
-                                    <td>". htmlspecialchars($row['DI_ID']) . "</td>
+                                    <td>". htmlspecialchars($row['DRIVER_ID']) . "</td>
                                     <td>". htmlspecialchars($row['DRIVER_NAME']) . "</td>
-                                    <td>". htmlspecialchars($row['PHI_ERPercent']) . "</td>
-                                    <td>". htmlspecialchars($row['PHI_EEPercent']) . "</td>
-                                    <td>". htmlspecialchars($row['CON_TOTPhilhealthContribution']) . "</td>
+                                    <td>₱ ". htmlspecialchars($row['PHIL_TOTAL_EMPLOYEE']) . "</td>
+                                    <td>₱ ". htmlspecialchars($row['PHIL_TOTAL_EMPLOYER']) . "</td>
+                                    <td>₱ ". htmlspecialchars($row['PHIL_TOTAL_CONTRIBUTION']) . "</td>
                                 </tr>
                                 ";
                         }
@@ -231,17 +367,17 @@
                     <th>TOTAL CONTRIBUTION</th>
                 </tr>
                 <?php
-                    if ($result2 && $result2->num_rows > 0) {
+                    if ($result4 && $result4->num_rows > 0) {
                         // Fetch and display each row from the result set
-                        while ($row = $result2->fetch_assoc()) {               
+                        while ($row = $result4->fetch_assoc()) {               
                             echo "
                                 <tr>
                                     <td>". htmlspecialchars($row['date']) . "</td>
-                                    <td>". htmlspecialchars($row['DI_ID']) . "</td>
+                                    <td>". htmlspecialchars($row['DRIVER_ID']) . "</td>
                                     <td>". htmlspecialchars($row['DRIVER_NAME']) . "</td>
-                                    <td>". htmlspecialchars($row['PBIG_ERPercent']) . "</td>
-                                    <td>". htmlspecialchars($row['PBIG_EEPercent']) . "</td>
-                                    <td>". htmlspecialchars($row['CON_TOTPagibigContribution']) . "</td>
+                                    <td>₱ ". htmlspecialchars($row['PBIG_TOTAL_EMPLOYEE']) . "</td>
+                                    <td>₱ ". htmlspecialchars($row['PBIG_TOTAL_EMPLOYER']) . "</td>
+                                    <td>₱ ". htmlspecialchars($row['PBIG_TOTAL_CONTRIBUTION']) . "</td>
                                 </tr>
                                 ";
                         }
@@ -262,17 +398,17 @@
                     <th>TOTAL CONTRIBUTION</th>
                 </tr>
                 <?php
-                    if ($result3 && $result3->num_rows > 0) {
+                    if ($result5 && $result5->num_rows > 0) {
                         // Fetch and display each row from the result set
-                        while ($row = $result3->fetch_assoc()) {               
+                        while ($row = $result5->fetch_assoc()) {               
                             echo "
                                 <tr>
                                     <td>". htmlspecialchars($row['date']) . "</td>
-                                    <td>". htmlspecialchars($row['DI_ID']) . "</td>
+                                    <td>". htmlspecialchars($row['DRIVER_ID']) . "</td>
                                     <td>". htmlspecialchars($row['DRIVER_NAME']) . "</td>
-                                    <td>". htmlspecialchars($row['SSSCR_ERPer']) . "</td>
-                                    <td>". htmlspecialchars($row['SSSCR_EEPer']) . "</td>
-                                    <td>". htmlspecialchars($row['CON_SSSContribution']) . "</td>
+                                    <td>₱ ". htmlspecialchars($row['SSS_TOTAL_EMPLOYEE']) . "</td>
+                                    <td>₱ ". htmlspecialchars($row['SSS_TOTAL_EMPLOYER']) . "</td>
+                                    <td>₱ ". htmlspecialchars($row['SSS_TOTAL_CONTRIBUTION']) . "</td>
                                 </tr>
                                 ";
                         }

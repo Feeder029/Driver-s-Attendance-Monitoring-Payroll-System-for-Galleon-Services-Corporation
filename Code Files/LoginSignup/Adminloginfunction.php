@@ -3,9 +3,9 @@ session_start();
 
 require '../DatabaseConnection/Database.php';
 
-$AccDetails = "SELECT a.`ACC_Username`, a.`ACC_Password`, b.`ACCS_Status`, c.`DI_ID` FROM account a
+$AccDetails = "SELECT a.`ACC_Username`, a.`ACC_Password`, b.`ACCS_Status`, c.`TL_ID` FROM account a
 JOIN account_status b ON a.ACC_StatusID = b.ACCS_ID
-JOIN driver_information c ON a.ACC_ID = c.DI_AccountID;";
+JOIN teamlead_information c ON a.ACC_ID = c.TL_AccountID";
 
 
 $AccInfo= mysqli_query($conn, $AccDetails);            
@@ -23,7 +23,7 @@ while ($row = mysqli_fetch_assoc($AccInfo)) {
         "Username" => $row["ACC_Username"],
         "Password" => $row["ACC_Password"],
         "Status"=> $row["ACCS_Status"],
-        "ID" => $row["DI_ID"],
+        "ID" => $row["TL_ID"],
     ];
 
     $ADDACC_COUNT += 1;
@@ -37,15 +37,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     for ($i = 0; $i < count($ADACC); $i++) {
         if ($user == $ADACC[$i]["Username"] && $pass == $ADACC[$i]["Password"]) {
+            $Acc = true;
             if ($ADACC[$i]["Status"] == "Active") {
                 $_SESSION['DVID'] = $ADACC[$i]["ID"];
-                header(header: "Location: ../Employee PHP/EMP_INDEX.PHP");
+                header("Location: ../HTML Files/MainAdminDashboard.php");
                 exit();
-            } elseif ($ADACC[$i]["Status"] == "Inactive") {
-                header("Location: ../LoginSignup/employeelogin.php?error=inactive");
+            } else if ($ADACC[$i]["Status"] == "Inactive") {
+                header("Location: ../LoginSignup/AdminLoginRegister.php?error=inactive");
                 exit();
             } else {
-                header("Location: ../LoginSignup/employeelogin.php?error=pending");
+                header("Location: ../LoginSignup/AdminLoginRegister.php?error=pending");
                 exit();
             }
         }
@@ -53,7 +54,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // If no match is found, redirect with an error message
     if (!$Acc) {
-        header("Location: ../LoginSignup/employeelogin.php?error=invalid");
+        header("Location: ../LoginSignup/AdminLoginRegister.php?error=invalid");
+        
         exit();
     }
 }

@@ -30,7 +30,7 @@ a{
 }
 
 a:hover{
-    color: #212879;
+    color: #000000;
 }
 
 
@@ -48,7 +48,7 @@ li{
     left: 0;
     width: 200px;
     height: 100%;
-    background-color: rgb(47, 47, 116);
+    background-color: #30344A;
     z-index: 2000px;
     overflow-x: hidden;
     scrollbar-width: none;
@@ -56,8 +56,10 @@ li{
 }
 
 .side-menu{
-    background-color: rgb(36, 60, 133);
+    background-color:#25274D;
     border: none;
+    margin-top: 30px;
+    border-top: 3px solid azure;
 }
 
 .side-menu li:hover{
@@ -70,7 +72,7 @@ li{
 .side-menu li a.active{
     background-color: #ffc729;
     outline: none;
-    color: #212879;
+    color: #000000;
     margin-left: -30px;
     padding-left: 30px;
     width: 250px;
@@ -81,20 +83,24 @@ li{
     border: 0;
     border-left: 5px solid whitesmoke;
     padding-left: 30.2px;
+    color: #000000;
 }
 
 .side-profile{
     text-align: center;
     border: none;
+
 }
 
 .bx, .fa-solid{
     font-size: 2rem;
-    color: black;
+    color:#e7e7e7;
 }
 
 .bx-user-circle{
     font-size: 200px;
+    z-index: 10;
+    position: absolute;
 }
 
 .navbar{
@@ -117,7 +123,7 @@ li{
 .iframe-container{
 
     text-align: center;
-    background-color: aqua;
+    background-color:  #464866;
 }
 
 .iframe-container iframe{
@@ -130,4 +136,28 @@ li{
 
 }
 
+.side-profile img{
+    position: relative;
+    margin-top: 10px;
+    max-width: 170px;
+    border: 5px solid whitesmoke;
+    border-radius: 100px;
+    z-index: 10;
+}
 
+.side-bar h3, h5{
+    color: antiquewhite;
+}
+
+.side-profile h3{
+    margin-top: 15px;
+}
+
+.side-profile .bg{
+    border-radius: 0 0 60px 60px;
+    height: 130px;
+    width: 200px;
+    position: absolute;
+    z-index: 2;
+    background-color:#ffc729;
+}

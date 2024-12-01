@@ -26,7 +26,8 @@
                 <button class="btn btn-1" id="signin">Login</button>
                 <button class="btn btn-2" id="signup">Register</button>
             </div>
-            
+ 
+        <form action="Adminloginfunction.php" method="post">
             <!-- Login Form Container -->
             <div class="login-form">
                 <div class="form-title">
@@ -34,11 +35,11 @@
                 </div>
                 <div class="form-input">
                     <div class="input-box">
-                        <input type="text" class="input-field" placeholder="Username" required>
+                        <input type="text" class="input-field" name="user" placeholder="Username" required>
                         <i class="bx bx-user icon"></i>
                     </div>
                     <div class="input-box">
-                        <input type="password" class="input-field" placeholder="Password" required>
+                        <input type="password" class="input-field" name="pass" placeholder="Password" required>
                         <i class="bx bx-lock-alt icon"></i>
                     </div>
                     <div class="forgot-pass">
@@ -51,7 +52,7 @@
                     </div>
                 </div>
             </div>
-    
+        </form>
             <!-- Register Form Container -->
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="registerform" enctype="multipart/form-data">
                 <div class="register-form">

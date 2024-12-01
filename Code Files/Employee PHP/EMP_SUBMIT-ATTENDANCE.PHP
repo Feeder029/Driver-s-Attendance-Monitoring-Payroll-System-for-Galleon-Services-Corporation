@@ -16,6 +16,12 @@
     <div id="submit-attendance" class="form-sections">
       <h2>Submit Attendance</h2>
 
+      <h4 style="color: red; <?php echo $deniedInput ? 'display: block;' : 'display: none;'; ?>"> 
+        <?php
+        echo $Message    
+        ?>  
+        </h4>
+
       <div id="date-time-section">
         <h3>Date and Time</h3>
         <div id="current-date"></div>
@@ -45,8 +51,12 @@
         <button type="submit" <?php if ($disableInput) echo "style='display: none;'"; ?>> Submit </button>      
         <button type="reset" <?php if ($disableInput) echo "style='display: none;'"; ?> >Reset</button>
         <h4 style="<?php echo $disableInput ? 'display: block;' : 'display: none;'; ?>"> 
-        Please contact the Admins if there are any errors or changes needed in your todays submission. 
+        <?php
+        echo $Message    
+        ?>  
       </div>
+
+      
     </div>
 </form>
 

@@ -4,6 +4,8 @@
 body{
     background-color:#464866;
     overflow-x: hidden;
+    font-size: 100%; /* Relative font size for better scaling */
+    line-height: 1.6;
 }
 
 html{
@@ -453,8 +455,8 @@ tr, td{
     border: 3.5px solid;
     padding: 30px;
     background-color: #3E4E6C; 
-    height: 180px;
-    width: 220px;
+    height: 160px;
+    width: 120px;
     border-radius: 20px;
 }
 
@@ -527,3 +529,73 @@ tr, td{
     color: #e63946;
   }
   
+  /* Responsive media queries */
+@media (max-width: 1200px) {
+    .search-bar {
+        width: 30%; /* Adjust search bar width for medium screens */
+    }
+    .dropdown-category {
+        margin: -38px 0 -100px -70px; /* Adjust spacing for dropdown */
+    }
+    .hub-container {
+        flex-direction: column; /* Stack hub-left and hub-right vertically */
+    }
+    .hub-right {
+        margin-right: 0; /* Remove margin for stacked layout */
+    }
+}
+
+@media (max-width: 768px) {
+    .search-bar {
+        width: 50%; /* Reduce search bar width for smaller screens */
+    }
+    .navbar h3 {
+        font-size: 30px; /* Smaller font size for navbar title */
+    }
+    .dropdown-category {
+        margin: -38px 0 -90px -50px; /* Further adjust spacing */
+    }
+    .table-container {
+        max-height: 5in; /* Reduce max height of tables */
+    }
+    .profile-image {
+        width: 80px;
+        height: 80px; /* Smaller profile image */
+    }
+    .td-content {
+        flex-direction: column; /* Stack elements for smaller screens */
+    }
+    .td-right {
+        align-items: center; /* Center align buttons */
+    }
+    .hub-container {
+        flex-direction: column;
+        align-items: center; /* Stack and center-align hubs */
+    }
+}
+
+@media (max-width: 480px) {
+    .search-bar {
+        width: 80%; /* Maximize search bar width for mobile */
+    }
+    .navbar h3 {
+        font-size: 20px; /* Further reduce font size */
+    }
+    .category-btn {
+        margin: -30px 0 10px 30px; /* Adjust category button margin */
+    }
+    .td-content {
+        flex-direction: column; /* Simplify for smaller screens */
+    }
+    .td-btn button {
+        margin: 5px 0; /* Add margin for better spacing */
+    }
+    .parcel {
+        width: 100%; /* Make parcels take full width */
+        height: auto; /* Adjust height automatically */
+    }
+    .chart-container {
+        width: 100%; /* Full width for charts */
+        height: auto; /* Adjust height dynamically */
+    }
+}

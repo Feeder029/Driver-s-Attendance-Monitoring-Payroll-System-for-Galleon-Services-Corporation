@@ -2,10 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DASHBOARD</title>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../CSS Files/DASHBOARD.CSS">
 </head>
-<body style="background-color: rgb(70, 70, 70);">
-    <H1>DASHBOARD</H1>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-input">
+            <h3>Dashboard</h3>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="dashboard-container">
+        <h1>Employee Performance</h1>
+        <div class="chart-container">
+            <canvas id="performanceChart"></canvas>
+        </div>
+    </div>
+
+    <div class="side-container">
+        <div class="hub-container">
+            <h2>HUB 1</h2>
+            <canvas id="hub1Chart"></canvas>
+        </div>
+        <div class="hub-container">
+            <h2>HUB 2</h2>
+            <canvas id="hub2Chart"></canvas>
+        </div>
+        <div class="hub-container">
+            <h2>HUB 3</h2>
+            <canvas id="hub3Chart"></canvas>
+        </div>
+        <div class="hub-container">
+            <h2>HUB 4</h2>
+            <canvas id="hub4Chart"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../JS Files/DASHBOARD.js"></script>
 </body>
 </html>

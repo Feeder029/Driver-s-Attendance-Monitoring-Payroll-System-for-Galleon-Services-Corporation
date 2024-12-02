@@ -10,52 +10,11 @@
 
     //join query
     $sql = "
-        SELECT
-            i.DI_ProfileImage,
-            n.DN_FName,
-            n.DN_MName,
-            n.DN_LName,
-            n.DN_Suffix,
-            d.DEL_ID,
-            d.DEL_ParcelCarried,
-            d.DEL_ParcelDelivered,
-            d.DEL_ParcelReturned,
-            d.DEL_RemittanceReciept,
-            t.ATT_Date,
-            h.hub_Name
-
-        FROM
-            attendance a
-        JOIN
-            delivery_information d ON a.ATT_DeliveryID = d.DEL_ID
-        JOIN
-            driver_information i ON a.ATT_DriverID = i.DI_ID
-        JOIN
-            driver_name n ON i.DI_NameID = n.DN_ID
-        JOIN
-        	attendance_date_type t ON a.ADT_ID = t.ADT_ID
-        JOIN
-            hub h ON i.DI_HubAssignedID = h.hub_ID
+        SELECT * FROM DriverDelivery
     ";
 
     $sql2="
-        SELECT
-            SUM(d.DEL_ParcelCarried) AS TotalCarried,
-            SUM(d.DEL_ParcelDelivered) AS TotalDelivered,
-            SUM(d.DEL_ParcelReturned) AS TotalReturned,
-            h.hub_Name
-        FROM
-            attendance a
-        JOIN
-            delivery_information d ON a.ATT_DeliveryID = d.DEL_ID
-        JOIN
-            driver_information i ON a.ATT_DriverID = i.DI_ID
-        JOIN
-            hub h ON i.DI_HubAssignedID = h.hub_ID
-       group by
-       hub_ID
-       order by
-       SUM(d.DEL_ParcelCarried)
+    SELECT * FROM HubDeliveryPerformance
     ";
 
 

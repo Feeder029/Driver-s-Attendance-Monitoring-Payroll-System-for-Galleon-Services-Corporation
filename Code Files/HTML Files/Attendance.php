@@ -10,73 +10,12 @@
 
     //join query
     $sql = "
-        SELECT
-            i.DI_ProfileImage,
-            n.DN_FName,
-            n.DN_MName,
-            n.DN_LName,
-            n.DN_Suffix,
-            d.DEL_ID,
-            d.DEL_ParcelCarried,
-            d.DEL_ParcelDelivered,
-            d.DEL_ParcelReturned,
-            d.DEL_RemittanceReciept,
-            t.ATT_Date,
-            a.ATT_ID,
-            h.hub_Name,
-            o.`AS_ID`
-        FROM
-            attendance a
-        JOIN
-            delivery_information d ON a.ATT_DeliveryID = d.DEL_ID
-        JOIN
-            driver_information i ON a.ATT_DriverID = i.DI_ID
-        JOIN
-            driver_name n ON i.DI_NameID = n.DN_ID
-        JOIN
-        	attendance_date_type t ON a.ADT_ID = t.ADT_ID
-        JOIN
-            hub h ON i.DI_HubAssignedID = h.hub_ID
-        JOIN
-            attendance_status o ON a.`ATT_StatusID` = o.`AS_ID`
-        ORDER BY o.`AS_ID` ASC, t.ATT_Date DESC
+    SELECT * FROM Attendance_Report
     ";
 
     //summary
     $sql2="
- SELECT
-    i.DI_ProfileImage,
-    n.DN_FName,
-    n.DN_MName,
-    n.DN_LName,
-    n.DN_Suffix,
-    d.DEL_ID,
-    COUNT(a.ATT_DriverID) AS Trips,
-    SUM(d.DEL_ParcelCarried) AS Carried_Sum,
-    SUM(d.DEL_ParcelDelivered) AS Delivered_Sum,
-    SUM(d.DEL_ParcelReturned) AS Returned_Sum,
-    d.DEL_RemittanceReciept,
-    MAX(t.ATT_Date) AS Latest_Date,
-    a.ATT_ID,
-    a.ATT_StatusID,
-    h.hub_Name
-FROM
-    attendance a
-JOIN
-    delivery_information d ON a.ATT_DeliveryID = d.DEL_ID
-JOIN
-    driver_information i ON a.ATT_DriverID = i.DI_ID
-JOIN
-    driver_name n ON i.DI_NameID = n.DN_ID
-JOIN
-    attendance_date_type t ON a.ADT_ID = t.ADT_ID
-JOIN
-    hub h ON i.DI_HubAssignedID = h.hub_ID
-WHERE a.ATT_StatusID = 2
-GROUP BY
-    a.ATT_DriverID
-ORDER BY
-COUNT(a.ATT_DriverID) DESC, SUM(d.DEL_ParcelCarried) DESC
+    SELECT * FROM SummarizeEmployeeAttendance
             ";
         //pending
         $sql3 = "

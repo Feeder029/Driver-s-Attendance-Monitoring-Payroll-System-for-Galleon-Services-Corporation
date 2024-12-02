@@ -23,8 +23,8 @@
             d.DEL_RemittanceReciept,
             t.ATT_Date,
             a.ATT_ID,
-            h.hub_Name
-
+            h.hub_Name,
+            o.`AS_ID`
         FROM
             attendance a
         JOIN
@@ -37,8 +37,9 @@
         	attendance_date_type t ON a.ADT_ID = t.ADT_ID
         JOIN
             hub h ON i.DI_HubAssignedID = h.hub_ID
-        ORDER BY t.ATT_Date DESC
-        
+        JOIN
+            attendance_status o ON a.`ATT_StatusID` = o.`AS_ID`
+        ORDER BY o.`AS_ID` ASC, t.ATT_Date DESC
     ";
 
     //summary
@@ -280,7 +281,7 @@ COUNT(a.ATT_DriverID) DESC, SUM(d.DEL_ParcelCarried) DESC
                                         <img src='$profileImage' alt='Profile Image' class='profile-image'>
                                         <div class='td-name'>
                                             <h3 id='username' name='Username'>" . htmlspecialchars($fullname) . "</h3>
-                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['hub_Name']) . "</h5>
+                                            <h5 id='fullname' name='Fullname'>" . htmlspecialchars($row['hub_Name']) . "</h5>"."
                                             <h5 id='position-name' name='Position'> | <span id='position'>Parcel Carried: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelCarried']) . "</span> | </h5>
                                             <h5 id='position-name' name='Position'>  <span id='position'>Parcel Delivered: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelDelivered']) . "</span> | </h5>
                                             <h5 id='position-name' name='Position'>  <span id='position'>Parcel Returned: </span><span id='type'>" . htmlspecialchars($row['DEL_ParcelReturned']) . "</span>  </h5>
@@ -288,10 +289,19 @@ COUNT(a.ATT_DriverID) DESC, SUM(d.DEL_ParcelCarried) DESC
                                     </div>
                                     <div class='td-right'>
                                         <h3 id='date'>Submitted on&nbsp;<span id='date-created'>" . $dateCreated . "</span></h3>
-                                        <div class='td-btn'>
+                                        <div class='td-btn'>";
+                                        if($row['AS_ID']==1){
+                                            echo "                                            
                                             <button id='accept-btn'>ACCEPT</button>
                                             <button id='decline-btn'>DECLINE</button>
-                                           <button id='view-btn' data-image='$remittanceImage'>REMITTANCE RECEIPT</button>
+                                            <button id='view-btn' data-image='$remittanceImage'>REMITTANCE RECEIPT</button>";
+                                        }  else if($row['AS_ID']==2){
+                                            echo"<button id='view-btn' data-image='$remittanceImage'>REMITTANCE RECEIPT</button>";                                 
+                                        } else {
+                                            echo"<button id='view-btn' data-image='$remittanceImage' style='background-color:red;'>REMITTANCE RECEIPT</button>";                                 
+                                        }
+
+                                        echo"
 
                                         </div>
                                     </div>

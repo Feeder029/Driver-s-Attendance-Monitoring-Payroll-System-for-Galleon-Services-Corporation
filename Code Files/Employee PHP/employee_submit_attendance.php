@@ -174,6 +174,8 @@ function SubmitAttendance($conn, $DriverID, $Carried, $Delivered, $Returned, $fi
     attendance_status c ON a.`ATT_StatusID` = c.`AS_ID`
     JOIN
     day_type d ON b.`DT_IT` = d.`DT_ID`
+    JOIN
+    attendance_status o ON a.`ATT_StatusID` = o.`AS_ID`
     WHERE a.`ATT_ID` = $ID;";
     
 

@@ -1,5 +1,5 @@
 window.onload = function() {
-    document.getElementById('iframe-dashboard').src = 'http://localhost/Driver-s-Attendance-Monitoring-Payroll-System-for-Galleon-Services-Corporation/Code%20Files/HTML%20Files/Accounts.php';
+    document.getElementById('iframe-dashboard').src = 'http://localhost/Driver-s-Attendance-Monitoring-Payroll-System-for-Galleon-Services-Corporation/Code%20Files/HTML%20Files/Dashboard.html';
 };
 
 

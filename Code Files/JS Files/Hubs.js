@@ -149,6 +149,14 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         popoverContainer.style.display = "none";
     });
+
+    // Close popover functionality
+    const closeButton2 = popoverContainer.querySelector('button[name="cancel-btn"]');
+    closeButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        popoverContainer.style.display = "none";
+    });
+    
 });
 
 

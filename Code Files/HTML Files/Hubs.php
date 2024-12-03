@@ -41,7 +41,7 @@
     <link rel="stylesheet" href="../CSS Files/Hubs.css?v=1.4">
     <script src="../JS Files/Hubs.js?v=1.2"></script>
         <!--JQuery-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js?v=1.2"></script>
     <title>HUBS</title>
 </head>
 <body>
@@ -130,7 +130,7 @@
             <!-- Button Section -->
             <div class="form-buttons">
                 <button type="submit" id="submit-hub">Submit</button>
-                <button type="button" id="cancel-hub">Cancel</button>
+                <button type="button" id="cancel-hub" name="cancel-btn" popovertargetaction="Hide" popovertarget="add-hub-container">Cancel</button>
             </div>
         </form>
     </div>

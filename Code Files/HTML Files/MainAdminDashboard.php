@@ -67,7 +67,7 @@
     <div class="side-bar">
         <div class="side-profile">
             <!-- Display Profile Image -->
-             <div class="bg"></div>
+             <!-- <div class="bg"></div> --> 
             <?php if (isset($_SESSION['LEAD_PROFILE']) && $_SESSION['LEAD_PROFILE']): ?>
                 <img src="data:image/jpeg;base64,<?php echo base64_encode($_SESSION['LEAD_PROFILE']); ?>" alt="Profile Image" class="profile-img" draggable="false">
             <?php else: ?>
@@ -82,11 +82,11 @@
 
         <div class="side-menu">
             <ul>
-                <li><a href="Dashboard.html?v=1.2" target="iframe-dashboard" draggable="false"><i class='bx bxs-dashboard' ></i>&nbsp;DASHBOARD</a></li>
+                <li><a href="Dashboard.html?v=1.3" target="iframe-dashboard" draggable="false"><i class='bx bxs-dashboard' ></i>&nbsp;DASHBOARD</a></li>
                 <li><a href="http://localhost/Driver-s-Attendance-Monitoring-Payroll-System-for-Galleon-Services-Corporation/Code%20Files/HTML%20Files/Accounts.php" target="iframe-dashboard" draggable="false"><i class='bx bxs-user'></i>&nbsp;ACCOUNTS</a></li>
                 <!-- <li><a href="Driver.html" target="iframe-dashboard" draggable="false"><i class="fa-solid fa-car"></i> &nbsp;DRIVERS</a></li>
                 <li><a href="Admin.html" target="iframe-dashboard" draggable="false"><i class='bx bxs-user-check'></i>&nbsp;ADMIN</a></li> -->
-                <li><a href="http://localhost/Driver-s-Attendance-Monitoring-Payroll-System-for-Galleon-Services-Corporation/Code%20Files/HTML%20Files/Hubs.php" target="iframe-dashboard" draggable="false"><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp; HUBS</a></li>
+                <li><a href="http://localhost/Driver-s-Attendance-Monitoring-Payroll-System-for-Galleon-Services-Corporation/Code%20Files/HTML%20Files/Hubs.php?v=1.2" target="iframe-dashboard" draggable="false"><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp; HUBS</a></li>
                 <li><a href="http://localhost/Driver-s-Attendance-Monitoring-Payroll-System-for-Galleon-Services-Corporation/Code%20Files/HTML%20Files/Contribution.php" target="iframe-dashboard" draggable="false"><i class='bx bxs-credit-card-alt' ></i>&nbsp;CONTRIBUTION</a></li>
                 <li><a href="Event2.html?v=1.3" target="iframe-dashboard" draggable="false"><i class='bx bxs-calendar'></i>&nbsp;EVENT</a></li>
                 <li><a href="http://localhost/Driver-s-Attendance-Monitoring-Payroll-System-for-Galleon-Services-Corporation/Code%20Files/HTML%20Files/Attendance.php" target="iframe-dashboard" draggable="false"><i class='bx bxs-check-circle'></i>&nbsp;ATTENDANCE</a></li>
@@ -104,6 +104,6 @@
     </div>
 
 
-    <script src="../JS Files/AdminDashboard.js?v=1.2"></script>
+    <script src="../JS Files/AdminDashboard.js?v=1.3"></script>
 </body>
 </html>
